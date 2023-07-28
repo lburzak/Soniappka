@@ -1,5 +1,6 @@
 import 'package:easy_beck/beck_test/ui/questionnaire_view.dart';
 import 'package:easy_beck/beck_test/model/state.dart';
+import 'package:easy_beck/beck_test/ui/result_view.dart';
 import 'package:flutter/material.dart';
 
 class BeckTestView extends StatelessWidget {
@@ -31,18 +32,19 @@ class BeckTestView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: StreamBuilder(
           stream: state,
-          builder: (context, snapshot) {
-            final currentState = snapshot.data;
-
-            return switch (currentState) {
-              Finished() => Text("done"),
-              Solving() => QuestionnaireView(
-                  answers: currentState.answers,
-                  options: currentState.options,
-                  onAnswerSelected: onAnswerSelected,
-                ),
-              Loading() || null => SizedBox.shrink(),
-            };
+          builder: (context, snapshot) => switch (snapshot.data) {
+            Finished(
+              pointsObtained: final pointsObtained,
+              depressionLevel: final depressionLevel
+            ) =>
+              ResultView(points: pointsObtained, depressionLevel: depressionLevel),
+            Solving(answers: final answers, options: final options) =>
+              QuestionnaireView(
+                answers: answers,
+                options: options,
+                onAnswerSelected: onAnswerSelected,
+              ),
+            Loading() || null => const SizedBox.shrink(),
           },
         ),
       ),

@@ -2,19 +2,19 @@
   "results": [
     {
       "threshold": 0,
-      "verdict": "Brak depresji"
+      "level": "NONE"
     },
     {
       "threshold": 10,
-      "verdict": "Łagodna depresja"
+      "level": "MILD"
     },
     {
       "threshold": 19,
-      "verdict": "Umiarkowana depresja"
+      "level": "MODERATE"
     },
     {
       "threshold": 30,
-      "verdict": "Ciężka depresja"
+      "level": "SEVERE"
     }
   ],
   "questions": [

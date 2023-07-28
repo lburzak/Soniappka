@@ -10,9 +10,9 @@ class QuestionnaireView extends StatefulWidget {
 
   const QuestionnaireView(
       {super.key,
-        required this.options,
-        required this.onAnswerSelected,
-        required this.answers});
+      required this.options,
+      required this.onAnswerSelected,
+      required this.answers});
 
   @override
   State<QuestionnaireView> createState() => _QuestionnaireViewState();
@@ -38,26 +38,26 @@ class _QuestionnaireViewState extends State<QuestionnaireView> {
             controller: controller,
             children: widget.options.entries
                 .map((entry) => QuestionPage(
-              options: entry.value,
-              onAnswerSelected: (answerIndex) {
-                widget.onAnswerSelected(entry.key, answerIndex);
-              },
-              selectedAnswerIndex: widget.answers[entry.key],
-            ))
+                      options: entry.value,
+                      onAnswerSelected: (answerIndex) {
+                        widget.onAnswerSelected(entry.key, answerIndex);
+                      },
+                      selectedAnswerIndex: widget.answers[entry.key],
+                    ))
                 .toList(),
           ),
         ),
         ValueListenableBuilder(
             valueListenable: currentPageValueNotifier,
             builder: (context, value, child) => PageIndicator(
-              currentPageIndex: value,
-              filledIndices: widget.answers.entries
-                  .map((element) =>
-              element.value != null ? element.key : null)
-                  .whereNotNull()
-                  .toList(),
-              pagesCount: widget.options.length,
-            ))
+                  currentPageIndex: value,
+                  filledIndices: widget.answers.entries
+                      .map((element) =>
+                          element.value != null ? element.key : null)
+                      .whereNotNull()
+                      .toList(),
+                  pagesCount: widget.options.length,
+                ))
       ],
     );
   }

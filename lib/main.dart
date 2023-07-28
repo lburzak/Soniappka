@@ -1,4 +1,4 @@
-import 'package:easy_beck/beck_test/data/JsonFileBeckAnswersSchemaRepository.dart';
+import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/ui/beck_test_view.dart';
 import 'package:easy_beck/beck_test/service/beck_test_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  final controller = BeckTestController(JsonFileBeckAnswersSchemaRepository());
+  final repo = JsonFileBeckRepository();
+  late final controller = BeckTestController(repo, repo);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

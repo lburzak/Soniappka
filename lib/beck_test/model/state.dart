@@ -1,14 +1,16 @@
+import 'package:easy_beck/beck_test/model/depression_level.dart';
+
 sealed class BeckTestState {
   const BeckTestState();
 }
 
 class Finished extends BeckTestState {
   final int pointsObtained;
-  final String description;
+  final DepressionLevel depressionLevel;
 
   const Finished({
     required this.pointsObtained,
-    required this.description,
+    required this.depressionLevel,
   });
 }
 
