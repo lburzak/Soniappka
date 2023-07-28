@@ -41,6 +41,11 @@ class _QuestionnaireViewState extends State<QuestionnaireView> {
                       options: entry.value,
                       onAnswerSelected: (answerIndex) {
                         widget.onAnswerSelected(entry.key, answerIndex);
+                        if (controller.page?.floor() == widget.options.length) {
+                          controller.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
+                        }
                       },
                       selectedAnswerIndex: widget.answers[entry.key],
                     ))
