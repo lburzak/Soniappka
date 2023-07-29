@@ -43,14 +43,16 @@ class BeckTestController {
   Future<void> _load() async {
     final questions = await _questionRepository.getQuestions();
 
-    final answers =
-        Map.fromEntries(List.generate(21, (index) => MapEntry(index, null)));
+    final answers = Map.fromEntries(
+        List.generate(questions.length, (index) => MapEntry(index, null)));
 
     final options = questions.mapIndexed(
         (index, question) => MapEntry(index, question.answersTexts.toList()));
 
     _state.add(Solving(
-        questionsCount: 21, answers: answers, options: options.collectToMap()));
+        questionsCount: questions.length,
+        answers: answers,
+        options: options.collectToMap()));
   }
 }
 
