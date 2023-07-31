@@ -1,5 +1,6 @@
 import 'package:easy_beck/beck_test/ui/page_indicator.dart';
 import 'package:easy_beck/beck_test/ui/question_page.dart';
+import 'package:easy_beck/common/ui/pastel_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -25,47 +26,50 @@ class QuestionnaireView extends HookWidget {
   Widget build(BuildContext context) {
     final pageController = usePageController();
     final currentPageNotifier = useState(0);
+    final colors = useMemoized(() =>
+        List.generate(options.length, (index) => generateRandomPastelColor()));
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Expanded(
-          child: PageView(
-            onPageChanged: (newPage) {
-              currentPageNotifier.value = newPage;
-            },
-
-            /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-            /// Use [Axis.vertical] to scroll vertically.
-            controller: pageController,
-            children: options.entries
-                .map((entry) => QuestionPage(
-                    options: entry.value,
-                    onAnswerSelected: (answerIndex) {
-                      onAnswerSelected(entry.key, answerIndex);
-                      if (pageController.page?.floor() == options.length) {
-                        pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.fastOutSlowIn);
-                      }
-                    },
-                    selectedAnswerIndex:
-                        state.getSelectedAnswerForQuestionIndex(entry.key)))
-                .toList(),
-          ),
+        PageView(
+          onPageChanged: (newPage) {
+            currentPageNotifier.value = newPage;
+          },
+          controller: pageController,
+          children: options.entries
+              .map((entry) => Container(
+                    color: colors.elementAtOrNull(entry.key),
+                    child: QuestionPage(
+                        options: entry.value,
+                        onAnswerSelected: (answerIndex) {
+                          onAnswerSelected(entry.key, answerIndex);
+                          if (pageController.page?.floor() == options.length) {
+                            pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.fastOutSlowIn);
+                          }
+                        },
+                        selectedAnswerIndex:
+                            state.getSelectedAnswerForQuestionIndex(entry.key)),
+                  ))
+              .toList(),
         ),
-        ListenableBuilder(
-            listenable: Listenable.merge(
-                [state.answeredQuestionsIndices, currentPageNotifier]),
-            builder: (context, _) {
-              return PageIndicator(
-                currentPageIndex: currentPageNotifier.value,
-                isFilled: (index) =>
-                    state.getSelectedAnswerForQuestionIndex(index).value !=
-                    null,
-                pagesCount: options.length,
-              );
-            })
+        Positioned(
+          bottom: 16,
+          child: ListenableBuilder(
+              listenable: Listenable.merge(
+                  [state.answeredQuestionsIndices, currentPageNotifier]),
+              builder: (context, _) {
+                return PageIndicator(
+                  currentPageIndex: currentPageNotifier.value,
+                  isFilled: (index) =>
+                      state.getSelectedAnswerForQuestionIndex(index).value !=
+                      null,
+                  pagesCount: options.length,
+                );
+              }),
+        )
       ],
     );
   }

@@ -71,15 +71,12 @@ class BeckTestView extends HookWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: StreamBuilder(
-          stream: state.map((event) => event.options).distinct(),
-          builder: (context, snapshot) => QuestionnaireView(
-            state: questionnaireState,
-            options: snapshot.data ?? {},
-            onAnswerSelected: onAnswerSelected,
-          ),
+      body: StreamBuilder(
+        stream: state.map((event) => event.options).distinct(),
+        builder: (context, snapshot) => QuestionnaireView(
+          state: questionnaireState,
+          options: snapshot.data ?? {},
+          onAnswerSelected: onAnswerSelected,
         ),
       ),
     );
