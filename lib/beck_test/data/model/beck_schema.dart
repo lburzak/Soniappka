@@ -10,6 +10,11 @@ class JsonQuestionId implements Identifier {
   final int value;
 
   JsonQuestionId(this.value);
+
+  @override
+  String serialize() {
+    return value.toString();
+  }
 }
 
 @MappableClass()

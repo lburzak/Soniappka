@@ -1,1 +1,3 @@
-abstract interface class Identifier {}
+abstract interface class Identifier {
+  String serialize();
+}

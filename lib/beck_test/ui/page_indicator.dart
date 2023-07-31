@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class PageIndicator extends StatelessWidget {
   final int currentPageIndex;
-  final List<int> filledIndices;
+  final bool Function(int index) isFilled;
   final int pagesCount;
 
   const PageIndicator(
       {super.key,
         required this.currentPageIndex,
-        required this.filledIndices,
+        required this.isFilled,
         required this.pagesCount});
 
   @override
@@ -23,7 +23,7 @@ class PageIndicator extends StatelessWidget {
               pagesCount,
                   (index) => PageIcon(
                 selected: index == currentPageIndex,
-                filled: filledIndices.contains(index),
+                filled: isFilled(index),
               )),
         ),
         const SizedBox(height: 12),

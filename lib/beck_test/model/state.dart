@@ -1,45 +1,40 @@
-import 'package:easy_beck/beck_test/model/depression_level.dart';
-
-sealed class BeckTestState {
-  const BeckTestState();
-}
-
-class Finished extends BeckTestState {
-  final int pointsObtained;
-  final DepressionLevel depressionLevel;
-
-  const Finished({
-    required this.pointsObtained,
-    required this.depressionLevel,
-  });
-}
-
-class Loading extends BeckTestState {}
-
-class Solving extends BeckTestState {
+class BeckTestState {
   final int questionsCount;
   final Map<int, int?> answers;
   final Map<int, List<String>> options;
   final bool canSubmit;
 
-  Solving({
+  const BeckTestState({
     required this.questionsCount,
     required this.answers,
     required this.options,
     this.canSubmit = false,
-  }) {
-    if (answers.length != questionsCount) {}
+  });
 
-    if (options.length != questionsCount) {}
-  }
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BeckTestState &&
+          runtimeType == other.runtimeType &&
+          questionsCount == other.questionsCount &&
+          answers == other.answers &&
+          options == other.options &&
+          canSubmit == other.canSubmit);
 
-  Solving copyWith({
+  @override
+  int get hashCode =>
+      questionsCount.hashCode ^
+      answers.hashCode ^
+      options.hashCode ^
+      canSubmit.hashCode;
+
+  BeckTestState copyWith({
     int? questionsCount,
     Map<int, int?>? answers,
     Map<int, List<String>>? options,
     bool? canSubmit,
   }) {
-    return Solving(
+    return BeckTestState(
       questionsCount: questionsCount ?? this.questionsCount,
       answers: answers ?? this.answers,
       options: options ?? this.options,
