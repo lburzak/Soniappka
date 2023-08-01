@@ -13,15 +13,18 @@ class BeckTestResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeFutureBuilder(
-        future: getBeckTestResult.invoke(id),
-        builder: (context, snapshot) => switch (snapshot) {
-              DataAsyncSnapshot(data: final data) => data != null
-                  ? ResultView(
-                      points: data.points,
-                      depressionLevel: data.depressionLevel)
-                  : const SizedBox.shrink(),
-              _ => const SizedBox.shrink()
-            });
+    return Container(
+      color: Color(0xffD2E6C3),
+      child: SafeFutureBuilder(
+          future: getBeckTestResult.invoke(id),
+          builder: (context, snapshot) => switch (snapshot) {
+                DataAsyncSnapshot(data: final data) => data != null
+                    ? ResultView(
+                        points: data.points,
+                        depressionLevel: data.depressionLevel)
+                    : const SizedBox.shrink(),
+                _ => const SizedBox.shrink()
+              }),
+    );
   }
 }

@@ -8,6 +8,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 abstract interface class QuestionnaireState {
   ValueListenable<int?> getSelectedAnswerForQuestionIndex(int index);
 
+  int? getNextPage(int currentPage);
+
   ValueListenable<List<int>> get answeredQuestionsIndices;
 }
 
@@ -44,8 +46,10 @@ class QuestionnaireView extends HookWidget {
                         options: entry.value,
                         onAnswerSelected: (answerIndex) {
                           onAnswerSelected(entry.key, answerIndex);
-                          if (pageController.page?.floor() == options.length) {
-                            pageController.nextPage(
+                          final nextPage = state
+                              .getNextPage(pageController.page?.ceil() ?? 0);
+                          if (nextPage != null) {
+                            pageController.animateToPage(nextPage,
                                 duration: const Duration(milliseconds: 500),
                                 curve: Curves.fastOutSlowIn);
                           }

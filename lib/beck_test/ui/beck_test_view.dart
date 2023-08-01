@@ -31,6 +31,20 @@ class DefaultQuestionnaireState implements QuestionnaireState {
   @override
   ValueListenable<List<int>> get answeredQuestionsIndices =>
       _answeredQuestionsIndices;
+
+  @override
+  int? getNextPage(int currentPage) {
+    final unfilled = _listenables.entries.where(
+        (element) => !_answeredQuestionsIndices.value.contains(element.key));
+
+    final firstAfterCurrent =
+        unfilled.where((value) => value.key > currentPage).firstOrNull;
+    if (firstAfterCurrent != null) {
+      return firstAfterCurrent.key;
+    }
+
+    return unfilled.where((value) => value.key != currentPage).firstOrNull?.key;
+  }
 }
 
 QuestionnaireState useQuestionnaireState(Stream<Map<int, int?>> answers) {
