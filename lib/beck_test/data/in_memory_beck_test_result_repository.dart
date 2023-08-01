@@ -1,6 +1,7 @@
 import 'package:easy_beck/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/beck_test/model/beck_test_result.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart';
+import 'package:easy_beck/common/day.dart';
 
 class InMemoryBeckTestId implements BeckTestId {
   final int key;
@@ -48,4 +49,11 @@ class InMemoryBeckTestResultRepository implements BeckTestResultRepository {
   @override
   Future<BeckTestResult?> findById(BeckTestId id) async =>
       _results.where((element) => element.id == id).firstOrNull;
+
+  @override
+  Future<BeckTestResult?> findByDay(Day day) async {
+    return _results
+        .where((element) => element.submissionDateTime.toDay() == day)
+        .firstOrNull;
+  }
 }

@@ -34,13 +34,13 @@ class BeckTestResultPage extends StatelessWidget {
               children: [
                 ElevatedButton.icon(
                     onPressed: () {
-                      context.go("/beck-test");
+                      context.replace("/beck-test");
                     },
                     icon: Icon(Icons.refresh),
                     label: Text("Jeszcze raz")),
                 ElevatedButton.icon(
                     onPressed: () {
-                      context.go("/");
+                      context.pop();
                     },
                     icon: Icon(Icons.done),
                     label: Text("Zakończ"))

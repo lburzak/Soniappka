@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:easy_beck/beck_test/model/beck_test_result.dart';
 import 'package:easy_beck/beck_test/model/state.dart';
-import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart';
-import 'package:easy_beck/beck_test/repository/depression_level_repository.dart';
 import 'package:easy_beck/beck_test/repository/question_repository.dart';
 import 'package:easy_beck/beck_test/service/beck_test_router.dart';
+import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/common/map_extensions.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -15,15 +13,14 @@ const _initialState = BeckTestState(
 
 class BeckTestController {
   final QuestionRepository _questionRepository;
-  final DepressionLevelRepository _depressionLevelRepository;
-  final BeckTestResultRepository _beckTestResultRepository;
+  final SubmitBeckTest _submitBeckTest;
   final BeckTestRouter _beckTestRouter;
 
   final _state = BehaviorSubject<BeckTestState>.seeded(_initialState);
   late final Stream<BeckTestState> state = _state.doOnListen(_load);
 
-  BeckTestController(this._questionRepository, this._depressionLevelRepository,
-      this._beckTestRouter, this._beckTestResultRepository);
+  BeckTestController(
+      this._questionRepository, this._submitBeckTest, this._beckTestRouter);
 
   void selectAnswer(int questionIndex, int answerIndex) {
     final BehaviorSubject(value: currentState) = _state;
@@ -41,13 +38,7 @@ class BeckTestController {
         .whereNotNull()
         .fold(0, (previousValue, answerIndex) => previousValue + answerIndex);
 
-    final depressionLevel =
-        await _depressionLevelRepository.getDepressionLevelForPoints(points);
-
-    final result = await _beckTestResultRepository.insert(BeckTestResult(
-        id: _beckTestResultRepository.createId(),
-        points: points,
-        depressionLevel: depressionLevel));
+    final result = await _submitBeckTest(points);
 
     _beckTestRouter.goToTestResult(result.id);
   }

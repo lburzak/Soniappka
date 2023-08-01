@@ -13,6 +13,6 @@ class GoBeckTestRouter implements BeckTestRouter {
 
   @override
   void goToTestResult(BeckTestId id) {
-    _context.go("/beck-test/${id.serialize()}/result");
+    _context.replace("/beck-test/${id.serialize()}/result");
   }
 }
