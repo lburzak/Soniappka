@@ -10,21 +10,23 @@ class ResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("$points", style: const TextStyle(fontSize: 64),),
-          Text(getDepressionLevelString(context),
-              style: const TextStyle(fontSize: 22))
-        ],
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("$points", style: const TextStyle(fontSize: 64),),
+            Text(getDepressionLevelString(context),
+                style: const TextStyle(fontSize: 22))
+          ],
+        ),
       ),
     );
   }
 
   String getDepressionLevelString(BuildContext context) {
     return switch (depressionLevel) {
-      DepressionLevel.none => "Brak",
+      DepressionLevel.none => "Brak depresji",
       DepressionLevel.mild => "Łagodna depresja",
       DepressionLevel.moderate => "Umiarkowana depresja",
       DepressionLevel.severe => "Silna depresja"

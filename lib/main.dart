@@ -14,7 +14,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       routerConfig: router,
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              background: const Color(0xffD2E6C3)),
           useMaterial3: true,
-          textTheme: GoogleFonts.cormorantInfantTextTheme()));
+          textTheme: GoogleFonts.cormorantInfantTextTheme().copyWith(
+            labelLarge: GoogleFonts.cormorantInfantTextTheme().labelLarge?.copyWith(fontSize: 16, fontWeight: FontWeight.bold, )
+          )));
 }
