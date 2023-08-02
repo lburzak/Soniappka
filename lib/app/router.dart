@@ -1,3 +1,5 @@
+import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
+import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/data/in_memory_beck_test_result_repository.dart';
 import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart';
@@ -12,7 +14,7 @@ import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/dashboard/dashboard.dart';
 import 'package:easy_beck/dashboard/dashboard_controller.dart';
 import 'package:easy_beck/dashboard/usecase/check_if_test_was_filled_today.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:quiver/time.dart';
@@ -58,16 +60,31 @@ class DashboardContainer extends KiwiContainer {
   }
 }
 
+class BeckCalendarContainer extends KiwiContainer {
+  BeckCalendarContainer() : super.scoped() {
+    registerFactory(
+        (container) => BeckCalendarController(beckTestDomainContainer()));
+    registerFactory<BeckCalendarViewBuilder>(
+        (container) => (context) => BeckCalendarView(
+              viewModel: container<BeckCalendarController>().viewModel,
+            ));
+  }
+}
+
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
 final dashboardContainer = DashboardContainer();
+final beckCalendarContainer = BeckCalendarContainer();
 
 final router = GoRouter(routes: [
   GoRoute(
       path: "/",
-      builder: (context, state) => Dashboard(
-            viewModel: dashboardContainer<DashboardController>().viewModel,
-          )),
+      builder: (context, state) {
+        return Dashboard(
+          viewModel: dashboardContainer<DashboardController>().viewModel,
+          calendarBuilder: beckCalendarContainer(),
+        );
+      }),
   GoRoute(
       path: "/beck-test",
       builder: (context, state) {

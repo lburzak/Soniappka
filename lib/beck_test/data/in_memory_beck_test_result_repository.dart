@@ -56,4 +56,9 @@ class InMemoryBeckTestResultRepository implements BeckTestResultRepository {
         .where((element) => element.submissionDateTime.toDay() == day)
         .firstOrNull;
   }
+
+  @override
+  Stream<List<BeckTestResult>> observeAll() {
+    return Stream.value(_results);
+  }
 }
