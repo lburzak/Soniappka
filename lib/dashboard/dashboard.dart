@@ -18,9 +18,12 @@ class Dashboard extends StatelessWidget {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Hej Soniu :))"),
-              calendarBuilder(context),
+              // const Text("Hej Soniu :))", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+              Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: calendarBuilder(context)),
               StreamBuilder(
                   stream: viewModel.map((model) => model.isTodayTestFilled),
                   builder: (context, isTodayTestFilled) => ElevatedButton.icon(
