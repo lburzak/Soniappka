@@ -14,6 +14,11 @@ import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/dashboard/dashboard.dart';
 import 'package:easy_beck/dashboard/dashboard_controller.dart';
 import 'package:easy_beck/dashboard/usecase/check_if_test_was_filled_today.dart';
+import 'package:easy_beck/mood_tracker/data/in_memory_mood_log_repository.dart';
+import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dart';
+import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
+import 'package:easy_beck/mood_tracker/mood_picker.dart';
+import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kiwi/kiwi.dart';
@@ -71,18 +76,33 @@ class BeckCalendarContainer extends KiwiContainer {
   }
 }
 
+class MoodTrackerContainer extends KiwiContainer {
+  MoodTrackerContainer() : super.scoped() {
+    registerFactory((container) => const Clock());
+    registerFactory<MoodLogRepository>((container) => InMemoryMoodLogRepository(container()));
+    registerFactory((container) => LogMood(container(), container()));
+    registerFactory((container) => MoodTrackerBloc(container()));
+  }
+}
+
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
 final dashboardContainer = DashboardContainer();
 final beckCalendarContainer = BeckCalendarContainer();
+final moodTrackerContainer = MoodTrackerContainer();
 
 final router = GoRouter(routes: [
   GoRoute(
       path: "/",
       builder: (context, state) {
+        final bloc = moodTrackerContainer<MoodTrackerBloc>();
         return Dashboard(
           viewModel: dashboardContainer<DashboardController>().viewModel,
           calendarBuilder: beckCalendarContainer(),
+          moodPickerBuilder: (context) => MoodPicker(
+            events: bloc,
+            state: bloc.stream,
+          ),
         );
       }),
   GoRoute(
