@@ -1,5 +1,6 @@
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/dashboard/dashboard_view_model.dart';
+import 'package:easy_beck/feature/sleep_prompt/sleep_prompt.dart';
 import 'package:easy_beck/mood_tracker/mood_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,18 +26,15 @@ class Dashboard extends StatelessWidget {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // const Text("Hej Soniu :))", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),,
+                SleepPrompt(),
                 _Section(
                   label: "Twoje samopoczucie",
                   children: [
-                    SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Image.asset("assets/sleeping.png")),
                     SizedBox(
                         width: 200,
                         height: 200,
@@ -85,7 +83,7 @@ class _Section extends StatelessWidget {
   final String label;
   final List<Widget> children;
 
-  const _Section({super.key, required this.label, required this.children});
+  const _Section({required this.label, required this.children});
 
   @override
   Widget build(BuildContext context) {

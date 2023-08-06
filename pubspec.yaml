@@ -20,6 +20,7 @@ dependencies:
   table_calendar: ^3.0.9
   quiver: ^3.2.1
   bloc: ^8.1.2
+  syncfusion_flutter_sliders: ^22.2.7
 
 dev_dependencies:
   flutter_test:
