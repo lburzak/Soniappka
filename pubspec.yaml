@@ -33,4 +33,7 @@ flutter:
   uses-material-design: true
   assets:
    - assets/beck.json
+   - assets/sleeping.png
+   - assets/anxiety.png
+   - assets/angry.gif
    - fonts/

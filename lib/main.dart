@@ -10,7 +10,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
+  Widget build(BuildContext context) {
+
+    final font = GoogleFonts.amaticScTextTheme();
+    // final font = GoogleFonts.berkshireSwashTextTheme();
+    return MaterialApp.router(
       title: 'Flutter Demo',
       routerConfig: router,
       theme: ThemeData(
@@ -18,7 +22,8 @@ class MyApp extends StatelessWidget {
               seedColor: Colors.deepPurple,
               background: const Color(0xffD2E6C3)),
           useMaterial3: true,
-          textTheme: GoogleFonts.cormorantInfantTextTheme().copyWith(
-            labelLarge: GoogleFonts.cormorantInfantTextTheme().labelLarge?.copyWith(fontSize: 16, fontWeight: FontWeight.bold, )
+          textTheme: font.copyWith(
+            labelLarge: font.labelLarge?.copyWith(fontSize: 16, fontWeight: FontWeight.bold, )
           )));
+  }
 }

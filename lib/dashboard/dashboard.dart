@@ -33,11 +33,18 @@ class Dashboard extends StatelessWidget {
                 _Section(
                   label: "Twoje samopoczucie",
                   children: [
-                    Container(
-                      height: 120,
-                      decoration: const BoxDecoration(
-                          border: Border.fromBorderSide(BorderSide())),
-                    ),
+                    SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Image.asset("assets/sleeping.png")),
+                    SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: Image.asset("assets/angry.gif")),
+                    SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Image.asset("assets/anxiety.png")),
                     Padding(
                       padding: const EdgeInsets.only(top: 24, bottom: 8),
                       child: Text(
@@ -82,16 +89,21 @@ class _Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(label, style: const TextStyle(fontSize: 32))),
-          ...children
-        ],
+    return Card(
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16))),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(label, style: const TextStyle(fontSize: 32))),
+            ...children
+          ],
+        ),
       ),
     );
   }
