@@ -11,7 +11,7 @@ class RatingSelector extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final level = useState(0.0);
+    final level = useState(2.0);
 
     return ValueListenableBuilder(
       valueListenable: level,

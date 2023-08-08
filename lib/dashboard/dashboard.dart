@@ -1,6 +1,9 @@
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/dashboard/dashboard_view_model.dart';
+import 'package:easy_beck/feature/anxiety_prompt.dart';
+import 'package:easy_beck/feature/irritability_prompt.dart';
 import 'package:easy_beck/feature/sleep_prompt/sleep_prompt.dart';
+import 'package:easy_beck/feature/sleepiness_prompt.dart';
 import 'package:easy_beck/mood_tracker/mood_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +34,10 @@ class Dashboard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // const Text("Hej Soniu :))", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),,
-                SleepPrompt(),
+                const SleepPrompt(),
+                const IrritabilityPrompt(),
+                const SleepinessPrompt(),
+                const AnxietyPrompt(),
                 _Section(
                   label: "Twoje samopoczucie",
                   children: [
