@@ -1,57 +1,57 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
-import 'package:easy_beck/feature/prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/widget/prompt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-class SleepPrompt extends StatelessWidget {
-  const SleepPrompt({super.key});
+class SleepPrompt extends HookWidget {
+  final void Function(int level) onSubmitted;
+
+  const SleepPrompt({super.key, required this.onSubmitted});
 
   @override
   Widget build(BuildContext context) {
+    final currentLevel = useState(2);
+    final currentHours = useState(8);
+
     return Prompt(
         title: "Sen w nocy",
-        icon: SizedBox(width: 100, height: 100, child: Image.asset("assets/sleeping.png")),
+        icon: SizedBox(
+            width: 100, height: 100, child: Image.asset("assets/sleeping.png")),
         body: Column(
           children: [
-            const Text("Ile godzin spałaś?", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            _SleepHoursSlider(),
+            const Text("Ile godzin spałaś?",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ValueListenableBuilder(
+              valueListenable: currentHours,
+              builder: (context, value, child) => SfSlider(
+                  value: value,
+                  interval: 2.0,
+                  showTicks: true,
+                  showLabels: true,
+                  stepSize: 1,
+                  onChanged: (value) {
+                    currentHours.value = value;
+                  },
+                  min: 0.0,
+                  max: 16.0),
+            ),
             const SizedBox(height: 32),
-            const Text("Jak oceniasz swój sen?", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text("Jak oceniasz swój sen?",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             SizedBox(
                 height: 210,
                 child: RatingSelector(
                   ratings: ratings,
-                  onLevelSelected: (level) {},
+                  onLevelSelected: (level) {
+                    currentLevel.value = level;
+                  },
                 )),
           ],
         ),
-        onSubmitted: () {});
-  }
-}
-
-class _SleepHoursSlider extends StatefulWidget {
-  @override
-  State<_SleepHoursSlider> createState() => _SleepHoursSliderState();
-}
-
-class _SleepHoursSliderState extends State<_SleepHoursSlider> {
-  double _value = 8;
-
-  @override
-  Widget build(BuildContext context) {
-    return SfSlider(
-        value: _value,
-        interval: 2.0,
-        showTicks: true,
-        showLabels: true,
-        stepSize: 1,
-        onChanged: (value) {
-          setState(() {
-            _value = value;
-          });
-        },
-        min: 0.0,
-        max: 16.0);
+        onSubmitted: () {
+          onSubmitted(currentLevel.value);
+        });
   }
 }
 

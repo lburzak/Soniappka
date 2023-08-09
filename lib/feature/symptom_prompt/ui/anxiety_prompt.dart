@@ -1,12 +1,17 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
-import 'package:easy_beck/feature/prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/widget/prompt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AnxietyPrompt extends StatelessWidget {
-  const AnxietyPrompt({super.key});
+class AnxietyPrompt extends HookWidget {
+  final void Function(int level) onSubmitted;
+
+  const AnxietyPrompt({super.key, required this.onSubmitted});
 
   @override
   Widget build(BuildContext context) {
+    final currentLevel = useState(2);
+
     return Prompt(
         title: "Niepokój w ciągu dnia",
         icon: SizedBox(
@@ -21,11 +26,16 @@ class AnxietyPrompt extends StatelessWidget {
                 height: 210,
                 child: RatingSelector(
                   ratings: ratings,
-                  onLevelSelected: (level) {},
+                  initialLevel: 2,
+                  onLevelSelected: (level) {
+                    currentLevel.value = level;
+                  },
                 )),
           ],
         ),
-        onSubmitted: () {});
+        onSubmitted: () {
+          onSubmitted(currentLevel.value);
+        });
   }
 }
 

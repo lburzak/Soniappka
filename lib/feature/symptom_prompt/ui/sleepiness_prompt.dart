@@ -1,12 +1,17 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
-import 'package:easy_beck/feature/prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/widget/prompt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class SleepinessPrompt extends StatelessWidget {
-  const SleepinessPrompt({super.key});
+class SleepinessPrompt extends HookWidget {
+  final void Function(int level) onSubmitted;
+
+  const SleepinessPrompt({super.key, required this.onSubmitted});
 
   @override
   Widget build(BuildContext context) {
+    final currentLevel = useState(2);
+
     return Prompt(
         title: "Senność w ciągu dnia",
         icon: SizedBox(
@@ -21,11 +26,15 @@ class SleepinessPrompt extends StatelessWidget {
                 height: 210,
                 child: RatingSelector(
                   ratings: ratings,
-                  onLevelSelected: (level) {},
+                  onLevelSelected: (level) {
+                    currentLevel.value = level;
+                  },
                 )),
           ],
         ),
-        onSubmitted: () {});
+        onSubmitted: () {
+          onSubmitted(currentLevel.value);
+        });
   }
 }
 

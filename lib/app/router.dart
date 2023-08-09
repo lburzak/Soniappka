@@ -14,13 +14,24 @@ import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/dashboard/dashboard.dart';
 import 'package:easy_beck/dashboard/dashboard_controller.dart';
 import 'package:easy_beck/dashboard/usecase/check_if_test_was_filled_today.dart';
+import 'package:easy_beck/feature/symptom_prompt/data/hive_symptom_repository.dart';
+import 'package:easy_beck/feature/symptom_prompt/domain/log_symptom.dart';
+import 'package:easy_beck/feature/symptom_prompt/domain/observe_symptom_has_value_today.dart';
+import 'package:easy_beck/feature/symptom_prompt/domain/symptom_repository.dart';
+import 'package:easy_beck/feature/symptom_prompt/ui/anxiety_prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/ui/irritability_prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/ui/sleep_prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/ui/sleepiness_prompt.dart';
 import 'package:easy_beck/mood_tracker/data/in_memory_mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
 import 'package:easy_beck/mood_tracker/mood_picker.dart';
 import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:quiver/time.dart';
 
@@ -61,7 +72,13 @@ class DashboardContainer extends KiwiContainer {
     registerFactory((container) => const Clock());
     registerFactory((container) =>
         CheckIfTestWasFilledToday(container(), beckTestDomainContainer()));
-    registerFactory((container) => DashboardController(container()));
+    registerFactory((container) => DashboardController(
+          container(),
+          symptomPromptContainer("symptom/sleep"),
+          symptomPromptContainer("symptom/sleepiness"),
+          symptomPromptContainer("symptom/irritability"),
+          symptomPromptContainer("symptom/anxiety"),
+        ));
   }
 }
 
@@ -79,9 +96,73 @@ class BeckCalendarContainer extends KiwiContainer {
 class MoodTrackerContainer extends KiwiContainer {
   MoodTrackerContainer() : super.scoped() {
     registerFactory((container) => const Clock());
-    registerFactory<MoodLogRepository>((container) => InMemoryMoodLogRepository(container()));
+    registerFactory<MoodLogRepository>(
+        (container) => InMemoryMoodLogRepository(container()));
     registerFactory((container) => LogMood(container(), container()));
     registerFactory((container) => MoodTrackerBloc(container()));
+  }
+}
+
+class HiveContainer extends KiwiContainer {
+  late Box<int> irritabilityBox;
+  late Box<int> sleepBox;
+  late Box<int> sleepinessBox;
+  late Box<int> anxietyBox;
+
+  HiveContainer() : super.scoped() {
+    registerSingleton<Box<int>>((container) => irritabilityBox,
+        name: "symptom/irritability");
+    registerSingleton<Box<int>>((container) => sleepBox, name: "symptom/sleep");
+    registerSingleton<Box<int>>((container) => sleepinessBox,
+        name: "symptom/sleepiness");
+    registerSingleton<Box<int>>((container) => anxietyBox,
+        name: "symptom/anxiety");
+  }
+
+  Future<void> load() async {
+    await Hive.initFlutter();
+    irritabilityBox = await Hive.openBox("symptom-irritability");
+    sleepBox = await Hive.openBox("symptom-sleep");
+    sleepinessBox = await Hive.openBox("symptom-sleepiness");
+    anxietyBox = await Hive.openBox("symptom-anxiety");
+  }
+}
+
+class SymptomPromptContainer extends KiwiContainer {
+  SymptomPromptContainer() : super.scoped() {
+    registerFactory((container) => const Clock());
+    for (final dependencyName in const [
+      "symptom/sleep",
+      "symptom/irritability",
+      "symptom/sleepiness",
+      "symptom/anxiety"
+    ]) {
+      registerFactory<SymptomRepository>(
+          (container) => HiveSymptomRepository(hiveContainer(dependencyName)),
+          name: dependencyName);
+      registerFactory(
+          (container) => LogSymptom(container(dependencyName), container()),
+          name: dependencyName);
+      registerFactory(
+          (container) => ObserveSymptomHasValueToday(
+              container(dependencyName), container()),
+          name: dependencyName);
+    }
+    registerFactory<SleepPromptBuilder>((container) => (context) => SleepPrompt(
+          onSubmitted: container<LogSymptom>("symptom/sleep"),
+        ));
+    registerFactory<IrritabilityPromptBuilder>(
+        (container) => (context) => IrritabilityPrompt(
+              onSubmitted: container<LogSymptom>("symptom/irritability"),
+            ));
+    registerFactory<AnxietyPromptBuilder>(
+        (container) => (context) => AnxietyPrompt(
+              onSubmitted: container<LogSymptom>("symptom/anxiety"),
+            ));
+    registerFactory<SleepinessPromptBuilder>(
+        (container) => (context) => SleepinessPrompt(
+              onSubmitted: container<LogSymptom>("symptom/sleepiness"),
+            ));
   }
 }
 
@@ -90,20 +171,32 @@ final beckTestDomainContainer = BeckTestDomainContainer();
 final dashboardContainer = DashboardContainer();
 final beckCalendarContainer = BeckCalendarContainer();
 final moodTrackerContainer = MoodTrackerContainer();
+final symptomPromptContainer = SymptomPromptContainer();
+final hiveContainer = HiveContainer();
 
 final router = GoRouter(routes: [
   GoRoute(
       path: "/",
       builder: (context, state) {
         final bloc = moodTrackerContainer<MoodTrackerBloc>();
-        return Dashboard(
-          viewModel: dashboardContainer<DashboardController>().viewModel,
-          calendarBuilder: beckCalendarContainer(),
-          moodPickerBuilder: (context) => MoodPicker(
-            events: bloc,
-            state: bloc.stream,
-          ),
-        );
+        return FutureBuilder(
+            future: hiveContainer.load(),
+            builder: (context, snapshot) =>
+                snapshot.connectionState == ConnectionState.done
+                    ? Dashboard(
+                        viewModel:
+                            dashboardContainer<DashboardController>().viewModel,
+                        calendarBuilder: beckCalendarContainer(),
+                        moodPickerBuilder: (context) => MoodPicker(
+                          events: bloc,
+                          state: bloc.stream,
+                        ),
+                        sleepPromptBuilder: symptomPromptContainer(),
+                        irritabilityPromptBuilder: symptomPromptContainer(),
+                        sleepinessPromptBuilder: symptomPromptContainer(),
+                        anxietyPromptBuilder: symptomPromptContainer(),
+                      )
+                    : const CircularProgressIndicator());
       }),
   GoRoute(
       path: "/beck-test",

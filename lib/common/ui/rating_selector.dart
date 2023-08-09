@@ -4,14 +4,18 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class RatingSelector extends HookWidget {
   final List<Rating> ratings;
+  final int initialLevel;
   final void Function(int level) onLevelSelected;
 
   const RatingSelector(
-      {super.key, required this.ratings, required this.onLevelSelected});
+      {super.key,
+      required this.ratings,
+      required this.onLevelSelected,
+      this.initialLevel = 0});
 
   @override
   Widget build(BuildContext context) {
-    final level = useState(2.0);
+    final level = useState(initialLevel);
 
     return ValueListenableBuilder(
       valueListenable: level,
@@ -24,8 +28,8 @@ class RatingSelector extends HookWidget {
               showLabels: true,
               stepSize: 1,
               onChanged: (value) {
-                level.value = value;
-                onLevelSelected(value);
+                level.value = value.toInt();
+                onLevelSelected(value.toInt());
               },
               labelFormatterCallback: (value, text) => "${value.toInt() + 1}",
               min: 0.0,
