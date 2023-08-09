@@ -23,6 +23,7 @@ dependencies:
   syncfusion_flutter_sliders: ^22.2.7
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  circular_bottom_navigation: ^2.3.0
 
 dev_dependencies:
   flutter_test:

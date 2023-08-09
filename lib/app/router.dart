@@ -1,3 +1,5 @@
+import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
+import 'package:circular_bottom_navigation/tab_item.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/data/in_memory_beck_test_result_repository.dart';
@@ -11,9 +13,11 @@ import 'package:easy_beck/beck_test/ui/beck_test_result_page.dart';
 import 'package:easy_beck/beck_test/ui/beck_test_view.dart';
 import 'package:easy_beck/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
+import 'package:easy_beck/common/ui/typed_widget_builder.dart';
 import 'package:easy_beck/dashboard/dashboard.dart';
 import 'package:easy_beck/dashboard/dashboard_controller.dart';
-import 'package:easy_beck/dashboard/usecase/check_if_test_was_filled_today.dart';
+import 'package:easy_beck/feature/beck_test_button/domain/check_if_test_was_filled_today.dart';
+import 'package:easy_beck/feature/beck_test_button/ui/beck_test_button.dart';
 import 'package:easy_beck/feature/symptom_prompt/data/hive_symptom_repository.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/log_symptom.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/observe_symptom_has_value_today.dart';
@@ -27,10 +31,10 @@ import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dar
 import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
 import 'package:easy_beck/mood_tracker/mood_picker.dart';
 import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
+import 'package:easy_beck/page/journal/journal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:quiver/time.dart';
@@ -69,11 +73,7 @@ class BeckTestQuestionnaireContainer extends KiwiContainer {
 
 class DashboardContainer extends KiwiContainer {
   DashboardContainer() : super.scoped() {
-    registerFactory((container) => const Clock());
-    registerFactory((container) =>
-        CheckIfTestWasFilledToday(container(), beckTestDomainContainer()));
     registerFactory((container) => DashboardController(
-          container(),
           symptomPromptContainer("symptom/sleep"),
           symptomPromptContainer("symptom/sleepiness"),
           symptomPromptContainer("symptom/irritability"),
@@ -82,11 +82,22 @@ class DashboardContainer extends KiwiContainer {
   }
 }
 
+class BeckTestButtonContainer extends KiwiContainer {
+  BeckTestButtonContainer() : super.scoped() {
+    registerFactory((container) => const Clock());
+    registerFactory((container) =>
+        ObserveIfTestWasFilledToday(container(), beckTestDomainContainer()));
+    registerFactory<TypedWidgetBuilder<BeckTestButton>>((container) =>
+        (context) => BeckTestButton(
+            isTestFilledToday: container<ObserveIfTestWasFilledToday>()()));
+  }
+}
+
 class BeckCalendarContainer extends KiwiContainer {
   BeckCalendarContainer() : super.scoped() {
     registerFactory(
         (container) => BeckCalendarController(beckTestDomainContainer()));
-    registerFactory<BeckCalendarViewBuilder>(
+    registerFactory<TypedWidgetBuilder<BeckCalendarView>>(
         (container) => (context) => BeckCalendarView(
               viewModel: container<BeckCalendarController>().viewModel,
             ));
@@ -173,46 +184,115 @@ final beckCalendarContainer = BeckCalendarContainer();
 final moodTrackerContainer = MoodTrackerContainer();
 final symptomPromptContainer = SymptomPromptContainer();
 final hiveContainer = HiveContainer();
+final beckTestButtonContainer = BeckTestButtonContainer();
 
-final router = GoRouter(routes: [
-  GoRoute(
-      path: "/",
-      builder: (context, state) {
-        final bloc = moodTrackerContainer<MoodTrackerBloc>();
-        return FutureBuilder(
-            future: hiveContainer.load(),
-            builder: (context, snapshot) =>
-                snapshot.connectionState == ConnectionState.done
-                    ? Dashboard(
-                        viewModel:
-                            dashboardContainer<DashboardController>().viewModel,
-                        calendarBuilder: beckCalendarContainer(),
-                        moodPickerBuilder: (context) => MoodPicker(
-                          events: bloc,
-                          state: bloc.stream,
-                        ),
-                        sleepPromptBuilder: symptomPromptContainer(),
-                        irritabilityPromptBuilder: symptomPromptContainer(),
-                        sleepinessPromptBuilder: symptomPromptContainer(),
-                        anxietyPromptBuilder: symptomPromptContainer(),
-                      )
-                    : const CircularProgressIndicator());
-      }),
-  GoRoute(
-      path: "/beck-test",
-      builder: (context, state) {
-        final BeckTestController(:state, :submit, :selectAnswer) =
-            BeckTestQuestionnaireContainer(context).resolve();
+class BottomBar extends StatefulWidget {
+  const BottomBar({super.key});
 
-        return BeckTestView(
-            state: state, onSubmit: submit, onAnswerSelected: selectAnswer);
-      }),
-  GoRoute(
-      path: "/beck-test/:beckTestId/result",
-      builder: (context, state) {
-        final id =
-            InMemoryBeckTestId.deserialize(state.pathParameters["beckTestId"]!);
-        return BeckTestResultPage(
-            getBeckTestResult: beckTestResultContainer(), id: id);
-      })
-]);
+  @override
+  State<StatefulWidget> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  late final CircularBottomNavigationController _controller;
+
+  @override
+  void initState() {
+    _controller = CircularBottomNavigationController(0);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CircularBottomNavigation(
+      controller: _controller,
+      [
+        TabItem(Icons.sunny, "Dzisiaj", Colors.red),
+        TabItem(Icons.calendar_month, "Dziennik", Colors.green),
+        TabItem(Icons.area_chart, "Statystyki", Colors.blue),
+      ],
+      selectedCallback: (pos) {
+        switch (pos) {
+          case 0:
+            _navigate("/dashboard", pos!);
+          case 1:
+            _navigate("/journal", pos!);
+          case 2:
+            _navigate("/statistics", pos!);
+        }
+      },
+    );
+  }
+
+  void _navigate(String path, int pos) {
+    context.go(path);
+    _controller.value = pos;
+  }
+}
+
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+final router = GoRouter(
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: "/dashboard",
+    routes: [
+      ShellRoute(
+          builder: (context, state, child) => Scaffold(
+                body: child,
+                extendBody: true,
+                bottomNavigationBar: const BottomBar(),
+              ),
+          routes: [
+            GoRoute(
+                path: "/dashboard",
+                builder: (context, state) {
+                  final bloc = moodTrackerContainer<MoodTrackerBloc>();
+                  return FutureBuilder(
+                      future: hiveContainer.load(),
+                      builder: (context, snapshot) => snapshot
+                                  .connectionState ==
+                              ConnectionState.done
+                          ? Dashboard(
+                              viewModel:
+                                  dashboardContainer<DashboardController>()
+                                      .viewModel,
+                              moodPickerBuilder: (context) => MoodPicker(
+                                events: bloc,
+                                state: bloc.stream,
+                              ),
+                              sleepPromptBuilder: symptomPromptContainer(),
+                              irritabilityPromptBuilder:
+                                  symptomPromptContainer(),
+                              sleepinessPromptBuilder: symptomPromptContainer(),
+                              anxietyPromptBuilder: symptomPromptContainer(),
+                            )
+                          : const CircularProgressIndicator());
+                }),
+            GoRoute(
+                path: "/journal",
+                builder: (context, state) => JournalPage(
+                      calendarBuilder: beckCalendarContainer(),
+                      beckTestButtonBuilder: beckTestButtonContainer(),
+                    )),
+            GoRoute(
+                path: "/statistics",
+                builder: (context, state) => Text("Stats")),
+          ]),
+      GoRoute(
+          path: "/beck-test",
+          builder: (context, state) {
+            final BeckTestController(:state, :submit, :selectAnswer) =
+                BeckTestQuestionnaireContainer(context).resolve();
+
+            return BeckTestView(
+                state: state, onSubmit: submit, onAnswerSelected: selectAnswer);
+          }),
+      GoRoute(
+          path: "/beck-test/:beckTestId/result",
+          builder: (context, state) {
+            final id = InMemoryBeckTestId.deserialize(
+                state.pathParameters["beckTestId"]!);
+            return BeckTestResultPage(
+                getBeckTestResult: beckTestResultContainer(), id: id);
+          })
+    ]);

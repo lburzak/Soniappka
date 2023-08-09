@@ -51,8 +51,8 @@ class InMemoryBeckTestResultRepository implements BeckTestResultRepository {
       _results.where((element) => element.id == id).firstOrNull;
 
   @override
-  Future<BeckTestResult?> findByDay(Day day) async {
-    return _results
+  Stream<BeckTestResult?> observeByDay(Day day) async* {
+    yield _results
         .where((element) => element.submissionDateTime.toDay() == day)
         .firstOrNull;
   }
