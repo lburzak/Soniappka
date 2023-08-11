@@ -6,8 +6,8 @@ import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
 class BeckCalendarController {
   final BeckTestResultRepository _beckTestResultRepository;
   late final Stream<BeckCalendarViewModel> viewModel = _beckTestResultRepository
-      .observeAll()
-      .map((event) => listOfResultsToModel(event));
+      .watchAll()
+      .map((event) => listOfResultsToModel(event.toList()));
 
   BeckCalendarController(this._beckTestResultRepository);
 

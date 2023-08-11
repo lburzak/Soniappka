@@ -24,6 +24,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   circular_bottom_navigation: ^2.3.0
+  fl_chart: ^0.63.0
+  syncfusion_flutter_charts: ^22.2.8
 
 dev_dependencies:
   flutter_test:

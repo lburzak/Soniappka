@@ -11,20 +11,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final font = GoogleFonts.itimTextTheme();
     // final font = GoogleFonts.berkshireSwashTextTheme();
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      routerConfig: router,
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple,
-              background: const Color(0xffD2E6C3)),
-          cardTheme: const CardTheme(surfaceTintColor: Colors.white),
-          useMaterial3: true,
-          textTheme: font.copyWith(
-            labelLarge: font.labelLarge?.copyWith(fontSize: 16, fontWeight: FontWeight.bold, )
-          )));
+    return FutureBuilder(
+      future: hiveContainer.load(),
+      builder: (context, snapshot) => snapshot.connectionState ==
+              ConnectionState.done
+          ? MaterialApp.router(
+              title: 'Flutter Demo',
+              routerConfig: router,
+              theme: ThemeData(
+                  colorScheme: ColorScheme.fromSeed(
+                      seedColor: Colors.deepPurple,
+                      background: const Color(0xffD2E6C3)),
+                  cardTheme: const CardTheme(surfaceTintColor: Colors.white),
+                  useMaterial3: true,
+                  textTheme: font.copyWith(
+                      labelLarge: font.labelLarge?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ))))
+          : const CircularProgressIndicator(),
+    );
   }
 }

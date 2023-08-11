@@ -58,7 +58,7 @@ class InMemoryBeckTestResultRepository implements BeckTestResultRepository {
   }
 
   @override
-  Stream<List<BeckTestResult>> observeAll() {
+  Stream<List<BeckTestResult>> watchAll() {
     return Stream.value(_results);
   }
 }
