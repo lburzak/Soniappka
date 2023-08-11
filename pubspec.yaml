@@ -26,6 +26,7 @@ dependencies:
   circular_bottom_navigation: ^2.3.0
   fl_chart: ^0.63.0
   syncfusion_flutter_charts: ^22.2.8
+  meta: ^1.9.1
 
 dev_dependencies:
   flutter_test:

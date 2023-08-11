@@ -1,15 +1,15 @@
-import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
-import 'package:circular_bottom_navigation/tab_item.dart';
+import 'package:easy_beck/app/app_router.dart';
+import 'package:easy_beck/app/bottom_bar.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
-import 'package:easy_beck/beck_test/data/adapter/beck_test_result_adapter.dart';
-import 'package:easy_beck/beck_test/data/adapter/symptom_log_adapter.dart';
 import 'package:easy_beck/beck_test/data/hive_beck_test_result_repository.dart';
 import 'package:easy_beck/beck_test/data/in_memory_beck_test_result_repository.dart';
 import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
-import 'package:easy_beck/beck_test/model/beck_test_result.dart';
-import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart' as beck_test;
-import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart' as symptoms_chart;
+import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
+    as beck_test;
+import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
+    as symptoms_chart;
 import 'package:easy_beck/beck_test/repository/depression_level_repository.dart';
 import 'package:easy_beck/beck_test/repository/question_repository.dart';
 import 'package:easy_beck/beck_test/service/beck_test_controller.dart';
@@ -26,7 +26,6 @@ import 'package:easy_beck/feature/beck_test_button/ui/beck_test_button.dart';
 import 'package:easy_beck/feature/symptom_prompt/data/hive_symptom_repository.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/log_symptom.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/observe_symptom_has_value_today.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/symptom_log.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/symptom_repository.dart';
 import 'package:easy_beck/feature/symptom_prompt/ui/anxiety_prompt.dart';
 import 'package:easy_beck/feature/symptom_prompt/ui/irritability_prompt.dart';
@@ -35,17 +34,16 @@ import 'package:easy_beck/feature/symptom_prompt/ui/sleepiness_prompt.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/symptom_log_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_controller.dart';
 import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart.dart';
+import 'package:easy_beck/hive/adapter/beck_test_result_adapter.dart';
+import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
+import 'package:easy_beck/hive/hive_loader.dart';
 import 'package:easy_beck/mood_tracker/data/in_memory_mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
 import 'package:easy_beck/mood_tracker/mood_picker.dart';
 import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
 import 'package:easy_beck/page/journal/journal_page.dart';
-import 'package:easy_beck/page/statistics_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:quiver/time.dart';
 
@@ -78,6 +76,13 @@ class BeckTestQuestionnaireContainer extends KiwiContainer {
         beckTestDomainContainer(), beckTestDomainContainer(), container()));
     registerFactory((container) => BeckTestController(
         beckTestDomainContainer(), container(), container()));
+    registerFactory<WidgetBuilder>((container) => (BuildContext context) {
+          final BeckTestController(:state, :submit, :selectAnswer) =
+              container();
+
+          return BeckTestView(
+              state: state, onSubmit: submit, onAnswerSelected: selectAnswer);
+        });
   }
 }
 
@@ -89,6 +94,21 @@ class DashboardContainer extends KiwiContainer {
           symptomPromptContainer("symptom/irritability"),
           symptomPromptContainer("symptom/anxiety"),
         ));
+    registerFactory<WidgetBuilder>(
+            (container) => (BuildContext context) {
+          final bloc = moodTrackerContainer<MoodTrackerBloc>();
+          return Dashboard(
+            viewModel: dashboardContainer<DashboardController>().viewModel,
+            moodPickerBuilder: (context) => MoodPicker(
+              events: bloc,
+              state: bloc.stream,
+            ),
+            sleepPromptBuilder: symptomPromptContainer(),
+            irritabilityPromptBuilder: symptomPromptContainer(),
+            sleepinessPromptBuilder: symptomPromptContainer(),
+            anxietyPromptBuilder: symptomPromptContainer(),
+          );
+        });
   }
 }
 
@@ -125,32 +145,21 @@ class MoodTrackerContainer extends KiwiContainer {
 }
 
 class HiveContainer extends KiwiContainer {
-  late Box<SymptomLog> irritabilityBox;
-  late Box<SymptomLog> sleepBox;
-  late Box<SymptomLog> sleepinessBox;
-  late Box<SymptomLog> anxietyBox;
-  late Box<BeckTestResult> beckTestResultBox;
-
   HiveContainer() : super.scoped() {
-    registerSingleton((container) => irritabilityBox,
+    registerSingleton((container) => HiveLoader(
+        symptomLogAdapter: container(), beckTestResultAdapter: container()));
+    registerSingleton((container) => container<HiveLoader>().irritabilityBox,
         name: "symptom/irritability");
-    registerSingleton((container) => sleepBox, name: "symptom/sleep");
-    registerSingleton((container) => sleepinessBox, name: "symptom/sleepiness");
-    registerSingleton((container) => anxietyBox, name: "symptom/anxiety");
-    registerSingleton((container) => beckTestResultBox);
+    registerSingleton((container) => container<HiveLoader>().sleepBox,
+        name: "symptom/sleep");
+    registerSingleton((container) => container<HiveLoader>().sleepinessBox,
+        name: "symptom/sleepiness");
+    registerSingleton((container) => container<HiveLoader>().anxietyBox,
+        name: "symptom/anxiety");
+    registerSingleton((container) => container<HiveLoader>().beckTestResultBox);
+    registerSingleton<Loader>((container) => container<HiveLoader>());
     registerFactory((container) => SymptomLogAdapter());
     registerFactory((container) => BeckTestResultAdapter());
-  }
-
-  Future<void> load() async {
-    Hive.registerAdapter(this<SymptomLogAdapter>());
-    Hive.registerAdapter(this<BeckTestResultAdapter>());
-    await Hive.initFlutter();
-    irritabilityBox = await Hive.openBox("symptom-irritability");
-    sleepBox = await Hive.openBox("symptom-sleep");
-    sleepinessBox = await Hive.openBox("symptom-sleepiness");
-    anxietyBox = await Hive.openBox("symptom-anxiety");
-    beckTestResultBox = await Hive.openBox("beck-test-results");
   }
 }
 
@@ -217,6 +226,21 @@ class SymptomsChartContainer extends KiwiContainer {
   }
 }
 
+class JournalPageContainer extends KiwiContainer {
+  JournalPageContainer({
+    required SymptomsChartContainer symptomsChartContainer,
+    required BeckCalendarContainer beckCalendarContainer,
+    required BeckTestButtonContainer beckTestButtonContainer
+}) : super.scoped() {
+    registerFactory<WidgetBuilder>(
+            (container) => (BuildContext context) => JournalPage(
+          symptomsChartBuilder: symptomsChartContainer(),
+          calendarBuilder: beckCalendarContainer(),
+          beckTestButtonBuilder: beckTestButtonContainer(),
+        ));
+  }
+}
+
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
 final dashboardContainer = DashboardContainer();
@@ -227,121 +251,30 @@ final hiveContainer = HiveContainer();
 final beckTestButtonContainer = BeckTestButtonContainer();
 final symptomsChartContainer = SymptomsChartContainer();
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class RouterContainer extends KiwiContainer {
+  RouterContainer(BeckTestQuestionnaireContainer Function(BuildContext context) beckTestQuestionnaireContainer, DashboardContainer dashboardContainer, JournalPageContainer journalPageContainer)
+      : super.scoped() {
+    registerSingleton((container) => GlobalKey<NavigatorState>());
 
-  @override
-  State<StatefulWidget> createState() => _BottomBarState();
-}
+    registerFactory<BeckTestResultPageBuilder>(
+        (container) => (context, idParameter) {
+              final id = InMemoryBeckTestId.deserialize(idParameter);
+              return BeckTestResultPage(
+                  getBeckTestResult: beckTestResultContainer(), id: id);
+            });
 
-class _BottomBarState extends State<BottomBar> {
-  late final CircularBottomNavigationController _controller;
-
-  @override
-  void initState() {
-    _controller = CircularBottomNavigationController(0);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CircularBottomNavigation(
-      controller: _controller,
-      [
-        TabItem(Icons.sunny, "Dzisiaj", Colors.red),
-        TabItem(Icons.calendar_month, "Dziennik", Colors.green),
-        TabItem(Icons.area_chart, "Statystyki", Colors.blue),
-      ],
-      selectedCallback: (pos) {
-        switch (pos) {
-          case 0:
-            _navigate("/dashboard", pos!);
-          case 1:
-            _navigate("/journal", pos!);
-          case 2:
-            _navigate("/statistics", pos!);
-        }
-      },
-    );
-  }
-
-  void _navigate(String path, int pos) {
-    context.go(path);
-    _controller.value = pos;
+    registerSingleton<ScaffoldBuilder>(
+        (container) => (context, child) => Scaffold(
+              body: child,
+              extendBody: true,
+              bottomNavigationBar: const BottomBar(),
+            ));
+    registerFactory<RouterConfig<Object>>((container) => AppRouter(
+        navigatorKey: container(),
+        scaffoldBuilder: container(),
+        dashboardBuilder: dashboardContainer(),
+        journalBuilder: journalPageContainer(),
+        beckTestBuilder: (context) => beckTestQuestionnaireContainer(context)(),
+        beckTestResultBuilder: container()));
   }
 }
-
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-
-class CustomSlideTransition extends CustomTransitionPage<void> {
-  CustomSlideTransition({super.key, required super.child})
-      : super(
-          transitionDuration: const Duration(milliseconds: 250),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child),
-        );
-}
-
-final router = GoRouter(
-    navigatorKey: _rootNavigatorKey,
-    initialLocation: "/dashboard",
-    routes: [
-      ShellRoute(
-          builder: (context, state, child) => Scaffold(
-                body: child,
-                extendBody: true,
-                bottomNavigationBar: const BottomBar(),
-              ),
-          routes: [
-            GoRoute(
-                path: "/dashboard",
-                pageBuilder: (context, state) {
-                  final bloc = moodTrackerContainer<MoodTrackerBloc>();
-                  return CustomSlideTransition(
-                      key: state.pageKey,
-                      child: Dashboard(
-                        viewModel:
-                            dashboardContainer<DashboardController>().viewModel,
-                        moodPickerBuilder: (context) => MoodPicker(
-                          events: bloc,
-                          state: bloc.stream,
-                        ),
-                        sleepPromptBuilder: symptomPromptContainer(),
-                        irritabilityPromptBuilder: symptomPromptContainer(),
-                        sleepinessPromptBuilder: symptomPromptContainer(),
-                        anxietyPromptBuilder: symptomPromptContainer(),
-                      ));
-                }),
-            GoRoute(
-                path: "/journal",
-                pageBuilder: (context, state) => CustomSlideTransition(
-                      key: state.pageKey,
-                      child: JournalPage(
-                        symptomsChartBuilder: symptomsChartContainer(),
-                        calendarBuilder: beckCalendarContainer(),
-                        beckTestButtonBuilder: beckTestButtonContainer(),
-                      ),
-                    )),
-            GoRoute(
-                path: "/statistics",
-                pageBuilder: (context, state) => CustomSlideTransition(
-                    key: state.pageKey, child: const StatisticsPage())),
-          ]),
-      GoRoute(
-          path: "/beck-test",
-          builder: (context, state) {
-            final BeckTestController(:state, :submit, :selectAnswer) =
-                BeckTestQuestionnaireContainer(context).resolve();
-
-            return BeckTestView(
-                state: state, onSubmit: submit, onAnswerSelected: selectAnswer);
-          }),
-      GoRoute(
-          path: "/beck-test/:beckTestId/result",
-          builder: (context, state) {
-            final id = InMemoryBeckTestId.deserialize(
-                state.pathParameters["beckTestId"]!);
-            return BeckTestResultPage(
-                getBeckTestResult: beckTestResultContainer(), id: id);
-          })
-    ]);
