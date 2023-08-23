@@ -28,6 +28,7 @@ class SymptomsChart extends StatelessWidget {
                 enablePanning: true,
                 zoomMode: ZoomMode.x),
             legend: const Legend(isVisible: true),
+            margin: EdgeInsets.zero,
             series: <CartesianSeries>[
               StackedColumnSeries(
                   dataSource: data.anxietyLogs,

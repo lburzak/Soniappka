@@ -274,7 +274,7 @@ class RouterContainer extends KiwiContainer {
         scaffoldBuilder: container(),
         dashboardBuilder: dashboardContainer(),
         journalBuilder: journalPageContainer(),
-        beckTestBuilder: (context) => beckTestQuestionnaireContainer(context)(),
+        beckTestBuilder: (context) => beckTestQuestionnaireContainer(context)<WidgetBuilder>()(context),
         beckTestResultBuilder: container()));
   }
 }

@@ -6,17 +6,19 @@ class Prompt extends StatelessWidget {
   final Widget icon;
   final Widget body;
   final VoidCallback onSubmitted;
+  final Color color;
 
   const Prompt(
       {super.key,
       required this.title,
       required this.icon,
       required this.body,
-      required this.onSubmitted});
+      required this.onSubmitted, this.color = Colors.white});
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: color,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         child: Column(

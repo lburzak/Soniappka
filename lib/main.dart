@@ -2,9 +2,10 @@ import 'package:easy_beck/app/router.dart';
 import 'package:easy_beck/common/loader.dart';
 import 'package:easy_beck/common/ui/loader_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
   final routerContainer = RouterContainer(
       (context) => BeckTestQuestionnaireContainer(context),
       DashboardContainer(),
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         builder: (context) => MaterialApp.router(
             title: 'Flutter Demo',
             routerConfig: routerConfig,
+            supportedLocales: const [Locale("pl")],
+            locale: const Locale("pl"),
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
             theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(
                     seedColor: Colors.deepPurple,

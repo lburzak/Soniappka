@@ -15,7 +15,7 @@ class SleepinessPrompt extends HookWidget {
     return Prompt(
         title: "Senność w ciągu dnia",
         icon: SizedBox(
-            width: 100, height: 100, child: Image.asset("assets/sleeping.png")),
+            width: 100, height: 100, child: Image.asset("assets/sleepy.png")),
         body: Column(
           children: [
             const Text(

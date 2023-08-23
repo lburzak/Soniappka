@@ -17,6 +17,7 @@ class BeckCalendarView extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return TableCalendar<BeckTestResult>(
+              locale: Localizations.localeOf(context).languageCode,
               focusedDay: DateTime.now(),
               eventLoader: (day) =>
                   snapshot.requireData.getTestResultForDay(day)?.toList() ?? [],
