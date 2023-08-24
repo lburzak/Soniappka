@@ -15,20 +15,19 @@ class IrritabilityPrompt extends HookWidget {
     return Prompt(
         title: "Drażliwość w ciągu dnia",
         icon: SizedBox(
-            width: 200, height: 200, child: Image.asset("assets/angry.gif")),
+            width: 100, height: 100, child: Hero(tag: "icon/irritability", child: Image.asset("assets/angry-cut.gif"))),
         body: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             const Text("Jak oceniasz swój poziom drażliwości?",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(
-                height: 210,
-                child: RatingSelector(
-                  ratings: ratings,
-                  initialLevel: 2,
-                  onLevelSelected: (level) {
-                    currentLevel.value = level;
-                  },
-                )),
+            RatingSelector(
+              ratings: irritabilityRatings,
+              initialLevel: 2,
+              onLevelSelected: (level) {
+                currentLevel.value = level;
+              },
+            ),
           ],
         ),
         onSubmitted: () {
@@ -37,7 +36,7 @@ class IrritabilityPrompt extends HookWidget {
   }
 }
 
-const ratings = [
+const irritabilityRatings = [
   Rating(
       title: "Bardzo spokojna",
       description:

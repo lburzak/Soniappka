@@ -15,7 +15,7 @@ class AnxietyPrompt extends HookWidget {
     return Prompt(
         title: "Niepokój w ciągu dnia",
         icon: SizedBox(
-            width: 100, height: 100, child: Image.asset("assets/anxiety.png")),
+            width: 100, height: 100, child: Hero(tag: "icon/anxiety", child: Image.asset("assets/anxiety-new.png"))),
         body: Column(
           children: [
             const Text(
@@ -25,7 +25,7 @@ class AnxietyPrompt extends HookWidget {
             SizedBox(
                 height: 210,
                 child: RatingSelector(
-                  ratings: ratings,
+                  ratings: anxietyRatings,
                   initialLevel: 2,
                   onLevelSelected: (level) {
                     currentLevel.value = level;
@@ -39,7 +39,7 @@ class AnxietyPrompt extends HookWidget {
   }
 }
 
-const ratings = [
+const anxietyRatings = [
   Rating(
       title: "Bardzo spokojna",
       description:

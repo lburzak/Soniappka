@@ -42,7 +42,7 @@ class SleepPrompt extends HookWidget {
             SizedBox(
                 height: 210,
                 child: RatingSelector(
-                  ratings: ratings,
+                  ratings: sleepRatings,
                   onLevelSelected: (level) {
                     currentLevel.value = level;
                   },
@@ -55,7 +55,7 @@ class SleepPrompt extends HookWidget {
   }
 }
 
-const ratings = [
+const sleepRatings = [
   Rating(
       title: "Bardzo słaby",
       description:

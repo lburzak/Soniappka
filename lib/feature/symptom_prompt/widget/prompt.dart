@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Prompt extends StatelessWidget {
@@ -13,7 +14,8 @@ class Prompt extends StatelessWidget {
       required this.title,
       required this.icon,
       required this.body,
-      required this.onSubmitted, this.color = Colors.white});
+      required this.onSubmitted,
+      this.color = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +25,28 @@ class Prompt extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: Text(title,
-                    style: GoogleFonts.amaticSc()
-                        .copyWith(fontSize: 32, fontWeight: FontWeight.bold))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title,
+                        style: GoogleFonts.amaticSc().copyWith(
+                            fontSize: 32, fontWeight: FontWeight.bold)),
+                    IconButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                        icon: const Icon(Icons.close))
+                  ],
+                )),
             Padding(
               padding: const EdgeInsets.only(top: 12, bottom: 28),
               child: icon,
             ),
-            body,
+            Expanded(child: body),
             ElevatedButton.icon(
               onPressed: onSubmitted,
               icon: const Icon(Icons.done),

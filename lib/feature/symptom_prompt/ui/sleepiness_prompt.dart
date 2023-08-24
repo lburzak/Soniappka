@@ -15,7 +15,7 @@ class SleepinessPrompt extends HookWidget {
     return Prompt(
         title: "Senność w ciągu dnia",
         icon: SizedBox(
-            width: 100, height: 100, child: Image.asset("assets/sleepy.png")),
+            width: 100, height: 100, child: Hero(tag: "icon/sleepiness", child: Image.asset("assets/sleeping.png"))),
         body: Column(
           children: [
             const Text(
@@ -25,7 +25,7 @@ class SleepinessPrompt extends HookWidget {
             SizedBox(
                 height: 210,
                 child: RatingSelector(
-                  ratings: ratings,
+                  ratings: sleepinessRatings,
                   onLevelSelected: (level) {
                     currentLevel.value = level;
                   },
@@ -38,7 +38,7 @@ class SleepinessPrompt extends HookWidget {
   }
 }
 
-const ratings = [
+const sleepinessRatings = [
   Rating(
       title: "Bardzo rozbudzona",
       description:

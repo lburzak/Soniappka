@@ -8,6 +8,8 @@ import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
 import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/feature/symptom_page/irritability_page.dart';
+import 'package:easy_beck/feature/symptom_page/symptom_page.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
     as symptoms_chart;
 import 'package:easy_beck/beck_test/repository/depression_level_repository.dart';
@@ -19,7 +21,7 @@ import 'package:easy_beck/beck_test/ui/beck_test_view.dart';
 import 'package:easy_beck/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/common/ui/typed_widget_builder.dart';
-import 'package:easy_beck/dashboard/dashboard.dart';
+import 'package:easy_beck/feature/dashboard/dashboard.dart';
 import 'package:easy_beck/dashboard/dashboard_controller.dart';
 import 'package:easy_beck/feature/beck_test_button/domain/check_if_test_was_filled_today.dart';
 import 'package:easy_beck/feature/beck_test_button/ui/beck_test_button.dart';
@@ -94,20 +96,19 @@ class DashboardContainer extends KiwiContainer {
           symptomPromptContainer("symptom/irritability"),
           symptomPromptContainer("symptom/anxiety"),
         ));
-    registerFactory<WidgetBuilder>(
-            (container) => (BuildContext context) {
+    registerFactory<WidgetBuilder>((container) => (BuildContext context) {
           final bloc = moodTrackerContainer<MoodTrackerBloc>();
           return Dashboard(
-            viewModel: dashboardContainer<DashboardController>().viewModel,
-            moodPickerBuilder: (context) => MoodPicker(
-              events: bloc,
-              state: bloc.stream,
-            ),
-            sleepPromptBuilder: symptomPromptContainer(),
-            irritabilityPromptBuilder: symptomPromptContainer(),
-            sleepinessPromptBuilder: symptomPromptContainer(),
-            anxietyPromptBuilder: symptomPromptContainer(),
-          );
+              // viewModel: dashboardContainer<DashboardController>().viewModel,
+              // moodPickerBuilder: (context) => MoodPicker(
+              //   events: bloc,
+              //   state: bloc.stream,
+              // ),
+              // sleepPromptBuilder: symptomPromptContainer(),
+              // irritabilityPromptBuilder: symptomPromptContainer(),
+              // sleepinessPromptBuilder: symptomPromptContainer(),
+              // anxietyPromptBuilder: symptomPromptContainer(),
+              );
         });
   }
 }
@@ -183,21 +184,26 @@ class SymptomPromptContainer extends KiwiContainer {
               container(dependencyName), container()),
           name: dependencyName);
     }
-    registerFactory<SleepPromptBuilder>((container) => (context) => SleepPrompt(
-          onSubmitted: container<LogSymptom>("symptom/sleep"),
-        ));
-    registerFactory<IrritabilityPromptBuilder>(
-        (container) => (context) => IrritabilityPrompt(
-              onSubmitted: container<LogSymptom>("symptom/irritability"),
-            ));
-    registerFactory<AnxietyPromptBuilder>(
-        (container) => (context) => AnxietyPrompt(
-              onSubmitted: container<LogSymptom>("symptom/anxiety"),
-            ));
-    registerFactory<SleepinessPromptBuilder>(
-        (container) => (context) => SleepinessPrompt(
-              onSubmitted: container<LogSymptom>("symptom/sleepiness"),
-            ));
+
+    // registerFactory<SleepPromptBuilder>((container) => (context) => SleepPrompt(
+    //       onSubmitted: container<LogSymptom>("symptom/sleep"),
+    //     ));
+    // registerFactory<IrritabilityPromptBuilder>(
+    //     (container) => (context) => IrritabilityPrompt(
+    //           onSubmitted: container<LogSymptom>("symptom/irritability"),
+    //         ));
+    // registerFactory<AnxietyPromptBuilder>(
+    //     (container) => (context) => AnxietyPrompt(
+    //           onSubmitted: container<LogSymptom>("symptom/anxiety"),
+    //         ));
+    // registerFactory<SleepinessPromptBuilder>(
+    //     (container) => (context) => SleepinessPrompt(
+    //           onSubmitted: container<LogSymptom>("symptom/sleepiness"),
+    //         ));
+
+    registerFactory<WidgetBuilder>(
+        (container) => (context) => const IrritabilityPage(),
+        name: "irritability_page");
   }
 }
 
@@ -227,17 +233,17 @@ class SymptomsChartContainer extends KiwiContainer {
 }
 
 class JournalPageContainer extends KiwiContainer {
-  JournalPageContainer({
-    required SymptomsChartContainer symptomsChartContainer,
-    required BeckCalendarContainer beckCalendarContainer,
-    required BeckTestButtonContainer beckTestButtonContainer
-}) : super.scoped() {
+  JournalPageContainer(
+      {required SymptomsChartContainer symptomsChartContainer,
+      required BeckCalendarContainer beckCalendarContainer,
+      required BeckTestButtonContainer beckTestButtonContainer})
+      : super.scoped() {
     registerFactory<WidgetBuilder>(
-            (container) => (BuildContext context) => JournalPage(
-          symptomsChartBuilder: symptomsChartContainer(),
-          calendarBuilder: beckCalendarContainer(),
-          beckTestButtonBuilder: beckTestButtonContainer(),
-        ));
+        (container) => (BuildContext context) => JournalPage(
+              symptomsChartBuilder: symptomsChartContainer(),
+              calendarBuilder: beckCalendarContainer(),
+              beckTestButtonBuilder: beckTestButtonContainer(),
+            ));
   }
 }
 
@@ -252,9 +258,18 @@ final beckTestButtonContainer = BeckTestButtonContainer();
 final symptomsChartContainer = SymptomsChartContainer();
 
 class RouterContainer extends KiwiContainer {
-  RouterContainer(BeckTestQuestionnaireContainer Function(BuildContext context) beckTestQuestionnaireContainer, DashboardContainer dashboardContainer, JournalPageContainer journalPageContainer)
+  RouterContainer(
+      BeckTestQuestionnaireContainer Function(BuildContext context)
+          beckTestQuestionnaireContainer,
+      DashboardContainer dashboardContainer,
+      JournalPageContainer journalPageContainer)
       : super.scoped() {
-    registerSingleton((container) => GlobalKey<NavigatorState>());
+    registerSingleton(
+        (container) => GlobalKey<NavigatorState>(debugLabel: "root"),
+        name: "root");
+    registerSingleton(
+        (container) => GlobalKey<NavigatorState>(debugLabel: "shell"),
+        name: "shell");
 
     registerFactory<BeckTestResultPageBuilder>(
         (container) => (context, idParameter) {
@@ -270,11 +285,14 @@ class RouterContainer extends KiwiContainer {
               bottomNavigationBar: const BottomBar(),
             ));
     registerFactory<RouterConfig<Object>>((container) => AppRouter(
-        navigatorKey: container(),
+        irritabilityPageBuilder: symptomPromptContainer("irritability_page"),
+        rootNavigatorKey: container("root"),
+        shellNavigatorKey: container("shell"),
         scaffoldBuilder: container(),
         dashboardBuilder: dashboardContainer(),
         journalBuilder: journalPageContainer(),
-        beckTestBuilder: (context) => beckTestQuestionnaireContainer(context)<WidgetBuilder>()(context),
+        beckTestBuilder: (context) =>
+            beckTestQuestionnaireContainer(context)<WidgetBuilder>()(context),
         beckTestResultBuilder: container()));
   }
 }
