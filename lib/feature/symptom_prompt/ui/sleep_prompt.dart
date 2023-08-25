@@ -44,7 +44,7 @@ class SleepPrompt extends HookWidget {
                 child: RatingSelector(
                   ratings: sleepRatings,
                   onLevelSelected: (level) {
-                    currentLevel.value = level;
+                    currentLevel.value = level!;
                   },
                 )),
           ],

@@ -1,14 +1,12 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
+import 'package:easy_beck/common/ui/rating_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-class SymptomTile extends HookWidget {
+class SymptomTile extends StatelessWidget {
   final String title;
   final List<Rating> ratings;
   final Widget image;
-  final int level;
+  final int? level;
   final void Function() onExpanded;
   final void Function(int? level) onUpdated;
 
@@ -44,26 +42,11 @@ class SymptomTile extends HookWidget {
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              Text(level > 0 ? ratings[level - 1].title : "Nieokreślone"),
+              Text(level != null ? ratings[level!].title : "Nieokreślone"),
               SizedBox(
                 height: 30,
-                child: SfSliderTheme(
-                  data: SfSliderThemeData(
-                      thumbRadius: 8,
-                      thumbColor: level > 0 ? null : Colors.grey),
-                  child: SfSlider(
-                      value: level,
-                      interval: 1.0,
-                      showTicks: false,
-                      showLabels: false,
-                      showDividers: true,
-                      stepSize: 1,
-                      onChanged: (value) {
-                        onUpdated(value == 0 ? null : value.toInt());
-                      },
-                      min: 0.0,
-                      max: ratings.length),
-                ),
+                child: RatingSlider.compact(
+                    level: level, max: 4, onChanged: onUpdated, min: 0),
               ),
             ],
           ),

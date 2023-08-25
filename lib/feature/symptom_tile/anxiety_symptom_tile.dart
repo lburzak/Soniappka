@@ -15,7 +15,7 @@ class AnxietySymptomTile extends HookWidget {
     final level = useStream(state);
 
     return SymptomTile(
-      level: level.data ?? 0,
+      level: level.data,
       title: "Niepokój",
       ratings: anxietyRatings,
       image: const Hero(

@@ -23,9 +23,9 @@ class IrritabilityPrompt extends HookWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             RatingSelector(
               ratings: irritabilityRatings,
-              initialLevel: 2,
+              level: 2,
               onLevelSelected: (level) {
-                currentLevel.value = level;
+                currentLevel.value = level!;
               },
             ),
           ],

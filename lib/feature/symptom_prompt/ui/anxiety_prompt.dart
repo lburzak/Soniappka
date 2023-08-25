@@ -26,9 +26,9 @@ class AnxietyPrompt extends HookWidget {
                 height: 210,
                 child: RatingSelector(
                   ratings: anxietyRatings,
-                  initialLevel: 2,
+                  level: 2,
                   onLevelSelected: (level) {
-                    currentLevel.value = level;
+                    currentLevel.value = level!;
                   },
                 )),
           ],

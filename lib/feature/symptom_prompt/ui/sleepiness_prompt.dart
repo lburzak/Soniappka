@@ -27,7 +27,7 @@ class SleepinessPrompt extends HookWidget {
                 child: RatingSelector(
                   ratings: sleepinessRatings,
                   onLevelSelected: (level) {
-                    currentLevel.value = level;
+                    currentLevel.value = level!;
                   },
                 )),
           ],

@@ -15,7 +15,7 @@ class SleepinessSymptomTile extends HookWidget {
   Widget build(BuildContext context) {
     final level = useStream(state);
     return SymptomTile(
-      level: level.data ?? 0,
+      level: level.data,
       title: "Senność",
       ratings: sleepinessRatings,
       image: const Hero(

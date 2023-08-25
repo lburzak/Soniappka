@@ -1,15 +1,15 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SymptomPage extends HookWidget {
+class SymptomPage extends StatelessWidget {
   final String title;
   final String description;
   final Widget image;
   final List<Rating> ratings;
-  final void Function(int level) onUpdated;
+  final Stream<int?> level;
+  final void Function(int? level) onUpdated;
 
   const SymptomPage(
       {super.key,
@@ -17,12 +17,11 @@ class SymptomPage extends HookWidget {
       required this.description,
       required this.image,
       required this.ratings,
-      required this.onUpdated});
+      required this.onUpdated,
+      required this.level});
 
   @override
   Widget build(BuildContext context) {
-    final currentLevel = useState(2);
-
     return Scaffold(
       body: SafeArea(
         child: Card(
@@ -58,15 +57,19 @@ class SymptomPage extends HookWidget {
                 ),
                 SizedBox(
                     height: 210,
-                    child: RatingSelector(
-                      ratings: ratings,
-                      initialLevel: 2,
-                      onLevelSelected: (level) {
-                        currentLevel.value = level;
-                        onUpdated(level);
-                      },
+                    child: StreamBuilder(
+                      stream: level,
+                      builder: (context, snapshot) {
+                        return RatingSelector(
+                          ratings: ratings,
+                          level: snapshot.data,
+                          onLevelSelected: (level) {
+                            onUpdated(level);
+                          },
+                        );
+                      }
                     )),
-                Spacer()
+                const Spacer()
               ],
             ),
           ),
