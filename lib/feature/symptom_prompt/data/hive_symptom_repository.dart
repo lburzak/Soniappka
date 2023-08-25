@@ -15,6 +15,11 @@ class HiveSymptomRepository implements SymptomRepository, SymptomLogRepository {
   }
 
   @override
+  Future<void> deleteSymptomLog(Day day) async {
+    _symptomBox.delete(day.hashCode);
+  }
+
+  @override
   Stream<bool> observeSymptomHasLevelForDay(Day day) async* {
     yield _symptomBox.containsKey(day.hashCode);
     yield* _symptomBox
@@ -27,5 +32,14 @@ class HiveSymptomRepository implements SymptomRepository, SymptomLogRepository {
   Stream<Iterable<SymptomLog>> watchAll() async* {
     yield _symptomBox.values;
     yield* _symptomBox.watch().map((event) => _symptomBox.values);
+  }
+
+  @override
+  Stream<int?> observeSymptomLevelForDay(Day day) async* {
+    yield _symptomBox.get(day.hashCode)?.level;
+    yield* _symptomBox
+        .watch(key: day.hashCode)
+        .map((event) => _symptomBox.get(day.hashCode)?.level)
+        .distinct();
   }
 }
