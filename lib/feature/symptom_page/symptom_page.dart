@@ -1,4 +1,5 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
+import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,17 +9,15 @@ class SymptomPage extends StatelessWidget {
   final String description;
   final Widget image;
   final List<Rating> ratings;
-  final Stream<int?> level;
-  final void Function(int? level) onUpdated;
+  final SymptomPageViewModel viewModel;
 
   const SymptomPage(
       {super.key,
+      required this.viewModel,
       required this.title,
       required this.description,
       required this.image,
-      required this.ratings,
-      required this.onUpdated,
-      required this.level});
+      required this.ratings});
 
   @override
   Widget build(BuildContext context) {
@@ -58,17 +57,20 @@ class SymptomPage extends StatelessWidget {
                 SizedBox(
                     height: 210,
                     child: StreamBuilder(
-                      stream: level,
-                      builder: (context, snapshot) {
-                        return RatingSelector(
-                          ratings: ratings,
-                          level: snapshot.data,
-                          onLevelSelected: (level) {
-                            onUpdated(level);
-                          },
-                        );
-                      }
-                    )),
+                        stream: viewModel.level,
+                        builder: (context, snapshot) {
+                          return RatingSelector(
+                            ratings: ratings,
+                            level: snapshot.data,
+                            onLevelSelected: (level) {
+                              if (level == null) {
+                                viewModel.unsetLevel();
+                              } else {
+                                viewModel.setLevel(level);
+                              }
+                            },
+                          );
+                        })),
                 const Spacer()
               ],
             ),

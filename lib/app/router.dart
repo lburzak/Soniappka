@@ -10,7 +10,9 @@ import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
 import 'package:easy_beck/common/loader.dart';
 import 'package:easy_beck/feature/dashboard/dashboard_controller.dart';
 import 'package:easy_beck/feature/dashboard/dashboard_view_model.dart';
+import 'package:easy_beck/feature/symptom_page/anxiety_page.dart';
 import 'package:easy_beck/feature/symptom_page/irritability_page.dart';
+import 'package:easy_beck/feature/symptom_page/sleepiness_page.dart';
 import 'package:easy_beck/feature/symptom_page/symptom_page_controller.dart';
 import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
@@ -177,6 +179,16 @@ class SymptomPromptContainer extends KiwiContainer {
             container("symptom/irritability"), const Clock()),
         name: "symptom/irritability");
 
+    registerFactory<SymptomPageViewModel>(
+        (container) => SymptomPageController(
+            container("symptom/sleepiness"), const Clock()),
+        name: "symptom/sleepiness");
+
+    registerFactory<SymptomPageViewModel>(
+        (container) => SymptomPageController(
+            container("symptom/anxiety"), const Clock()),
+        name: "symptom/anxiety");
+
     // registerFactory<SleepPromptBuilder>((container) => (context) => SleepPrompt(
     //       onSubmitted: container<LogSymptom>("symptom/sleep"),
     //     ));
@@ -193,11 +205,24 @@ class SymptomPromptContainer extends KiwiContainer {
     //           onSubmitted: container<LogSymptom>("symptom/sleepiness"),
     //         ));
 
+    // TODO: Try to parametrize containers
     registerFactory<WidgetBuilder>(
         (container) => (context) => IrritabilityPage(
               viewModel: container("symptom/irritability"),
             ),
         name: "irritability_page");
+
+    registerFactory<WidgetBuilder>(
+        (container) => (context) => SleepinessPage(
+              viewModel: container("symptom/sleepiness"),
+            ),
+        name: "sleepiness_page");
+
+    registerFactory<WidgetBuilder>(
+        (container) => (context) => AnxietyPage(
+              viewModel: container("symptom/anxiety"),
+            ),
+        name: "anxiety_page");
   }
 }
 
@@ -280,6 +305,8 @@ class RouterContainer extends KiwiContainer {
             ));
     registerFactory<RouterConfig<Object>>((container) => AppRouter(
         irritabilityPageBuilder: symptomPromptContainer("irritability_page"),
+        sleepinessPageBuilder: symptomPromptContainer("sleepiness_page"),
+        anxietyPageBuilder: symptomPromptContainer("anxiety_page"),
         rootNavigatorKey: container("root"),
         shellNavigatorKey: container("shell"),
         scaffoldBuilder: container(),

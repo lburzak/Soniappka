@@ -1,5 +1,3 @@
-import 'package:easy_beck/feature/symptom_prompt/ui/anxiety_prompt.dart';
-import 'package:easy_beck/feature/symptom_prompt/ui/sleepiness_prompt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -24,16 +22,20 @@ class AppRouter extends GoRouter {
   final BeckTestResultPageBuilder beckTestResultBuilder;
   final ScaffoldBuilder scaffoldBuilder;
   final WidgetBuilder irritabilityPageBuilder;
+  final WidgetBuilder sleepinessPageBuilder;
+  final WidgetBuilder anxietyPageBuilder;
 
   AppRouter(
       {required GlobalKey<NavigatorState> rootNavigatorKey,
-        required GlobalKey<NavigatorState> shellNavigatorKey,
+      required GlobalKey<NavigatorState> shellNavigatorKey,
       required this.dashboardBuilder,
       required this.journalBuilder,
       required this.scaffoldBuilder,
       required this.beckTestBuilder,
       required this.beckTestResultBuilder,
-      required this.irritabilityPageBuilder})
+      required this.irritabilityPageBuilder,
+      required this.sleepinessPageBuilder,
+      required this.anxietyPageBuilder})
       : super(
             navigatorKey: rootNavigatorKey,
             initialLocation: "/dashboard",
@@ -81,9 +83,10 @@ class AppRouter extends GoRouter {
                         );
                       })),
               GoRoute(
+                  parentNavigatorKey: rootNavigatorKey,
                   path: "/symptom/sleepiness",
                   pageBuilder: (context, state) => CustomTransitionPage(
-                      child: SafeArea(child: SleepinessPrompt(onSubmitted: (a) {})),
+                      child: sleepinessPageBuilder(context),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         return FadeTransition(
@@ -93,9 +96,10 @@ class AppRouter extends GoRouter {
                         );
                       })),
               GoRoute(
+                  parentNavigatorKey: rootNavigatorKey,
                   path: "/symptom/anxiety",
                   pageBuilder: (context, state) => CustomTransitionPage(
-                      child: AnxietyPrompt(onSubmitted: (a) {}),
+                      child: anxietyPageBuilder(context),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         return FadeTransition(
