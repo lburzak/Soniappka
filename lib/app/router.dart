@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_beck/app/app_router.dart';
 import 'package:easy_beck/app/bottom_bar.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
@@ -8,8 +10,8 @@ import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
 import 'package:easy_beck/common/loader.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_controller.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_view_model.dart';
+import 'package:easy_beck/feature/dashboard/dashboard_event.dart';
+import 'package:easy_beck/feature/dashboard/new_dashboard_controller.dart';
 import 'package:easy_beck/feature/symptom_page/anxiety_page.dart';
 import 'package:easy_beck/feature/symptom_page/irritability_page.dart';
 import 'package:easy_beck/feature/symptom_page/sleepiness_page.dart';
@@ -45,6 +47,7 @@ import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
 import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
 import 'package:easy_beck/page/journal/journal_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stream_listener/flutter_stream_listener.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:quiver/time.dart';
 
@@ -89,16 +92,27 @@ class BeckTestQuestionnaireContainer extends KiwiContainer {
 
 class DashboardContainer extends KiwiContainer {
   DashboardContainer() : super.scoped() {
-    registerFactory<DashboardViewModel>((container) => DashboardController(
+    registerSingleton((container) => NewDashboardController(
         sleepinessRepository: symptomPromptContainer("symptom/sleepiness"),
         irritabilityRepository: symptomPromptContainer("symptom/irritability"),
         anxietyRepository: symptomPromptContainer("symptom/anxiety"),
         clock: const Clock()));
-    registerFactory<WidgetBuilder>((container) => (BuildContext context) {
-          return Dashboard(
-            viewModel: container(),
-          );
-        });
+    registerSingleton(
+        (container) => StreamController<DashboardEvent>.broadcast());
+    registerFactory<EventSink<DashboardEvent>>(
+        (container) => container<StreamController<DashboardEvent>>().sink);
+    registerFactory<Stream<DashboardEvent>>(
+        (container) => container<StreamController<DashboardEvent>>().stream);
+    registerFactory<WidgetBuilder>((container) {
+      return (BuildContext context) {
+        return StreamListener<DashboardEvent>(
+            stream: container<Stream<DashboardEvent>>().distinct(),
+            onData: container<NewDashboardController>().handleEvent,
+            child: Dashboard(
+                state: container<NewDashboardController>().createState().asBroadcastStream(),
+                sink: container<EventSink<DashboardEvent>>()));
+      };
+    });
   }
 }
 
@@ -185,8 +199,8 @@ class SymptomPromptContainer extends KiwiContainer {
         name: "symptom/sleepiness");
 
     registerFactory<SymptomPageViewModel>(
-        (container) => SymptomPageController(
-            container("symptom/anxiety"), const Clock()),
+        (container) =>
+            SymptomPageController(container("symptom/anxiety"), const Clock()),
         name: "symptom/anxiety");
 
     // registerFactory<SleepPromptBuilder>((container) => (context) => SleepPrompt(

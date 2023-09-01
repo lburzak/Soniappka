@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   syncfusion_localizations: ^22.2.8
   action_slider: ^0.7.0
+  flutter_stream_listener: ^2.0.0
 
 dev_dependencies:
   flutter_test:
