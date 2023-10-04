@@ -1,4 +1,7 @@
 import 'package:easy_beck/common/day.dart';
+import 'package:easy_beck/feature/actions/usecase/toggle_task.dart';
+import 'package:easy_beck/feature/actions/usecase/watch_beck_test_task.dart';
+import 'package:easy_beck/feature/actions/usecase/watch_tasks.dart';
 import 'package:easy_beck/feature/dashboard/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/dashboard_state.dart';
 import 'package:easy_beck/feature/dashboard/symptom_type.dart';
@@ -11,15 +14,23 @@ class NewDashboardController {
   final SymptomRepository _anxietyRepository;
   final SymptomRepository _irritabilityRepository;
   final SymptomRepository _sleepinessRepository;
+  final WatchTasks _watchTasks;
+  final ToggleTask _toggleTask;
+  final WatchBeckTestTask _watchBeckTestTask;
   final Clock _clock;
 
   Stream<DashboardState> createState() =>
-      Stream.value(_clock.today()).switchMap((today) => Rx.combineLatest3(
+      Stream.value(_clock.today()).switchMap((today) => Rx.combineLatest5(
           _anxietyRepository.observeSymptomLevelForDay(today),
           _irritabilityRepository.observeSymptomLevelForDay(today),
           _sleepinessRepository.observeSymptomLevelForDay(today),
-          (a, b, c) => DashboardState(
-              irritabilityLevel: b, sleepinessLevel: c, anxietyLevel: a)));
+          _watchTasks(),
+          _watchBeckTestTask(),
+          (a, b, c, d, e) => DashboardState(
+              irritabilityLevel: b,
+              sleepinessLevel: c,
+              anxietyLevel: a,
+              tasks: [e, ...d].toList())));
 
   void handleEvent(DashboardEvent event) {
     switch (event) {
@@ -28,6 +39,9 @@ class NewDashboardController {
             .upsertSymptomLog(SymptomLog(day: _clock.today(), level: level));
       case UnsetLevel(symptomType: var type):
         _getRepositoryForType(type).deleteSymptomLog(_clock.today());
+      case TaskToggled(task: var task):
+        _toggleTask(task);
+      case ShowTaskCreator():
     }
   }
 
@@ -41,10 +55,16 @@ class NewDashboardController {
     required SymptomRepository anxietyRepository,
     required SymptomRepository irritabilityRepository,
     required SymptomRepository sleepinessRepository,
+    required WatchTasks watchTasks,
+    required ToggleTask toggleTask,
+    required WatchBeckTestTask watchBeckTestTask,
     required Clock clock,
   })  : _anxietyRepository = anxietyRepository,
         _irritabilityRepository = irritabilityRepository,
         _sleepinessRepository = sleepinessRepository,
+        _watchTasks = watchTasks,
+        _toggleTask = toggleTask,
+        _watchBeckTestTask = watchBeckTestTask,
         _clock = clock;
 }
 

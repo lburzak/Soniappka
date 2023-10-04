@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Test Becka",
+    "iconCodePoint": 59403,
+    "regularity": {
+      "type": "irregular"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Test Becka",
+    "iconCodePoint": 59399,
+    "regularity": {
+      "type": "irregular"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Test Becka",
+    "iconCodePoint": 59421,
+    "regularity": {
+      "type": "irregular"
+    }
+  }
+]

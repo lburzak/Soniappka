@@ -7,5 +7,6 @@ abstract interface class BeckTestResultRepository {
   Future<BeckTestResult?> findById(BeckTestId id);
   Stream<BeckTestResult?> observeByDay(Day day);
   Stream<Iterable<BeckTestResult>> watchAll();
+  Stream<DateTime?> watchSubmissionDateTimeOfLast();
   BeckTestId createId();
 }

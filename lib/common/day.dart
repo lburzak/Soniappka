@@ -26,6 +26,11 @@ class Day {
 
   @override
   int get hashCode => year.hashCode ^ month.hashCode ^ day.hashCode;
+
+  @override
+  String toString() {
+    return 'Day{year: $year, month: $month, day: $day}';
+  }
 }
 
 extension ToDay on DateTime {

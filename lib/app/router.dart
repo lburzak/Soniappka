@@ -10,6 +10,14 @@ import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
 import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/feature/actions/data/default_day_phase_clock.dart';
+import 'package:easy_beck/feature/actions/data/in_memory_action_completion_repository.dart';
+import 'package:easy_beck/feature/actions/repository/action_completion_repository.dart';
+import 'package:easy_beck/feature/actions/usecase/calendar.dart';
+import 'package:easy_beck/feature/actions/usecase/get_task_status.dart';
+import 'package:easy_beck/feature/actions/usecase/toggle_task.dart';
+import 'package:easy_beck/feature/actions/usecase/watch_beck_test_task.dart';
+import 'package:easy_beck/feature/actions/usecase/watch_tasks.dart';
 import 'package:easy_beck/feature/dashboard/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/new_dashboard_controller.dart';
 import 'package:easy_beck/feature/symptom_page/anxiety_page.dart';
@@ -41,6 +49,7 @@ import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart.dart';
 import 'package:easy_beck/hive/adapter/beck_test_result_adapter.dart';
 import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
 import 'package:easy_beck/hive/hive_loader.dart';
+import 'package:easy_beck/isar/isar_container.dart';
 import 'package:easy_beck/mood_tracker/data/in_memory_mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
@@ -91,11 +100,19 @@ class BeckTestQuestionnaireContainer extends KiwiContainer {
 }
 
 class DashboardContainer extends KiwiContainer {
-  DashboardContainer() : super.scoped() {
+  DashboardContainer(IsarContainer isarContainer) : super.scoped() {
+    registerSingleton<ActionCompletionRepository>((container) => InMemoryActionCompletionRepository());
+    registerFactory((container) => GetTaskStatus(actionCompletionRepository: container(), clock: const Clock(), calendar: JiffyCalendar(), dayPhaseClock: DefaultDayPhaseClock()));
+    registerFactory((container) => WatchTasks(actionRepository: isarContainer(), getTaskStatus: container(), actionCompletionRepository: container()));
+    registerFactory((container) => ToggleTask(actionCompletionRepository: container(), clock: const Clock()));
+    registerFactory((container) => WatchBeckTestTask(beckTestResultRepository: beckTestDomainContainer(), calendar: JiffyCalendar(), clock: const Clock()));
     registerSingleton((container) => NewDashboardController(
         sleepinessRepository: symptomPromptContainer("symptom/sleepiness"),
         irritabilityRepository: symptomPromptContainer("symptom/irritability"),
         anxietyRepository: symptomPromptContainer("symptom/anxiety"),
+        watchTasks: container(),
+        toggleTask: container(),
+        watchBeckTestTask: container(),
         clock: const Clock()));
     registerSingleton(
         (container) => StreamController<DashboardEvent>.broadcast());
@@ -282,7 +299,6 @@ class JournalPageContainer extends KiwiContainer {
 
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
-final dashboardContainer = DashboardContainer();
 final beckCalendarContainer = BeckCalendarContainer();
 final moodTrackerContainer = MoodTrackerContainer();
 final symptomPromptContainer = SymptomPromptContainer();

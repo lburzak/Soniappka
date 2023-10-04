@@ -1,3 +1,4 @@
+import 'package:easy_beck/feature/actions/model/task.dart';
 import 'package:easy_beck/feature/dashboard/symptom_type.dart';
 
 sealed class DashboardEvent {
@@ -38,4 +39,33 @@ class UnsetLevel extends DashboardEvent {
 
   @override
   int get hashCode => symptomType.hashCode;
+}
+
+class TaskToggled extends DashboardEvent {
+  final Task task;
+
+  const TaskToggled({
+    required this.task,
+  });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TaskToggled &&
+          runtimeType == other.runtimeType &&
+          task == other.task;
+
+  @override
+  int get hashCode => task.hashCode;
+}
+
+class ShowTaskCreator extends DashboardEvent {
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ShowTaskCreator && runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => 0;
 }

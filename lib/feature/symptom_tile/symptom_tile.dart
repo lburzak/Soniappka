@@ -22,40 +22,43 @@ class SymptomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox.square(
-              dimension: 60,
-              child: image,
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox.square(
+                dimension: 60,
+                child: image,
+              ),
             ),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Text(level != null ? ratings[level!].title : "Nieokreślone"),
-              SizedBox(
-                height: 30,
-                child: RatingSlider.compact(
-                    level: level, max: 4, onChanged: onUpdated, min: 0),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-                IconButton(onPressed: onExpanded, icon: const Icon(Icons.info)),
-          )
-        ],
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style:
+                      const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(level != null ? ratings[level!].title : "Nieokreślone"),
+                SizedBox(
+                  height: 30,
+                  child: RatingSlider.compact(
+                      level: level, max: 4, onChanged: onUpdated, min: 0),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                  IconButton(onPressed: onExpanded, icon: const Icon(Icons.info)),
+            )
+          ],
+        ),
       ),
     );
   }

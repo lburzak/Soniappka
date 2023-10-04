@@ -1,14 +1,18 @@
 import 'package:easy_beck/app/router.dart';
 import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/common/multi_loader.dart';
 import 'package:easy_beck/common/ui/loader_builder.dart';
+import 'package:easy_beck/isar/isar_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
+
+  final isarContainer = IsarContainer();
   final routerContainer = RouterContainer(
       (context) => BeckTestQuestionnaireContainer(context),
-      DashboardContainer(),
+      DashboardContainer(isarContainer),
       JournalPageContainer(
           symptomsChartContainer: SymptomsChartContainer(),
           beckCalendarContainer: BeckCalendarContainer(),
@@ -16,7 +20,7 @@ void main() async {
 
   runApp(MyApp(
     routerConfig: routerContainer(),
-    loader: hiveContainer(),
+    loader: MultiLoader(loaders: [hiveContainer(), isarContainer()]),
   ));
 }
 

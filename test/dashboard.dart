@@ -11,7 +11,7 @@ import 'package:rxdart/subjects.dart';
 
 void main() async {
   const state =
-      DashboardState(irritabilityLevel: 1, sleepinessLevel: 2, anxietyLevel: 3);
+      DashboardState(irritabilityLevel: 1, sleepinessLevel: 2, anxietyLevel: 3, tasks: []);
   final events = PublishSubject<DashboardEvent>();
   final dashboard = MaterialApp(
       home: Dashboard(state: BehaviorSubject.seeded(state), sink: events));

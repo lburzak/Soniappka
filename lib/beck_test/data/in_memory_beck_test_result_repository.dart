@@ -61,4 +61,9 @@ class InMemoryBeckTestResultRepository implements BeckTestResultRepository {
   Stream<List<BeckTestResult>> watchAll() {
     return Stream.value(_results);
   }
+
+  @override
+  Stream<DateTime> watchSubmissionDateTimeOfLast() {
+    throw UnimplementedError();
+  }
 }

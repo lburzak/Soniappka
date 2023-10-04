@@ -1,10 +1,14 @@
+import 'package:collection/collection.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/beck_test/model/beck_test_result.dart';
-import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart' as beck_test;
+import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
+    as beck_test;
 import 'package:easy_beck/common/day.dart';
-import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart' as symptoms_chart;
+import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
+    as symptoms_chart;
 import 'package:hive/hive.dart';
+import 'package:rxdart/rxdart.dart';
 
 class NoId implements BeckTestId {
   @override
@@ -24,11 +28,14 @@ class DateTimeBeckTestId implements BeckTestId {
   }
 }
 
-class HiveBeckTestResultRepository implements beck_test.BeckTestResultRepository, symptoms_chart.BeckTestResultRepository {
+class HiveBeckTestResultRepository
+    implements
+        beck_test.BeckTestResultRepository,
+        symptoms_chart.BeckTestResultRepository {
   final Box<BeckTestResult> _box;
 
   HiveBeckTestResultRepository(this._box);
-  
+
   @override
   BeckTestId createId() {
     return NoId();
@@ -58,5 +65,19 @@ class HiveBeckTestResultRepository implements beck_test.BeckTestResultRepository
     yield _box.values;
     yield* _box.watch().map((event) => _box.values);
   }
-  
+
+  Future<DateTime?> findSubmissionDateTimeOfLast() async {
+    return _box.values
+        .map((e) => e.submissionDateTime)
+        .sorted((a, b) => a.compareTo(b))
+        .firstOrNull;
+  }
+
+  @override
+  Stream<DateTime?> watchSubmissionDateTimeOfLast() async* {
+    yield await findSubmissionDateTimeOfLast();
+    yield* _box
+        .watch()
+        .flatMap((event) => findSubmissionDateTimeOfLast().asStream());
+  }
 }
