@@ -17,16 +17,17 @@ class JournalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: SafeArea(
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.topLeft,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              calendarBuilder(context),
-              beckTestButtonBuilder(context),
-              symptomsChartBuilder(context),
+              RotatedBox(
+                quarterTurns: 1,
+                child: symptomsChartBuilder(context),
+              )
             ],
           ),
         ),
