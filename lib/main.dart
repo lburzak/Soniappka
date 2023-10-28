@@ -43,9 +43,10 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
             theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(
-                    seedColor: Colors.deepPurple,
-                    background: const Color(0xffD2E6C3)),
-                cardTheme: const CardTheme(surfaceTintColor: Colors.white),
+                    seedColor: Color(0xffA0C49D),
+                    background: const Color(0xffC4D7B2)),
+                cardTheme: const CardTheme(surfaceTintColor: Color(0xffF4F2DE), color: Color(0xffF7FFE5)),
+                // iconTheme: const IconThemeData(color: Color(0xffA0C49D)),
                 useMaterial3: true,
                 textTheme: font.copyWith(
                     labelLarge: font.labelLarge?.copyWith(
