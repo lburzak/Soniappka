@@ -8,8 +8,8 @@ import 'package:easy_beck/feature/symptom_tile/anxiety_symptom_tile.dart';
 import 'package:easy_beck/feature/symptom_tile/irritability_symptom_tile.dart';
 import 'package:easy_beck/feature/symptom_tile/sleepiness_symptom_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class Dashboard extends StatelessWidget {
   final Stream<DashboardState> state;
@@ -27,9 +27,20 @@ class Dashboard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
               sliver: SliverFixedExtentList(
                   delegate: SliverChildBuilderDelegate(
-                      (context, index) => Text("Symptomy",
-                          style: GoogleFonts.amaticSc().copyWith(
-                              fontSize: 32, fontWeight: FontWeight.bold)),
+                      (context, index) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Symptomy",
+                                  style: GoogleFonts.amaticSc().copyWith(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold)),
+                              IconButton(
+                                  onPressed: () {
+                                    context.push("/journal");
+                                  },
+                                  icon: const Icon(Icons.bar_chart))
+                            ],
+                          ),
                       childCount: 1),
                   itemExtent: 40),
             ),

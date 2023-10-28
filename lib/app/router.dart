@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:easy_beck/app/app_router.dart';
-import 'package:easy_beck/app/bottom_bar.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/data/hive_beck_test_result_repository.dart';
@@ -329,9 +328,7 @@ class RouterContainer extends KiwiContainer {
 
     registerSingleton<ScaffoldBuilder>(
         (container) => (context, child) => Scaffold(
-              body: child,
-              extendBody: true,
-              bottomNavigationBar: const BottomBar(),
+              body: child
             ));
     registerFactory<RouterConfig<Object>>((container) => AppRouter(
         irritabilityPageBuilder: symptomPromptContainer("irritability_page"),

@@ -73,6 +73,8 @@ class AppRouter extends GoRouter {
                   parentNavigatorKey: rootNavigatorKey,
                   path: "/symptom/irritability",
                   pageBuilder: (context, state) => CustomTransitionPage(
+                      opaque: false,
+                      barrierDismissible: true,
                       child: irritabilityPageBuilder(context),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -86,6 +88,8 @@ class AppRouter extends GoRouter {
                   parentNavigatorKey: rootNavigatorKey,
                   path: "/symptom/sleepiness",
                   pageBuilder: (context, state) => CustomTransitionPage(
+                      opaque: false,
+                      barrierDismissible: true,
                       child: sleepinessPageBuilder(context),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
@@ -99,6 +103,8 @@ class AppRouter extends GoRouter {
                   parentNavigatorKey: rootNavigatorKey,
                   path: "/symptom/anxiety",
                   pageBuilder: (context, state) => CustomTransitionPage(
+                      opaque: false,
+                      barrierDismissible: true,
                       child: anxietyPageBuilder(context),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
