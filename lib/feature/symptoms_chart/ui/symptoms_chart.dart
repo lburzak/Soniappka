@@ -31,19 +31,19 @@ class SymptomsChart extends StatelessWidget {
             margin: EdgeInsets.zero,
             series: <CartesianSeries>[
               StackedColumnSeries(
-                  dataSource: data.anxietyLogs,
-                  xValueMapper: (value, _) => value.day.dateTime,
-                  yValueMapper: (value, _) => value.level,
+                  dataSource: data.symptomsChartDataPoints,
+                  xValueMapper: (value, _) => value.dateTime,
+                  yValueMapper: (value, _) => value.anxiety,
                   legendItemText: "Niepokój"),
               StackedColumnSeries(
-                  dataSource: data.irritabilityLogs,
-                  xValueMapper: (value, _) => value.day.dateTime,
-                  yValueMapper: (value, _) => value.level,
+                  dataSource: data.symptomsChartDataPoints,
+                  xValueMapper: (value, _) => value.dateTime,
+                  yValueMapper: (value, _) => value.irritability,
                   legendItemText: "Drażliwość"),
               StackedColumnSeries(
-                  dataSource: data.sleepinessLogs,
-                  xValueMapper: (value, _) => value.day.dateTime,
-                  yValueMapper: (value, _) => value.level,
+                  dataSource: data.symptomsChartDataPoints,
+                  xValueMapper: (value, _) => value.dateTime,
+                  yValueMapper: (value, _) => value.sleepiness,
                   legendItemText: "Senność"),
               SplineSeries(
                   dataSource: data.testResults,
