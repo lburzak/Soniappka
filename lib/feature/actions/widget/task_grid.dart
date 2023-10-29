@@ -18,16 +18,14 @@ class TasksGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.builder(
-        itemCount: tasks.length + 1,
+        itemCount: tasks.length,
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemBuilder: (context, index) => index == tasks.length
-            ? _AddActionTile(onTap: onNewTask)
-            : TaskTile(
-                task: tasks[index],
-                onToggle: () => tasks[index].action == beckTestAction
-                    ? context.push("/beck-test")
-                    : onToggleTask(tasks[index])));
+        itemBuilder: (context, index) => TaskTile(
+            task: tasks[index],
+            onToggle: () => tasks[index].action == beckTestAction
+                ? context.push("/beck-test")
+                : onToggleTask(tasks[index])));
   }
 }
 

@@ -14,23 +14,21 @@ class NewDashboardController {
   final SymptomRepository _anxietyRepository;
   final SymptomRepository _irritabilityRepository;
   final SymptomRepository _sleepinessRepository;
-  final WatchTasks _watchTasks;
   final ToggleTask _toggleTask;
   final WatchBeckTestTask _watchBeckTestTask;
   final Clock _clock;
 
   Stream<DashboardState> createState() =>
-      Stream.value(_clock.today()).switchMap((today) => Rx.combineLatest5(
+      Stream.value(_clock.today()).switchMap((today) => Rx.combineLatest4(
           _anxietyRepository.observeSymptomLevelForDay(today),
           _irritabilityRepository.observeSymptomLevelForDay(today),
           _sleepinessRepository.observeSymptomLevelForDay(today),
-          _watchTasks(),
           _watchBeckTestTask(),
-          (a, b, c, d, e) => DashboardState(
+          (a, b, c, d) => DashboardState(
               irritabilityLevel: b,
               sleepinessLevel: c,
               anxietyLevel: a,
-              tasks: [e, ...d].toList())));
+              tasks: [d].toList())));
 
   void handleEvent(DashboardEvent event) {
     switch (event) {
@@ -62,7 +60,6 @@ class NewDashboardController {
   })  : _anxietyRepository = anxietyRepository,
         _irritabilityRepository = irritabilityRepository,
         _sleepinessRepository = sleepinessRepository,
-        _watchTasks = watchTasks,
         _toggleTask = toggleTask,
         _watchBeckTestTask = watchBeckTestTask,
         _clock = clock;
