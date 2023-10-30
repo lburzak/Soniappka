@@ -1,9 +1,7 @@
 import 'package:easy_beck/feature/symptom_prompt/domain/symptom_log.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_state.dart';
 
-/**
- * Combines logs into a single list, to prevent gaps in dates
- */
+/// Combines logs into a single list, to prevent gaps in dates
 class SymptomsChartDataMerger {
   List<SymptomsChartDataPoint> merge(
       {required Iterable<SymptomLog> sleepinessLogs,
