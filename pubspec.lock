@@ -822,34 +822,34 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: "9b3087a6b2e06a23ae322123a4cd6a9f06256958eee1aeceda47d043bb2dd794"
+      sha256: "06a31c62398d2c252b4c216164af0157704f58d6d7580491b933d23856dbf5de"
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.12"
+    version: "23.1.42"
   syncfusion_flutter_core:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_core
-      sha256: "9f0a4593f7642b2f106e329734d0e5fc746baf8d0a59495eec586cd0d9ba7d02"
+      sha256: d3405e92dbfc1c68e55bf883fb9cd7e3dcae1f53eefd00b8b6b1803e474cf4d6
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.12"
+    version: "23.1.42"
   syncfusion_flutter_sliders:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_sliders
-      sha256: "826e2a6ab71c87ecc33f6c19e4064ed9910980b5ad171a3e2888fe782a324a6c"
+      sha256: d1c5724ad7ee1e21a2f8953f5e6d4a845036de55706ca8158372cda012de36cc
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.12"
+    version: "23.1.42"
   syncfusion_localizations:
     dependency: "direct main"
     description:
       name: syncfusion_localizations
-      sha256: cbed6be76a708beabf380a2b98843ee636bb5f660596ec5ab8ffccc9f859b3cc
+      sha256: a88bbf9e0423aa2cfe93725defd517fa81cabf51681bfd8864491b7075b03f64
       url: "https://pub.dev"
     source: hosted
-    version: "22.2.12"
+    version: "23.1.42"
   table_calendar:
     dependency: "direct main"
     description:

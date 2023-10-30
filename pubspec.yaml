@@ -24,10 +24,10 @@ dependencies:
   hive_flutter: ^1.1.0
   circular_bottom_navigation: ^2.3.0
   fl_chart: ^0.63.0
-  syncfusion_flutter_charts: ^22.2.11
-  syncfusion_flutter_core: ^22.2.11
-  syncfusion_localizations: ^22.2.11
-  syncfusion_flutter_sliders: ^22.2.11
+  syncfusion_flutter_charts: ^23.1.42
+  syncfusion_flutter_core: ^23.1.42
+  syncfusion_localizations: ^23.1.42
+  syncfusion_flutter_sliders: ^23.1.42
   meta: ^1.9.1
   intl: ^0.18.0
   flutter_localizations:
