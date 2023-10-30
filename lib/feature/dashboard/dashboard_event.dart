@@ -69,3 +69,14 @@ class ShowTaskCreator extends DashboardEvent {
   @override
   int get hashCode => 0;
 }
+
+class BeckTestOpened extends DashboardEvent {
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BeckTestOpened && runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => 0;
+}

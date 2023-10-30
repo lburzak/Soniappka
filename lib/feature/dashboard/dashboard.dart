@@ -85,6 +85,7 @@ class Dashboard extends StatelessWidget {
                   tasks: snapshot.data ?? [],
                   onNewTask: () => sink.add(ShowTaskCreator()),
                   onToggleTask: (task) => sink.add(TaskToggled(task: task)),
+                  onBeckTestOpen: () => sink.add(BeckTestOpened()),
                 ),
               ),
             )

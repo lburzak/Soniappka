@@ -17,7 +17,9 @@ import 'package:easy_beck/feature/actions/usecase/get_task_status.dart';
 import 'package:easy_beck/feature/actions/usecase/toggle_task.dart';
 import 'package:easy_beck/feature/actions/usecase/watch_beck_test_task.dart';
 import 'package:easy_beck/feature/actions/usecase/watch_tasks.dart';
+import 'package:easy_beck/feature/dashboard/check_beck_test_solved.dart';
 import 'package:easy_beck/feature/dashboard/dashboard_event.dart';
+import 'package:easy_beck/feature/dashboard/material_dashboard_router.dart';
 import 'package:easy_beck/feature/dashboard/new_dashboard_controller.dart';
 import 'package:easy_beck/feature/symptom_page/anxiety_page.dart';
 import 'package:easy_beck/feature/symptom_page/irritability_page.dart';
@@ -100,18 +102,22 @@ class BeckTestQuestionnaireContainer extends KiwiContainer {
 
 class DashboardContainer extends KiwiContainer {
   DashboardContainer(IsarContainer isarContainer) : super.scoped() {
-    registerSingleton<ActionCompletionRepository>((container) => InMemoryActionCompletionRepository());
-    registerFactory((container) => GetTaskStatus(actionCompletionRepository: container(), clock: const Clock(), calendar: JiffyCalendar(), dayPhaseClock: DefaultDayPhaseClock()));
-    registerFactory((container) => WatchTasks(actionRepository: isarContainer(), getTaskStatus: container(), actionCompletionRepository: container()));
-    registerFactory((container) => ToggleTask(actionCompletionRepository: container(), clock: const Clock()));
-    registerFactory((container) => WatchBeckTestTask(beckTestResultRepository: beckTestDomainContainer(), calendar: JiffyCalendar(), clock: const Clock()));
-    registerSingleton((container) => NewDashboardController(
-        sleepinessRepository: symptomPromptContainer("symptom/sleepiness"),
-        irritabilityRepository: symptomPromptContainer("symptom/irritability"),
-        anxietyRepository: symptomPromptContainer("symptom/anxiety"),
-        watchTasks: container(),
-        toggleTask: container(),
-        watchBeckTestTask: container(),
+    registerSingleton<ActionCompletionRepository>(
+        (container) => InMemoryActionCompletionRepository());
+    registerFactory((container) => GetTaskStatus(
+        actionCompletionRepository: container(),
+        clock: const Clock(),
+        calendar: JiffyCalendar(),
+        dayPhaseClock: DefaultDayPhaseClock()));
+    registerFactory((container) => WatchTasks(
+        actionRepository: isarContainer(),
+        getTaskStatus: container(),
+        actionCompletionRepository: container()));
+    registerFactory((container) => ToggleTask(
+        actionCompletionRepository: container(), clock: const Clock()));
+    registerFactory((container) => WatchBeckTestTask(
+        beckTestResultRepository: beckTestDomainContainer(),
+        calendar: JiffyCalendar(),
         clock: const Clock()));
     registerSingleton(
         (container) => StreamController<DashboardEvent>.broadcast());
@@ -121,11 +127,25 @@ class DashboardContainer extends KiwiContainer {
         (container) => container<StreamController<DashboardEvent>>().stream);
     registerFactory<WidgetBuilder>((container) {
       return (BuildContext context) {
+        final controller = NewDashboardController(
+            sleepinessRepository: symptomPromptContainer("symptom/sleepiness"),
+            irritabilityRepository:
+                symptomPromptContainer("symptom/irritability"),
+            anxietyRepository: symptomPromptContainer("symptom/anxiety"),
+            toggleTask: container(),
+            watchBeckTestTask: container(),
+            clock: const Clock(),
+            router: MaterialDashboardRouter(context: context),
+            checkBeckTestSolved: CheckBeckTestStatusForDay(
+                beckTestResultRepository: beckTestDomainContainer()));
+
         return StreamListener<DashboardEvent>(
-            stream: container<Stream<DashboardEvent>>().distinct(),
-            onData: container<NewDashboardController>().handleEvent,
+            stream: container<Stream<DashboardEvent>>(),
+            onData: controller.handleEvent,
             child: Dashboard(
-                state: container<NewDashboardController>().createState().asBroadcastStream(),
+                state: controller
+                    .createState()
+                    .asBroadcastStream(),
                 sink: container<EventSink<DashboardEvent>>()));
       };
     });
@@ -327,9 +347,7 @@ class RouterContainer extends KiwiContainer {
             });
 
     registerSingleton<ScaffoldBuilder>(
-        (container) => (context, child) => Scaffold(
-              body: child
-            ));
+        (container) => (context, child) => Scaffold(body: child));
     registerFactory<RouterConfig<Object>>((container) => AppRouter(
         irritabilityPageBuilder: symptomPromptContainer("irritability_page"),
         sleepinessPageBuilder: symptomPromptContainer("sleepiness_page"),

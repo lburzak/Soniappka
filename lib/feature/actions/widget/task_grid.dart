@@ -2,18 +2,19 @@ import 'package:easy_beck/feature/actions/data/beck_test_action.dart';
 import 'package:easy_beck/feature/actions/model/task.dart';
 import 'package:easy_beck/feature/actions/widget/task_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class TasksGrid extends StatelessWidget {
   final List<Task> tasks;
   final void Function(Task task) onToggleTask;
   final void Function() onNewTask;
+  final void Function() onBeckTestOpen;
 
   const TasksGrid(
       {super.key,
       required this.tasks,
       required this.onToggleTask,
-      required this.onNewTask});
+      required this.onNewTask,
+      required this.onBeckTestOpen});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class TasksGrid extends StatelessWidget {
         itemBuilder: (context, index) => TaskTile(
             task: tasks[index],
             onToggle: () => tasks[index].action == beckTestAction
-                ? context.push("/beck-test")
+                ? onBeckTestOpen()
                 : onToggleTask(tasks[index])));
   }
 }

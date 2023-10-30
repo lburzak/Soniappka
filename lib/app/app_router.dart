@@ -49,7 +49,11 @@ class AppRouter extends GoRouter {
                         pageBuilder: (context, state) {
                           return CustomSlideTransition(
                               key: state.pageKey,
-                              child: dashboardBuilder(context));
+                              child: Builder(
+                                builder: (context) {
+                                  return dashboardBuilder(context);
+                                }
+                              ));
                         }),
                     GoRoute(
                         path: "/journal",
