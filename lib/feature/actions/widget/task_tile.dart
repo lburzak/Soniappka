@@ -87,6 +87,11 @@ class TaskHint extends StatelessWidget {
     }
 
     final days = DateTime.now().difference(dateTime).inDays;
+
+    if (days == 0) {
+      return "Dzisiaj";
+    }
+
     return "$days dni temu";
   }
 }
