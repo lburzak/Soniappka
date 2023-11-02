@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -35,6 +36,7 @@ class RatingSlider extends StatelessWidget {
           value != off ? "${value.toInt()}" : "",
           stepSize: 1,
           onChanged: (value) {
+            HapticFeedback.selectionClick();
             onChanged(value == off ? null : value.toInt());
           },
           min: off,
