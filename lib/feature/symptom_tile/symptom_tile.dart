@@ -1,5 +1,6 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
 import 'package:easy_beck/common/ui/rating_slider.dart';
+import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 
 class SymptomTile extends StatelessWidget {
@@ -44,7 +45,7 @@ class SymptomTile extends StatelessWidget {
                   style:
                       const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Text(level != null ? ratings[level!].title : "Nieokreślone"),
+                Text(level != null ? ratings[level!].title : context.l10n.ratingUndefined),
                 SizedBox(
                   height: 30,
                   child: RatingSlider.compact(

@@ -4,6 +4,7 @@ import 'package:easy_beck/feature/actions/model/action_icon.dart';
 import 'package:easy_beck/feature/actions/model/task.dart';
 import 'package:easy_beck/feature/actions/widget/completable_tile.dart';
 import 'package:easy_beck/feature/actions/widget/optional_builder.dart';
+import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 
 class TaskTile extends StatelessWidget {
@@ -63,22 +64,22 @@ class TaskHint extends StatelessWidget {
 
   String _formatDayPhase(BuildContext context, DayPhase? dayPhase) =>
       switch (dayPhase) {
-        DayPhase.day => "W ciągu dnia",
-        DayPhase.morning => "Rano",
-        DayPhase.evening => "Wieczorem",
-        null => "Codziennie"
+        DayPhase.day => context.l10n.dayPhaseDay,
+        DayPhase.morning => context.l10n.dayPhaseMorning,
+        DayPhase.evening => context.l10n.dayPhaseEvening,
+        null => context.l10n.dayPhaseAllDay
       };
 
   String _formatDayOfWeek(BuildContext context, DayOfWeek? dayOfWeek) =>
       switch (dayOfWeek) {
-        DayOfWeek.monday => "Poniedziałek",
-        DayOfWeek.tuesday => "Wtorek",
-        DayOfWeek.wednesday => "Środa",
-        DayOfWeek.thursday => "Czwartek",
-        DayOfWeek.friday => "Piątek",
-        DayOfWeek.saturday => "Sobota",
-        DayOfWeek.sunday => "Niedziela",
-        null => "W tygodniu"
+        DayOfWeek.monday => context.l10n.dayOfWeekMonday,
+        DayOfWeek.tuesday => context.l10n.dayOfWeekTuesday,
+        DayOfWeek.wednesday => context.l10n.dayOfWeekWednesday,
+        DayOfWeek.thursday => context.l10n.dayOfWeekThursday,
+        DayOfWeek.friday => context.l10n.dayOfWeekFriday,
+        DayOfWeek.saturday => context.l10n.dayOfWeekSaturday,
+        DayOfWeek.sunday => context.l10n.dayOfWeekSunday,
+        null => context.l10n.dayOfWeekAny
       };
 
   String _formatTimeAgo(BuildContext context, DateTime? dateTime) {
@@ -89,10 +90,10 @@ class TaskHint extends StatelessWidget {
     final days = DateTime.now().difference(dateTime).inDays;
 
     if (days == 0) {
-      return "Dzisiaj";
+      return context.l10n.today;
     }
 
-    return "$days dni temu";
+    return context.l10n.nDaysAgo(days);
   }
 }
 

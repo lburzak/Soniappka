@@ -1,0 +1,43 @@
+{
+  "ratingUndefined": "Nieokreślone",
+  "depressionLevelNone": "Brak depresji",
+  "depressionLevelMild": "Łagodna depresja",
+  "depressionLevelModerate": "Umiarkowana depresja",
+  "depressionLevelSevere": "Ciężka depresja",
+  "dayPhaseDay": "W ciągu dnia",
+  "dayPhaseMorning": "Rano",
+  "dayPhaseEvening": "Wieczorem",
+  "dayPhaseAllDay": "Codziennie",
+  "dayOfWeekMonday": "Poniedziałek",
+  "dayOfWeekTuesday": "Wtorek",
+  "dayOfWeekWednesday": "Środa",
+  "dayOfWeekThursday": "Czwartek",
+  "dayOfWeekFriday": "Piątek",
+  "dayOfWeekSaturday": "Sobota",
+  "dayOfWeekSunday": "Niedziela",
+  "dayOfWeekAny": "W tygodniu",
+  "today": "Dzisiaj",
+  "nDaysAgo": "{days} dni temu",
+  "@nDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "symptomAnxiety": "Niepokój",
+  "symptomIrritability": "Drażliwość",
+  "symptomSleepiness": "Senność",
+  "ratingAnxietyQuestion": "Jak oceniasz swój poziom niepokoju?",
+  "ratingAnxietyTitleLevel0": "Bardzo spokojna",
+  "ratingAnxietyDescriptionLevel0": "Czułam się całkowicie spokojna i zrelaksowana. Nie było wtedy miejsca na niepokojące myśli ani lęki.",
+  "ratingAnxietyTitleLevel1": "Spokojna",
+  "ratingAnxietyDescriptionLevel1": "Odczuwałam pewien spokój, ale mogły pojawić się lekkie uczucia niepewności czy niespokoju. Jednak były one na tyle minimalne, że nie przeszkadzały mi w codziennych aktywnościach.",
+  "ratingAnxietyTitleLevel2": "Umiarkowanie zaniepokojona",
+  "ratingAnxietyDescriptionLevel2": "Odczuwałam większą dawkę niepewności i zmartwień. Miałam pewne lęki i obawy związane z sytuacjami życiowymi, ale nadal potrafiłam funkcjonować stosunkowo normalnie.",
+  "ratingAnxietyTitleLevel3": "Bardzo zaniepokojona",
+  "ratingAnxietyDescriptionLevel3": "Odczuwałam silne uczucia niepokoju i lęku. Moje myśli były skoncentrowane na negatywnych scenariuszach, co mogło utrudniać mi normalne funkcjonowanie i podejmowanie decyzji.",
+  "ratingAnxietyTitleLevel4": "Skrajnie zaniepokojona",
+  "ratingAnxietyDescriptionLevel4": "Byłam przytłoczona lękiem i niepokojem, co prowadziło do znacznego pogorszenia jakości życia. Zmaganie się z codziennymi wyzwaniami stało się trudne, a moje emocje wydawały się niekontrolowane."
+}
