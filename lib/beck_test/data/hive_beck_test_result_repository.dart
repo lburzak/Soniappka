@@ -22,6 +22,8 @@ class DateTimeBeckTestId implements BeckTestId {
 
   DateTimeBeckTestId(DateTime dateTime) : value = dateTime.dayHashCode;
 
+  DateTimeBeckTestId.fromDayHashCode(int dayHashCode) : value = dayHashCode;
+
   @override
   String serialize() {
     return value.toString();

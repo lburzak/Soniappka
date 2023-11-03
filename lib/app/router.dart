@@ -4,7 +4,6 @@ import 'package:easy_beck/app/app_router.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
 import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/data/hive_beck_test_result_repository.dart';
-import 'package:easy_beck/beck_test/data/in_memory_beck_test_result_repository.dart';
 import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
@@ -341,7 +340,7 @@ class RouterContainer extends KiwiContainer {
 
     registerFactory<BeckTestResultPageBuilder>(
         (container) => (context, idParameter) {
-              final id = InMemoryBeckTestId.deserialize(idParameter);
+              final id = DateTimeBeckTestId.fromDayHashCode(int.parse(idParameter));
               return BeckTestResultPage(
                   getBeckTestResult: beckTestResultContainer(), id: id);
             });
