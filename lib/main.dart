@@ -43,12 +43,12 @@ class MyApp extends StatelessWidget {
         loader: loader,
         builder: (context) =>
             MaterialApp.router(
-                title: 'Flutter Demo',
+                title: "Soniappka",
                 routerConfig: routerConfig,
                 supportedLocales: const [Locale("pl")],
                 locale: const Locale("pl"),
                 localizationsDelegates: const [
-                  AppLocalizations.delegate, // Add this line
+                  AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
