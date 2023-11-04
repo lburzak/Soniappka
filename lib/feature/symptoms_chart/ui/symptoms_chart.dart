@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+const _bdiAxisName = "bdiAxis";
+
 class SymptomsChart extends StatelessWidget {
   final Stream<SymptomsChartState> state;
 
@@ -32,8 +34,7 @@ class SymptomsChart extends StatelessWidget {
               axisLabelFormatter:
                   (AxisLabelRenderDetails axisLabelRenderArgs) =>
                       ChartAxisLabel(
-                          DateFormat(
-                                  axisLabelRenderArgs.currentDateFormat, "pl")
+                          DateFormat(axisLabelRenderArgs.currentDateFormat)
                               .format(DateTime.fromMillisecondsSinceEpoch(
                                   axisLabelRenderArgs.value.toInt())),
                           const TextStyle()),
@@ -49,7 +50,7 @@ class SymptomsChart extends StatelessWidget {
             ),
             axes: [
               NumericAxis(
-                  name: "bdiAxis",
+                  name: _bdiAxisName,
                   title: AxisTitle(
                       text: context.l10n.beckTestIndicator,
                       textStyle: Theme.of(context).textTheme.labelLarge),
@@ -91,7 +92,7 @@ class SymptomsChart extends StatelessWidget {
                   legendItemText: context.l10n.beckTestIndicator,
                   xValueMapper: (value, _) => value.submissionDateTime,
                   yValueMapper: (value, _) => value.points,
-                  yAxisName: 'bdiAxis')
+                  yAxisName: _bdiAxisName)
             ],
           );
         });
