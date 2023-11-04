@@ -1,6 +1,6 @@
 import 'package:easy_beck/feature/symptom_page/symptom_page.dart';
 import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
-import 'package:easy_beck/feature/symptom_prompt/ui/irritability_prompt.dart';
+import 'package:easy_beck/feature/symptom_prompt/ui/sleepiness_prompt.dart';
 import 'package:flutter/material.dart';
 
 class SleepinessPage extends StatelessWidget {
@@ -17,7 +17,7 @@ class SleepinessPage extends StatelessWidget {
             tag: "icon/sleepiness",
             child:
                 Image(height: 100, image: AssetImage("assets/sleeping.png"))),
-        ratings: irritabilityRatings,
+        ratings: sleepinessRatings,
         viewModel: viewModel);
   }
 }
