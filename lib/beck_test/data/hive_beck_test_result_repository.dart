@@ -72,7 +72,7 @@ class HiveBeckTestResultRepository
     return _box.values
         .map((e) => e.submissionDateTime)
         .sorted((a, b) => a.compareTo(b))
-        .firstOrNull;
+        .lastOrNull;
   }
 
   @override
