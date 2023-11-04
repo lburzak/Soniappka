@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/symptom_log_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_data_merger.dart';
@@ -22,7 +23,8 @@ class SymptomsChartController {
                   sleepinessLogs: sleepinessLogs,
                   irritabilityLogs: irritabilityLogs,
                   anxietyLogs: anxietyLogs),
-              testResults: beckTestResults.toList()));
+              testResults: beckTestResults.toList().sorted((a, b) =>
+                  a.submissionDateTime.compareTo(b.submissionDateTime))));
 
   SymptomsChartController(
       this._sleepinessLogRepository,

@@ -13,7 +13,7 @@ class JsonFileBeckRepository
 
   Future<BeckSchema> get schema =>
       schemaCache.runOnce(() => rootBundle.loadStructuredData(
-          "assets/beck.json",
+          "assets/beck_prod.json",
           (value) async => BeckSchemaMapper.fromJson(value)));
 
   @override

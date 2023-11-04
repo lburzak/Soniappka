@@ -29,6 +29,7 @@
   "symptomAnxiety": "Niepokój",
   "symptomIrritability": "Drażliwość",
   "symptomSleepiness": "Senność",
+  "beckTestIndicator": "BDI",
   "ratingAnxietyQuestion": "Jak oceniasz swój poziom niepokoju?",
   "ratingAnxietyTitleLevel0": "Bardzo spokojna",
   "ratingAnxietyDescriptionLevel0": "Czułam się całkowicie spokojna i zrelaksowana. Nie było wtedy miejsca na niepokojące myśli ani lęki.",
@@ -39,5 +40,6 @@
   "ratingAnxietyTitleLevel3": "Bardzo zaniepokojona",
   "ratingAnxietyDescriptionLevel3": "Odczuwałam silne uczucia niepokoju i lęku. Moje myśli były skoncentrowane na negatywnych scenariuszach, co mogło utrudniać mi normalne funkcjonowanie i podejmowanie decyzji.",
   "ratingAnxietyTitleLevel4": "Skrajnie zaniepokojona",
-  "ratingAnxietyDescriptionLevel4": "Byłam przytłoczona lękiem i niepokojem, co prowadziło do znacznego pogorszenia jakości życia. Zmaganie się z codziennymi wyzwaniami stało się trudne, a moje emocje wydawały się niekontrolowane."
+  "ratingAnxietyDescriptionLevel4": "Byłam przytłoczona lękiem i niepokojem, co prowadziło do znacznego pogorszenia jakości życia. Zmaganie się z codziennymi wyzwaniami stało się trudne, a moje emocje wydawały się niekontrolowane.",
+  "chartAxis_symptomsLevel": "Poziom symptomów"
 }
