@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart';
-import 'package:easy_beck/feature/symptoms_chart/domain/symptom_log_repository.dart';
+import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart';
+import 'package:easy_beck/domain/symptoms/repository/symptom_log_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_data_merger.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_state.dart';
 import 'package:rxdart/rxdart.dart';

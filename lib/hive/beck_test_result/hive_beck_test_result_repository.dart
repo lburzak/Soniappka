@@ -3,17 +3,12 @@ import 'package:easy_beck/domain/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/domain/beck_test/model/beck_test_result.dart';
 import 'package:easy_beck/common/day.dart';
 import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart';
-import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
-    as symptoms_chart;
 import 'package:easy_beck/hive/beck_test_result/date_time_beck_test_id.dart';
 import 'package:easy_beck/hive/beck_test_result/no_id.dart';
 import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HiveBeckTestResultRepository
-    implements
-        BeckTestResultRepository,
-        symptoms_chart.BeckTestResultRepository {
+class HiveBeckTestResultRepository implements BeckTestResultRepository {
   final Box<BeckTestResult> _box;
 
   HiveBeckTestResultRepository(this._box);

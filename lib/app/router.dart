@@ -25,8 +25,6 @@ import 'package:easy_beck/feature/symptom_page/ui/irritability_page.dart';
 import 'package:easy_beck/feature/symptom_page/ui/sleepiness_page.dart';
 import 'package:easy_beck/feature/symptom_page/service/symptom_page_controller.dart';
 import 'package:easy_beck/feature/symptom_page/model/symptom_page_view_model.dart';
-import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
-    as symptoms_chart;
 import 'package:easy_beck/domain/beck_test/repository/depression_level_repository.dart';
 import 'package:easy_beck/domain/beck_test/repository/question_repository.dart';
 import 'package:easy_beck/feature/beck_test/service/beck_test_controller.dart';
@@ -40,7 +38,7 @@ import 'package:easy_beck/feature/dashboard/ui/dashboard.dart';
 import 'package:easy_beck/hive/hive_symptom_repository.dart';
 import 'package:easy_beck/domain/symptoms/use_case/log_symptom.dart';
 import 'package:easy_beck/domain/symptoms/use_case/observe_symptom_has_value_today.dart';
-import 'package:easy_beck/feature/symptoms_chart/domain/symptom_log_repository.dart';
+import 'package:easy_beck/domain/symptoms/repository/symptom_log_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_controller.dart';
 import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart.dart';
 import 'package:easy_beck/hive/beck_test_result/beck_test_result_adapter.dart';
@@ -52,6 +50,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stream_listener/flutter_stream_listener.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:quiver/time.dart';
+
+import '../domain/beck_test/repository/beck_test_result_repository.dart';
 
 class BeckTestDomainContainer extends KiwiContainer {
   BeckTestDomainContainer() : super.scoped() {
@@ -248,7 +248,7 @@ class SymptomsChartContainer extends KiwiContainer {
           name: symptom);
     }
 
-    registerFactory<symptoms_chart.BeckTestResultRepository>(
+    registerFactory<BeckTestResultRepository>(
         (container) => HiveBeckTestResultRepository(hiveContainer()));
     registerFactory((container) => SymptomsChartController(
         container("symptom/sleepiness"),
