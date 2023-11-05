@@ -46,6 +46,7 @@ import 'package:easy_beck/hive/adapter/beck_test_result_adapter.dart';
 import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
 import 'package:easy_beck/hive/hive_loader.dart';
 import 'package:easy_beck/isar/isar_container.dart';
+import 'package:easy_beck/page/journal/journal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stream_listener/flutter_stream_listener.dart';
 import 'package:kiwi/kiwi.dart';
@@ -259,6 +260,17 @@ class SymptomsChartContainer extends KiwiContainer {
   }
 }
 
+class JournalPageContainer extends KiwiContainer {
+  JournalPageContainer(
+      {required SymptomsChartContainer symptomsChartContainer})
+      : super.scoped() {
+    registerFactory<WidgetBuilder>(
+        (container) => (BuildContext context) => JournalPage(
+              symptomsChartBuilder: symptomsChartContainer(),
+            ));
+  }
+}
+
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
 final symptomPromptContainer = SymptomPromptContainer();
@@ -269,7 +281,8 @@ class RouterContainer extends KiwiContainer {
   RouterContainer(
       BeckTestQuestionnaireContainer Function(BuildContext context)
           beckTestQuestionnaireContainer,
-      DashboardContainer dashboardContainer)
+      DashboardContainer dashboardContainer,
+      JournalPageContainer journalPageContainer)
       : super.scoped() {
     registerSingleton(
         (container) => GlobalKey<NavigatorState>(debugLabel: "root"),
@@ -295,6 +308,7 @@ class RouterContainer extends KiwiContainer {
         shellNavigatorKey: container("shell"),
         scaffoldBuilder: container(),
         dashboardBuilder: dashboardContainer(),
+        journalBuilder: journalPageContainer(),
         beckTestBuilder: (context) =>
             beckTestQuestionnaireContainer(context)<WidgetBuilder>()(context),
         beckTestResultBuilder: container()));

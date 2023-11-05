@@ -19,8 +19,9 @@ void main() async {
   Intl.defaultLocale = "pl_PL";
   final isarContainer = IsarContainer();
   final routerContainer = RouterContainer(
-          (context) => BeckTestQuestionnaireContainer(context),
-      DashboardContainer(isarContainer));
+      (context) => BeckTestQuestionnaireContainer(context),
+      DashboardContainer(isarContainer),
+      JournalPageContainer(symptomsChartContainer: SymptomsChartContainer()));
 
   runApp(MyApp(
     routerConfig: routerContainer(),
@@ -42,50 +43,44 @@ class MyApp extends StatelessWidget {
           FlutterNativeSplash.remove();
         },
         loader: loader,
-        builder: (context) =>
-            MaterialApp.router(
-                title: "Soniappka",
-                routerConfig: routerConfig,
-                supportedLocales: const [Locale("pl")],
-                locale: const Locale("pl"),
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
+        builder: (context) => MaterialApp.router(
+            title: "Soniappka",
+            routerConfig: routerConfig,
+            supportedLocales: const [Locale("pl")],
+            locale: const Locale("pl"),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                extensions: [
+                  const Backgrounds(selected: Colors.white24),
+                  Borders(
+                      thin: Border.all(width: 0.5),
+                      regular: Border.all(width: 1)),
+                  const ExtraColors(modalBarrier: Colors.black38)
                 ],
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                    extensions: [
-                      const Backgrounds(selected: Colors.white24),
-                      Borders(
-                          thin: Border.all(width: 0.5),
-                          regular: Border.all(width: 1)
-                      ),
-                      const ExtraColors(modalBarrier: Colors.black38)
-                    ],
-                    colorScheme: ColorScheme.fromSeed(
-                        seedColor: Color(0xffA0C49D),
-                        background: const Color(0xffC4D7B2)),
-                    cardTheme: const CardTheme(
-                        surfaceTintColor: Color(0xffF4F2DE),
-                        color: Color(0xffF7FFE5)),
-                    // iconTheme: const IconThemeData(color: Color(0xffA0C49D)),
-                    useMaterial3: true,
-                    textTheme: font.copyWith(
-                        displayLarge: font.displayLarge?.copyWith(fontSize: 64),
-                        headlineLarge: GoogleFonts.amaticSc()
-                            .copyWith(
-                            fontSize: 32, fontWeight: FontWeight.bold),
-                        headlineSmall: font.headlineSmall?.copyWith(
-                            fontSize: 18, fontWeight: FontWeight.bold
-                        ),
-                        titleMedium: font.titleMedium?.copyWith(
-                            fontSize: 20
-                        ),
-                        labelLarge: font.labelLarge?.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        )))));
+                colorScheme: ColorScheme.fromSeed(
+                    seedColor: Color(0xffA0C49D),
+                    background: const Color(0xffC4D7B2)),
+                cardTheme: const CardTheme(
+                    surfaceTintColor: Color(0xffF4F2DE),
+                    color: Color(0xffF7FFE5)),
+                // iconTheme: const IconThemeData(color: Color(0xffA0C49D)),
+                useMaterial3: true,
+                textTheme: font.copyWith(
+                    displayLarge: font.displayLarge?.copyWith(fontSize: 64),
+                    headlineLarge: GoogleFonts.amaticSc()
+                        .copyWith(fontSize: 32, fontWeight: FontWeight.bold),
+                    headlineSmall: font.headlineSmall
+                        ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                    titleMedium: font.titleMedium?.copyWith(fontSize: 20),
+                    labelLarge: font.labelLarge?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    )))));
   }
 }
