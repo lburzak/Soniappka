@@ -52,7 +52,6 @@ import 'package:easy_beck/mood_tracker/data/in_memory_mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dart';
 import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
 import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
-import 'package:easy_beck/page/journal/journal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stream_listener/flutter_stream_listener.dart';
 import 'package:kiwi/kiwi.dart';
@@ -287,19 +286,6 @@ class SymptomsChartContainer extends KiwiContainer {
   }
 }
 
-class JournalPageContainer extends KiwiContainer {
-  JournalPageContainer(
-      {required SymptomsChartContainer symptomsChartContainer,
-      required BeckTestButtonContainer beckTestButtonContainer})
-      : super.scoped() {
-    registerFactory<WidgetBuilder>(
-        (container) => (BuildContext context) => JournalPage(
-              symptomsChartBuilder: symptomsChartContainer(),
-              beckTestButtonBuilder: beckTestButtonContainer(),
-            ));
-  }
-}
-
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
 final moodTrackerContainer = MoodTrackerContainer();
@@ -312,8 +298,7 @@ class RouterContainer extends KiwiContainer {
   RouterContainer(
       BeckTestQuestionnaireContainer Function(BuildContext context)
           beckTestQuestionnaireContainer,
-      DashboardContainer dashboardContainer,
-      JournalPageContainer journalPageContainer)
+      DashboardContainer dashboardContainer)
       : super.scoped() {
     registerSingleton(
         (container) => GlobalKey<NavigatorState>(debugLabel: "root"),
@@ -339,7 +324,6 @@ class RouterContainer extends KiwiContainer {
         shellNavigatorKey: container("shell"),
         scaffoldBuilder: container(),
         dashboardBuilder: dashboardContainer(),
-        journalBuilder: journalPageContainer(),
         beckTestBuilder: (context) =>
             beckTestQuestionnaireContainer(context)<WidgetBuilder>()(context),
         beckTestResultBuilder: container()));

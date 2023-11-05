@@ -17,7 +17,6 @@ typedef BeckTestResultPageBuilder = Widget Function(
 
 class AppRouter extends GoRouter {
   final WidgetBuilder dashboardBuilder;
-  final WidgetBuilder journalBuilder;
   final WidgetBuilder beckTestBuilder;
   final BeckTestResultPageBuilder beckTestResultBuilder;
   final ScaffoldBuilder scaffoldBuilder;
@@ -29,7 +28,6 @@ class AppRouter extends GoRouter {
       {required GlobalKey<NavigatorState> rootNavigatorKey,
       required GlobalKey<NavigatorState> shellNavigatorKey,
       required this.dashboardBuilder,
-      required this.journalBuilder,
       required this.scaffoldBuilder,
       required this.beckTestBuilder,
       required this.beckTestResultBuilder,
@@ -55,23 +53,6 @@ class AppRouter extends GoRouter {
                                 }
                               ));
                         }),
-                    GoRoute(
-                        path: "/journal",
-                        pageBuilder: (context, state) => CustomTransitionPage(
-                            key: state.pageKey,
-                            child: journalBuilder(context),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              const begin = Offset(1.0, 0.0);
-                              const end = Offset.zero;
-                              final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: Curves.easeOut));
-                              final offsetAnimation = animation.drive(tween);
-
-                              return SlideTransition(
-                                position: offsetAnimation,
-                                child: child,
-                              );
-                            })),
                     GoRoute(
                         path: "/statistics",
                         pageBuilder: (context, state) => CustomSlideTransition(

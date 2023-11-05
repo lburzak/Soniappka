@@ -17,10 +17,7 @@ void main() async {
   final isarContainer = IsarContainer();
   final routerContainer = RouterContainer(
       (context) => BeckTestQuestionnaireContainer(context),
-      DashboardContainer(isarContainer),
-      JournalPageContainer(
-          symptomsChartContainer: SymptomsChartContainer(),
-          beckTestButtonContainer: BeckTestButtonContainer()));
+      DashboardContainer(isarContainer));
 
   runApp(MyApp(
     routerConfig: routerContainer(),
