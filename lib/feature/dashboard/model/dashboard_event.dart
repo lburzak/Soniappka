@@ -1,5 +1,5 @@
 import 'package:easy_beck/feature/actions/model/task.dart';
-import 'package:easy_beck/feature/dashboard/model/symptom_type.dart';
+import 'package:easy_beck/domain/symptoms/model/symptom_type.dart';
 
 sealed class DashboardEvent {
   const DashboardEvent();

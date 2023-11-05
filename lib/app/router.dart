@@ -16,7 +16,7 @@ import 'package:easy_beck/feature/actions/usecase/get_task_status.dart';
 import 'package:easy_beck/feature/actions/usecase/toggle_task.dart';
 import 'package:easy_beck/feature/actions/usecase/watch_beck_test_task.dart';
 import 'package:easy_beck/feature/actions/usecase/watch_tasks.dart';
-import 'package:easy_beck/feature/dashboard/use_case/check_beck_test_solved.dart';
+import 'package:easy_beck/domain/beck_test/usecase/check_beck_test_solved.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/ui/material_dashboard_router.dart';
 import 'package:easy_beck/feature/dashboard/service/new_dashboard_controller.dart';
