@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:easy_beck/app/app_router.dart';
 import 'package:easy_beck/domain/symptoms/repository/symptom_repository.dart';
-import 'package:easy_beck/feature/beck_test/data/hive_beck_test_result_repository.dart';
-import 'package:easy_beck/feature/beck_test/data/json_file_beck_repository.dart';
-import 'package:easy_beck/feature/beck_test/repository/beck_test_result_repository.dart'
+import 'package:easy_beck/hive/beck_test_result/date_time_beck_test_id.dart';
+import 'package:easy_beck/hive/beck_test_result/hive_beck_test_result_repository.dart';
+import 'package:easy_beck/json/beck_test/json_file_beck_repository.dart';
+import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
 import 'package:easy_beck/common/loader.dart';
 import 'package:easy_beck/feature/actions/data/default_day_phase_clock.dart';
@@ -26,14 +27,14 @@ import 'package:easy_beck/feature/symptom_page/service/symptom_page_controller.d
 import 'package:easy_beck/feature/symptom_page/model/symptom_page_view_model.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
     as symptoms_chart;
-import 'package:easy_beck/feature/beck_test/repository/depression_level_repository.dart';
-import 'package:easy_beck/feature/beck_test/repository/question_repository.dart';
+import 'package:easy_beck/domain/beck_test/repository/depression_level_repository.dart';
+import 'package:easy_beck/domain/beck_test/repository/question_repository.dart';
 import 'package:easy_beck/feature/beck_test/service/beck_test_controller.dart';
 import 'package:easy_beck/feature/beck_test/service/beck_test_router.dart';
 import 'package:easy_beck/feature/beck_test/ui/beck_test_result_page.dart';
 import 'package:easy_beck/feature/beck_test/ui/beck_test_view.dart';
-import 'package:easy_beck/feature/beck_test/usecase/get_beck_test_result.dart';
-import 'package:easy_beck/feature/beck_test/usecase/submit_beck_test.dart';
+import 'package:easy_beck/domain/beck_test/usecase/get_beck_test_result.dart';
+import 'package:easy_beck/domain/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/common/ui/typed_widget_builder.dart';
 import 'package:easy_beck/feature/dashboard/ui/dashboard.dart';
 import 'package:easy_beck/hive/hive_symptom_repository.dart';
@@ -42,7 +43,7 @@ import 'package:easy_beck/domain/symptoms/use_case/observe_symptom_has_value_tod
 import 'package:easy_beck/feature/symptoms_chart/domain/symptom_log_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_controller.dart';
 import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart.dart';
-import 'package:easy_beck/hive/adapter/beck_test_result_adapter.dart';
+import 'package:easy_beck/hive/beck_test_result/beck_test_result_adapter.dart';
 import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
 import 'package:easy_beck/hive/hive_loader.dart';
 import 'package:easy_beck/isar/isar_container.dart';

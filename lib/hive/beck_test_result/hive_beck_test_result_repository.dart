@@ -1,37 +1,18 @@
 import 'package:collection/collection.dart';
-import 'package:easy_beck/feature/beck_test/model/beck_test_id.dart';
-import 'package:easy_beck/feature/beck_test/model/beck_test_result.dart';
-import 'package:easy_beck/feature/beck_test/repository/beck_test_result_repository.dart'
-    as beck_test;
+import 'package:easy_beck/domain/beck_test/model/beck_test_id.dart';
+import 'package:easy_beck/domain/beck_test/model/beck_test_result.dart';
 import 'package:easy_beck/common/day.dart';
+import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
     as symptoms_chart;
+import 'package:easy_beck/hive/beck_test_result/date_time_beck_test_id.dart';
+import 'package:easy_beck/hive/beck_test_result/no_id.dart';
 import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
 
-class NoId implements BeckTestId {
-  @override
-  String serialize() {
-    return "0";
-  }
-}
-
-class DateTimeBeckTestId implements BeckTestId {
-  final int value;
-
-  DateTimeBeckTestId(DateTime dateTime) : value = dateTime.dayHashCode;
-
-  DateTimeBeckTestId.fromDayHashCode(int dayHashCode) : value = dayHashCode;
-
-  @override
-  String serialize() {
-    return value.toString();
-  }
-}
-
 class HiveBeckTestResultRepository
     implements
-        beck_test.BeckTestResultRepository,
+        BeckTestResultRepository,
         symptoms_chart.BeckTestResultRepository {
   final Box<BeckTestResult> _box;
 
@@ -81,8 +62,4 @@ class HiveBeckTestResultRepository
         .watch()
         .flatMap((event) => findSubmissionDateTimeOfLast().asStream());
   }
-}
-
-extension DayHash on DateTime {
-  int get dayHashCode => year.hashCode ^ month.hashCode ^ day.hashCode;
 }

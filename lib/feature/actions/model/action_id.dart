@@ -1,3 +1,3 @@
-import 'package:easy_beck/feature/beck_test/model/identifier.dart';
+import 'package:easy_beck/domain/common/identifier.dart';
 
 abstract interface class ActionId implements Identifier {}

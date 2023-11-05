@@ -1,4 +1,4 @@
-import 'package:easy_beck/feature/beck_test/model/beck_test_id.dart';
+import 'package:easy_beck/domain/beck_test/model/beck_test_id.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
