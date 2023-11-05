@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:easy_beck/domain/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/domain/beck_test/model/beck_test_result.dart';
-import 'package:easy_beck/common/day.dart';
+import 'package:easy_beck/domain/common/day.dart';
 import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart';
 import 'package:easy_beck/hive/beck_test_result/date_time_beck_test_id.dart';
 import 'package:easy_beck/hive/beck_test_result/no_id.dart';

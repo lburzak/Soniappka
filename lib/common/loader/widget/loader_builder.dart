@@ -1,5 +1,5 @@
-import 'package:easy_beck/common/loader.dart';
-import 'package:flutter/material.dart';
+import 'package:easy_beck/common/loader/loader.dart';
+import 'package:flutter/widgets.dart';
 
 class LoaderBuilder extends StatelessWidget {
   final Loader loader;
@@ -20,6 +20,6 @@ class LoaderBuilder extends StatelessWidget {
         builder: (context, snapshot) =>
             snapshot.connectionState == ConnectionState.done
                 ? builder(context)
-                : const CircularProgressIndicator());
+                : const SizedBox.shrink());
   }
 }

@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/day.dart';
+import 'package:easy_beck/domain/common/day.dart';
 import 'package:easy_beck/domain/symptoms/model/symptom_log.dart';
 import 'package:easy_beck/domain/symptoms/repository/symptom_repository.dart';
 import 'package:easy_beck/domain/actions/use_case/toggle_task.dart';
@@ -22,7 +22,7 @@ class NewDashboardController {
   final CheckBeckTestStatusForDay _checkBeckTestSolvedForDay;
 
   Stream<DashboardState> createState() =>
-      Stream.value(_clock.today()).switchMap((today) => Rx.combineLatest4(
+      Stream.value(_clock.now().toDay()).switchMap((today) => Rx.combineLatest4(
           _anxietyRepository.observeSymptomLevelForDay(today),
           _irritabilityRepository.observeSymptomLevelForDay(today),
           _sleepinessRepository.observeSymptomLevelForDay(today),
@@ -36,10 +36,10 @@ class NewDashboardController {
   void handleEvent(DashboardEvent event) {
     switch (event) {
       case SetLevel(symptomType: var type, level: var level):
-        _getRepositoryForType(type)
-            .upsertSymptomLog(SymptomLog(day: _clock.today(), level: level));
+        _getRepositoryForType(type).upsertSymptomLog(
+            SymptomLog(day: _clock.now().toDay(), level: level));
       case UnsetLevel(symptomType: var type):
-        _getRepositoryForType(type).deleteSymptomLog(_clock.today());
+        _getRepositoryForType(type).deleteSymptomLog(_clock.now().toDay());
       case TaskToggled(task: var task):
         _toggleTask(task);
       case ShowTaskCreator():

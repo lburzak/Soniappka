@@ -1,8 +1,8 @@
 import 'package:easy_beck/feature/actions/data/beck_test_action.dart';
 import 'package:easy_beck/domain/actions/model/task.dart';
 import 'package:easy_beck/feature/actions/widget/task_tile.dart';
-import 'package:easy_beck/theme/colors.dart';
-import 'package:easy_beck/theme/theme_getter.dart';
+import 'package:easy_beck/common/ui/theme/colors.dart';
+import 'package:easy_beck/common/ui/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class TasksGrid extends StatelessWidget {

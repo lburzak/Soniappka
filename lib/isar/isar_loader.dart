@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/one_time_loader.dart';
+import 'package:easy_beck/common/loader/one_time_loader.dart';
 import 'package:easy_beck/isar/actions/local_action.dart';
 import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';

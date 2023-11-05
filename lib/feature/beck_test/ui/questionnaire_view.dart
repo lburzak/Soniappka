@@ -1,6 +1,6 @@
 import 'package:easy_beck/feature/beck_test/ui/page_indicator.dart';
 import 'package:easy_beck/feature/beck_test/ui/question_page.dart';
-import 'package:easy_beck/common/ui/pastel_color.dart';
+import 'package:easy_beck/common/ui/theme/pastel_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

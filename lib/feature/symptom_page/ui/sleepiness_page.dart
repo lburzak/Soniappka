@@ -1,6 +1,6 @@
-import 'package:easy_beck/common/asset_names.dart';
-import 'package:easy_beck/common/hero_tags.dart';
-import 'package:easy_beck/common/ratings/sleepiness_ratings.dart';
+import 'package:easy_beck/common/ui/values/asset_names.dart';
+import 'package:easy_beck/common/ui/values/hero_tags.dart';
+import 'package:easy_beck/common/ui/values/sleepiness_ratings.dart';
 import 'package:easy_beck/feature/symptom_page/ui/symptom_page.dart';
 import 'package:easy_beck/feature/symptom_page/model/symptom_page_view_model.dart';
 import 'package:easy_beck/l10n/localizations.dart';

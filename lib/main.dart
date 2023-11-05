@@ -1,11 +1,11 @@
 import 'package:easy_beck/app/router.dart';
-import 'package:easy_beck/common/loader.dart';
-import 'package:easy_beck/common/multi_loader.dart';
-import 'package:easy_beck/common/ui/loader_builder.dart';
+import 'package:easy_beck/common/loader/loader.dart';
+import 'package:easy_beck/common/loader/multi_loader.dart';
+import 'package:easy_beck/common/loader/widget/loader_builder.dart';
 import 'package:easy_beck/isar/isar_container.dart';
-import 'package:easy_beck/theme/backgrounds.dart';
-import 'package:easy_beck/theme/borders.dart';
-import 'package:easy_beck/theme/colors.dart';
+import 'package:easy_beck/common/ui/theme/backgrounds.dart';
+import 'package:easy_beck/common/ui/theme/borders.dart';
+import 'package:easy_beck/common/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';

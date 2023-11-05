@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/common/loader/loader.dart';
 
 class MultiLoader implements Loader {
   final List<Loader> loaders;

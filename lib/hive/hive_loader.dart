@@ -1,6 +1,6 @@
 import 'package:easy_beck/domain/beck_test/model/beck_test_result.dart';
 import 'package:easy_beck/domain/symptoms/model/symptom_log.dart';
-import 'package:easy_beck/common/one_time_loader.dart';
+import 'package:easy_beck/common/loader/one_time_loader.dart';
 import 'package:easy_beck/hive/beck_test_result/beck_test_result_adapter.dart';
 import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
 import 'package:hive_flutter/hive_flutter.dart';

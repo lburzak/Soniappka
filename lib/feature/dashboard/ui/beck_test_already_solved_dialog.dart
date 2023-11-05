@@ -1,5 +1,5 @@
 import 'package:easy_beck/l10n/localizations.dart';
-import 'package:easy_beck/theme/theme_getter.dart';
+import 'package:easy_beck/common/ui/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

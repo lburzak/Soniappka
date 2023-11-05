@@ -7,7 +7,7 @@ import 'package:easy_beck/hive/beck_test_result/hive_beck_test_result_repository
 import 'package:easy_beck/json/beck_test/json_file_beck_repository.dart';
 import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
-import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/common/loader/loader.dart';
 import 'package:easy_beck/common/service/default_day_phase_clock.dart';
 import 'package:easy_beck/in_memory/in_memory_action_completion_repository.dart';
 import 'package:easy_beck/domain/actions/repository/action_completion_repository.dart';
@@ -33,7 +33,7 @@ import 'package:easy_beck/feature/beck_test/ui/beck_test_result_page.dart';
 import 'package:easy_beck/feature/beck_test/ui/beck_test_view.dart';
 import 'package:easy_beck/domain/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/domain/beck_test/usecase/submit_beck_test.dart';
-import 'package:easy_beck/common/ui/typed_widget_builder.dart';
+import 'package:easy_beck/common/ui/types/typed_widget_builder.dart';
 import 'package:easy_beck/feature/dashboard/ui/dashboard.dart';
 import 'package:easy_beck/hive/hive_symptom_repository.dart';
 import 'package:easy_beck/domain/symptoms/use_case/log_symptom.dart';
@@ -45,7 +45,7 @@ import 'package:easy_beck/hive/beck_test_result/beck_test_result_adapter.dart';
 import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
 import 'package:easy_beck/hive/hive_loader.dart';
 import 'package:easy_beck/isar/isar_container.dart';
-import 'package:easy_beck/page/journal/journal_page.dart';
+import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stream_listener/flutter_stream_listener.dart';
 import 'package:kiwi/kiwi.dart';
@@ -266,7 +266,7 @@ class JournalPageContainer extends KiwiContainer {
       {required SymptomsChartContainer symptomsChartContainer})
       : super.scoped() {
     registerFactory<WidgetBuilder>(
-        (container) => (BuildContext context) => JournalPage(
+        (container) => (BuildContext context) => SymptomsChartPage(
               symptomsChartBuilder: symptomsChartContainer(),
             ));
   }

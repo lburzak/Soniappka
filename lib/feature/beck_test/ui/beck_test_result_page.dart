@@ -1,7 +1,7 @@
 import 'package:easy_beck/domain/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/domain/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/feature/beck_test/ui/result_view.dart';
-import 'package:easy_beck/common/ui/safe_future_builder.dart';
+import 'package:easy_beck/common/ui/widget/safe_future_builder.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

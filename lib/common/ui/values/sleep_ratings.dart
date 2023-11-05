@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/ui/rating_selector.dart';
+import 'package:easy_beck/common/ui/widget/rating_selector.dart';
 
 const sleepRatings = [
   Rating(

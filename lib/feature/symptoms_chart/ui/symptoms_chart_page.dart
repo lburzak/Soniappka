@@ -1,11 +1,11 @@
-import 'package:easy_beck/common/ui/typed_widget_builder.dart';
+import 'package:easy_beck/common/ui/types/typed_widget_builder.dart';
 import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart.dart';
 import 'package:flutter/material.dart';
 
-class JournalPage extends StatelessWidget {
+class SymptomsChartPage extends StatelessWidget {
   final TypedWidgetBuilder<SymptomsChart> symptomsChartBuilder;
 
-  const JournalPage({super.key, required this.symptomsChartBuilder});
+  const SymptomsChartPage({super.key, required this.symptomsChartBuilder});
 
   @override
   Widget build(BuildContext context) {

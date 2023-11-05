@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/ui/rating_slider.dart';
+import 'package:easy_beck/common/ui/widget/rating_slider.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 

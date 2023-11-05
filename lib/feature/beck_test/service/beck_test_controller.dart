@@ -5,7 +5,7 @@ import 'package:easy_beck/domain/beck_test/repository/question_repository.dart';
 import 'package:easy_beck/domain/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/feature/beck_test/model/state.dart';
 import 'package:easy_beck/feature/beck_test/service/beck_test_router.dart';
-import 'package:easy_beck/common/map_extensions.dart';
+import 'package:easy_beck/common/map/map_extensions.dart';
 import 'package:rxdart/rxdart.dart';
 
 const _initialState = BeckTestState(

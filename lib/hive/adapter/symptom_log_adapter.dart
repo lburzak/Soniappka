@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/day.dart';
+import 'package:easy_beck/domain/common/day.dart';
 import 'package:easy_beck/domain/symptoms/model/symptom_log.dart';
 import 'package:hive/hive.dart';
 

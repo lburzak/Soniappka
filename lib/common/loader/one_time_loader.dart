@@ -1,5 +1,5 @@
 import 'package:async/async.dart';
-import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/common/loader/loader.dart';
 import 'package:meta/meta.dart';
 
 abstract class OneTimeLoader implements Loader {

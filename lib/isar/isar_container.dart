@@ -1,4 +1,4 @@
-import 'package:easy_beck/common/loader.dart';
+import 'package:easy_beck/common/loader/loader.dart';
 import 'package:easy_beck/isar/actions/isar_action_repository.dart';
 import 'package:easy_beck/domain/actions/repository/action_repository.dart';
 import 'package:easy_beck/isar/isar_loader.dart';
