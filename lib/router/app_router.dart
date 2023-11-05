@@ -1,15 +1,7 @@
+import 'package:easy_beck/common/routing/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-
-class CustomSlideTransition extends CustomTransitionPage<void> {
-  CustomSlideTransition({super.key, required super.child})
-      : super(
-          transitionDuration: const Duration(milliseconds: 250),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child),
-        );
-}
 
 typedef ScaffoldBuilder = Widget Function(BuildContext context, Widget child);
 typedef BeckTestResultPageBuilder = Widget Function(
@@ -38,25 +30,19 @@ class AppRouter extends GoRouter {
       required this.anxietyPageBuilder})
       : super(
             navigatorKey: rootNavigatorKey,
-            initialLocation: "/dashboard",
+            initialLocation: RouteNames.dashboard,
             routes: [
               ShellRoute(
                   builder: (context, state, child) =>
                       scaffoldBuilder(context, child),
                   routes: [
                     GoRoute(
-                        path: "/dashboard",
-                        pageBuilder: (context, state) {
-                          return CustomSlideTransition(
-                              key: state.pageKey,
-                              child: Builder(
-                                builder: (context) {
-                                  return dashboardBuilder(context);
-                                }
-                              ));
+                        path: RouteNames.dashboard,
+                        builder: (context, state) {
+                          return dashboardBuilder(context);
                         }),
                     GoRoute(
-                        path: "/journal",
+                        path: RouteNames.journal,
                         pageBuilder: (context, state) => CustomTransitionPage(
                             key: state.pageKey,
                             child: journalBuilder(context),
@@ -64,29 +50,27 @@ class AppRouter extends GoRouter {
                                 secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);
                               const end = Offset.zero;
-                              final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: Curves.easeOut));
+                              final tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: Curves.easeOut));
                               final offsetAnimation = animation.drive(tween);
 
                               return SlideTransition(
                                 position: offsetAnimation,
                                 child: child,
                               );
-                            })),
-                    GoRoute(
-                        path: "/statistics",
-                        pageBuilder: (context, state) => CustomSlideTransition(
-                            key: state.pageKey, child: const Text("data"))),
+                            }))
                   ]),
               GoRoute(
-                  path: "/beck-test",
+                  path: RouteNames.beckTest,
                   builder: (context, state) => beckTestBuilder(context)),
               GoRoute(
-                  path: "/beck-test/:beckTestId/result",
+                  path:
+                      "${RouteNames.beckTest}/:${_PathParams.beckTestId}/${RouteNames.beckTestResult}",
                   builder: (context, state) => beckTestResultBuilder(
-                      context, state.pathParameters["beckTestId"]!)),
+                      context, state.pathParameters[_PathParams.beckTestId]!)),
               GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
-                  path: "/symptom/irritability",
+                  path: RouteNames.irritabilityPage,
                   pageBuilder: (context, state) => CustomTransitionPage(
                       opaque: false,
                       barrierDismissible: true,
@@ -101,7 +85,7 @@ class AppRouter extends GoRouter {
                       })),
               GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
-                  path: "/symptom/sleepiness",
+                  path: RouteNames.sleepinessPage,
                   pageBuilder: (context, state) => CustomTransitionPage(
                       opaque: false,
                       barrierDismissible: true,
@@ -116,7 +100,7 @@ class AppRouter extends GoRouter {
                       })),
               GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
-                  path: "/symptom/anxiety",
+                  path: RouteNames.anxietyPage,
                   pageBuilder: (context, state) => CustomTransitionPage(
                       opaque: false,
                       barrierDismissible: true,
@@ -130,4 +114,8 @@ class AppRouter extends GoRouter {
                         );
                       }))
             ]);
+}
+
+abstract class _PathParams {
+  static const beckTestId = "beckTestId";
 }

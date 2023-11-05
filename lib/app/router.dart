@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easy_beck/app/app_router.dart';
+import 'package:easy_beck/router/app_router.dart';
 import 'package:easy_beck/domain/symptoms/repository/symptom_repository.dart';
 import 'package:easy_beck/hive/beck_test_result/date_time_beck_test_id.dart';
 import 'package:easy_beck/hive/beck_test_result/hive_beck_test_result_repository.dart';
