@@ -1,4 +1,4 @@
-import 'package:easy_beck/beck_test/model/identifier.dart';
+import 'package:easy_beck/feature/beck_test/model/identifier.dart';
 
 class IntIdentifier implements Identifier {
   final int value;

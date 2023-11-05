@@ -1,4 +1,4 @@
-import 'package:easy_beck/beck_test/ui/page_icon.dart';
+import 'package:easy_beck/feature/beck_test/ui/page_icon.dart';
 import 'package:flutter/material.dart';
 
 class PageIndicator extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:async/async.dart';
-import 'package:easy_beck/beck_test/data/model/beck_schema.dart'
+import 'package:easy_beck/feature/beck_test/data/model/beck_schema.dart'
     show BeckSchema, BeckSchemaMapper;
-import 'package:easy_beck/beck_test/model/depression_level.dart';
-import 'package:easy_beck/beck_test/model/question.dart';
-import 'package:easy_beck/beck_test/repository/depression_level_repository.dart';
-import 'package:easy_beck/beck_test/repository/question_repository.dart';
+import 'package:easy_beck/feature/beck_test/model/depression_level.dart';
+import 'package:easy_beck/feature/beck_test/model/question.dart';
+import 'package:easy_beck/feature/beck_test/repository/depression_level_repository.dart';
+import 'package:easy_beck/feature/beck_test/repository/question_repository.dart';
 import 'package:flutter/services.dart';
 
 class JsonFileBeckRepository

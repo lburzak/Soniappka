@@ -1,5 +1,5 @@
-import 'package:easy_beck/beck_test/model/answer.dart';
-import 'package:easy_beck/beck_test/model/identifier.dart';
+import 'package:easy_beck/feature/beck_test/model/answer.dart';
+import 'package:easy_beck/feature/beck_test/model/identifier.dart';
 
 class Question {
   final Identifier id;

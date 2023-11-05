@@ -1,6 +1,6 @@
-import 'package:easy_beck/beck_test/data/hive_beck_test_result_repository.dart';
-import 'package:easy_beck/beck_test/model/beck_test_result.dart';
-import 'package:easy_beck/beck_test/model/depression_level.dart';
+import 'package:easy_beck/feature/beck_test/data/hive_beck_test_result_repository.dart';
+import 'package:easy_beck/feature/beck_test/model/beck_test_result.dart';
+import 'package:easy_beck/feature/beck_test/model/depression_level.dart';
 import 'package:hive/hive.dart';
 
 const beckTestResultTypeId = 101;

@@ -1,4 +1,4 @@
-import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart';
+import 'package:easy_beck/feature/beck_test/repository/beck_test_result_repository.dart';
 import 'package:easy_beck/common/day.dart';
 
 class CheckBeckTestStatusForDay {

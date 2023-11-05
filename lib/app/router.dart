@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:easy_beck/app/app_router.dart';
-import 'package:easy_beck/beck_test/data/hive_beck_test_result_repository.dart';
-import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
-import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
+import 'package:easy_beck/feature/beck_test/data/hive_beck_test_result_repository.dart';
+import 'package:easy_beck/feature/beck_test/data/json_file_beck_repository.dart';
+import 'package:easy_beck/feature/beck_test/repository/beck_test_result_repository.dart'
     as beck_test;
 import 'package:easy_beck/common/loader.dart';
 import 'package:easy_beck/feature/actions/data/default_day_phase_clock.dart';
@@ -25,14 +25,14 @@ import 'package:easy_beck/feature/symptom_page/symptom_page_controller.dart';
 import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
     as symptoms_chart;
-import 'package:easy_beck/beck_test/repository/depression_level_repository.dart';
-import 'package:easy_beck/beck_test/repository/question_repository.dart';
-import 'package:easy_beck/beck_test/service/beck_test_controller.dart';
-import 'package:easy_beck/beck_test/service/beck_test_router.dart';
-import 'package:easy_beck/beck_test/ui/beck_test_result_page.dart';
-import 'package:easy_beck/beck_test/ui/beck_test_view.dart';
-import 'package:easy_beck/beck_test/usecase/get_beck_test_result.dart';
-import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
+import 'package:easy_beck/feature/beck_test/repository/depression_level_repository.dart';
+import 'package:easy_beck/feature/beck_test/repository/question_repository.dart';
+import 'package:easy_beck/feature/beck_test/service/beck_test_controller.dart';
+import 'package:easy_beck/feature/beck_test/service/beck_test_router.dart';
+import 'package:easy_beck/feature/beck_test/ui/beck_test_result_page.dart';
+import 'package:easy_beck/feature/beck_test/ui/beck_test_view.dart';
+import 'package:easy_beck/feature/beck_test/usecase/get_beck_test_result.dart';
+import 'package:easy_beck/feature/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/common/ui/typed_widget_builder.dart';
 import 'package:easy_beck/feature/dashboard/dashboard.dart';
 import 'package:easy_beck/feature/symptom_prompt/data/hive_symptom_repository.dart';

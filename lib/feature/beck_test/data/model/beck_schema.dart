@@ -1,8 +1,8 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:easy_beck/beck_test/model/answer.dart';
-import 'package:easy_beck/beck_test/model/depression_level.dart';
-import 'package:easy_beck/beck_test/model/identifier.dart';
-import 'package:easy_beck/beck_test/model/question.dart' as model;
+import 'package:easy_beck/feature/beck_test/model/answer.dart';
+import 'package:easy_beck/feature/beck_test/model/depression_level.dart';
+import 'package:easy_beck/feature/beck_test/model/identifier.dart';
+import 'package:easy_beck/feature/beck_test/model/question.dart' as model;
 
 part 'beck_schema.mapper.dart';
 
