@@ -46,10 +46,6 @@ import 'package:easy_beck/hive/adapter/beck_test_result_adapter.dart';
 import 'package:easy_beck/hive/adapter/symptom_log_adapter.dart';
 import 'package:easy_beck/hive/hive_loader.dart';
 import 'package:easy_beck/isar/isar_container.dart';
-import 'package:easy_beck/mood_tracker/data/in_memory_mood_log_repository.dart';
-import 'package:easy_beck/mood_tracker/domain/repository/mood_log_repository.dart';
-import 'package:easy_beck/mood_tracker/domain/usecase/log_mood.dart';
-import 'package:easy_beck/mood_tracker/service/mood_tracker_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stream_listener/flutter_stream_listener.dart';
 import 'package:kiwi/kiwi.dart';
@@ -143,16 +139,6 @@ class DashboardContainer extends KiwiContainer {
                 sink: container<EventSink<DashboardEvent>>()));
       };
     });
-  }
-}
-
-class MoodTrackerContainer extends KiwiContainer {
-  MoodTrackerContainer() : super.scoped() {
-    registerFactory((container) => const Clock());
-    registerFactory<MoodLogRepository>(
-        (container) => InMemoryMoodLogRepository(container()));
-    registerFactory((container) => LogMood(container(), container()));
-    registerFactory((container) => MoodTrackerBloc(container()));
   }
 }
 
@@ -275,7 +261,6 @@ class SymptomsChartContainer extends KiwiContainer {
 
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
-final moodTrackerContainer = MoodTrackerContainer();
 final symptomPromptContainer = SymptomPromptContainer();
 final hiveContainer = HiveContainer();
 final symptomsChartContainer = SymptomsChartContainer();
