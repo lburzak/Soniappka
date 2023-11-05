@@ -1,5 +1,5 @@
 import 'package:easy_beck/common/one_time_loader.dart';
-import 'package:easy_beck/feature/actions/data/local_action.dart';
+import 'package:easy_beck/isar/actions/local_action.dart';
 import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';

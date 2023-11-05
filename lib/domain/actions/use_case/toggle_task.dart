@@ -1,5 +1,5 @@
-import 'package:easy_beck/feature/actions/model/task.dart';
-import 'package:easy_beck/feature/actions/repository/action_completion_repository.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
+import 'package:easy_beck/domain/actions/repository/action_completion_repository.dart';
 import 'package:quiver/time.dart';
 
 class ToggleTask {

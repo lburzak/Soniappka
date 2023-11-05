@@ -26,10 +26,10 @@ class CompletableTile extends StatelessWidget {
           children: [
             Center(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Expanded(child: icon ?? SizedBox.expand()),
+                    Expanded(child: icon ?? const SizedBox.expand()),
                     Text(title),
                     hint ?? const SizedBox.shrink()
                   ],

@@ -1,6 +1,6 @@
-import 'package:easy_beck/feature/actions/awesome_icon.dart';
-import 'package:easy_beck/feature/actions/model/action.dart';
-import 'package:easy_beck/feature/actions/model/action_id.dart';
+import 'package:easy_beck/feature/actions/model/awesome_icon.dart';
+import 'package:easy_beck/domain/actions/model/action.dart';
+import 'package:easy_beck/domain/actions/model/action_id.dart';
 import 'package:easy_beck/feature/actions/widget/task_tile.dart';
 import 'package:isar/isar.dart';
 

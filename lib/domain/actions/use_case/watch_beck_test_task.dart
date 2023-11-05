@@ -1,7 +1,7 @@
+import 'package:easy_beck/domain/actions/service/calendar.dart';
 import 'package:easy_beck/domain/beck_test/repository/beck_test_result_repository.dart';
 import 'package:easy_beck/feature/actions/data/beck_test_action.dart';
-import 'package:easy_beck/feature/actions/model/task.dart';
-import 'package:easy_beck/feature/actions/usecase/calendar.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
 import 'package:quiver/time.dart';
 
 class WatchBeckTestTask {

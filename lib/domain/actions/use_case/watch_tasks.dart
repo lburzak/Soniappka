@@ -1,8 +1,8 @@
-import 'package:easy_beck/feature/actions/model/action.dart';
-import 'package:easy_beck/feature/actions/model/task.dart';
-import 'package:easy_beck/feature/actions/repository/action_completion_repository.dart';
-import 'package:easy_beck/feature/actions/repository/action_repository.dart';
-import 'package:easy_beck/feature/actions/usecase/get_task_status.dart';
+import 'package:easy_beck/domain/actions/model/action.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
+import 'package:easy_beck/domain/actions/repository/action_completion_repository.dart';
+import 'package:easy_beck/domain/actions/repository/action_repository.dart';
+import 'package:easy_beck/domain/actions/use_case/get_task_status.dart';
 import 'package:rxdart/rxdart.dart';
 
 class WatchTasks {

@@ -1,4 +1,4 @@
-import 'package:easy_beck/feature/actions/model/action_icon.dart' as model;
+import 'package:easy_beck/domain/actions/model/action_icon.dart' as model;
 import 'package:flutter/widgets.dart';
 
 class AwesomeIcon implements model.ActionIcon {

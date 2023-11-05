@@ -1,6 +1,8 @@
 import 'package:easy_beck/feature/actions/data/beck_test_action.dart';
-import 'package:easy_beck/feature/actions/model/task.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
 import 'package:easy_beck/feature/actions/widget/task_tile.dart';
+import 'package:easy_beck/theme/colors.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class TasksGrid extends StatelessWidget {
@@ -39,12 +41,12 @@ class _AddActionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: const Card(
+      child: Card(
         child: Center(
           child: Icon(
             Icons.add,
             size: 60,
-            color: Colors.grey,
+            color: context.theme.colors.inactive,
           ),
         ),
       ),

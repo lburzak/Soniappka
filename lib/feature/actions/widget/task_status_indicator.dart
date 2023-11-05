@@ -1,3 +1,6 @@
+import 'package:easy_beck/theme/borders.dart';
+import 'package:easy_beck/theme/colors.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class TaskStatusIndicator extends StatelessWidget {
@@ -12,16 +15,29 @@ class TaskStatusIndicator extends StatelessWidget {
       height: 20,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: completed ? Colors.green : Colors.transparent,
-        border: completed ? null : Border.all(color: Colors.grey, width: 2),
+        color: completed ? context.theme.colorScheme.primary : null,
+        border: completed
+            ? null
+            : context.theme.borders.bold
+                .copyWith(color: context.theme.colors.inactive),
       ),
       child: completed
-          ? const Icon(
+          ? Icon(
               Icons.done,
-              color: Colors.white,
+              color: context.theme.colorScheme.onPrimary,
               size: 15,
             )
-          : SizedBox.shrink(),
+          : const SizedBox.shrink(),
     );
+  }
+}
+
+extension CopyBorder on Border {
+  Border copyWith({Color? color, double? width}) {
+    return Border(
+        top: top.copyWith(color: color, width: width),
+        bottom: bottom.copyWith(color: color, width: width),
+        left: left.copyWith(color: color, width: width),
+        right: right.copyWith(color: color, width: width));
   }
 }

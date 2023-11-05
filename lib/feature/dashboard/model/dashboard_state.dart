@@ -1,4 +1,4 @@
-import 'package:easy_beck/feature/actions/model/task.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
 
 class DashboardState {
   final int? irritabilityLevel;

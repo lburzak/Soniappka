@@ -1,10 +1,12 @@
-import 'package:easy_beck/feature/actions/awesome_icon.dart';
-import 'package:easy_beck/feature/actions/model/action.dart';
-import 'package:easy_beck/feature/actions/model/action_icon.dart';
-import 'package:easy_beck/feature/actions/model/task.dart';
+import 'package:easy_beck/feature/actions/model/awesome_icon.dart';
+import 'package:easy_beck/domain/actions/model/action.dart';
+import 'package:easy_beck/domain/actions/model/action_icon.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
 import 'package:easy_beck/feature/actions/widget/completable_tile.dart';
-import 'package:easy_beck/feature/actions/widget/optional_builder.dart';
+import 'package:easy_beck/common/ui/optional_builder.dart';
 import 'package:easy_beck/l10n/localizations.dart';
+import 'package:easy_beck/theme/colors.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class TaskTile extends StatelessWidget {
@@ -50,7 +52,7 @@ class TaskHint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       _buildText(context),
-      style: const TextStyle(color: Colors.grey),
+      style: TextStyle(color: context.theme.colors.inactive),
     );
   }
 

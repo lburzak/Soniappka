@@ -1,5 +1,5 @@
-import 'package:easy_beck/feature/actions/model/action_icon.dart';
-import 'package:easy_beck/feature/actions/model/action_id.dart';
+import 'package:easy_beck/domain/actions/model/action_icon.dart';
+import 'package:easy_beck/domain/actions/model/action_id.dart';
 
 sealed class Regularity {
   const Regularity();

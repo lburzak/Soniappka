@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:easy_beck/feature/actions/model/action_id.dart';
-import 'package:easy_beck/feature/actions/repository/action_completion_repository.dart';
+import 'package:easy_beck/domain/actions/model/action_id.dart';
+import 'package:easy_beck/domain/actions/repository/action_completion_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class _Completion {

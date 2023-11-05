@@ -3,12 +3,19 @@ import 'package:flutter/material.dart';
 @immutable
 class ExtraColors extends ThemeExtension<ExtraColors> {
   final Color? modalBarrier;
+  final Color? inactive;
 
-  const ExtraColors({required this.modalBarrier});
+  const ExtraColors({
+    this.modalBarrier,
+    this.inactive,
+  });
 
   @override
-  ExtraColors copyWith({Color? modalBarrier}) {
-    return ExtraColors(modalBarrier: modalBarrier ?? this.modalBarrier);
+  ExtraColors copyWith({Color? modalBarrier, Color? inactive}) {
+    return ExtraColors(
+      modalBarrier: modalBarrier ?? this.modalBarrier,
+      inactive: inactive ?? this.inactive,
+    );
   }
 
   @override
@@ -19,6 +26,7 @@ class ExtraColors extends ThemeExtension<ExtraColors> {
 
     return ExtraColors(
       modalBarrier: Color.lerp(modalBarrier, other.modalBarrier, t),
+      inactive: Color.lerp(inactive, other.inactive, t),
     );
   }
 }

@@ -1,8 +1,8 @@
-import 'package:easy_beck/feature/actions/model/action.dart';
-import 'package:easy_beck/feature/actions/model/task.dart';
-import 'package:easy_beck/feature/actions/repository/action_completion_repository.dart';
-import 'package:easy_beck/feature/actions/usecase/calendar.dart';
-import 'package:easy_beck/feature/actions/usecase/day_phase_clock.dart';
+import 'package:easy_beck/domain/actions/model/action.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
+import 'package:easy_beck/domain/actions/repository/action_completion_repository.dart';
+import 'package:easy_beck/domain/actions/service/calendar.dart';
+import 'package:easy_beck/domain/actions/service/day_phase_clock.dart';
 import 'package:quiver/time.dart';
 
 class GetTaskStatus {

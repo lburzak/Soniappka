@@ -60,8 +60,11 @@ class MyApp extends StatelessWidget {
                   const Backgrounds(selected: Colors.white24),
                   Borders(
                       thin: Border.all(width: 0.5),
-                      regular: Border.all(width: 1)),
-                  const ExtraColors(modalBarrier: Colors.black38)
+                      regular: Border.all(width: 1),
+                      bold: Border.all(width: 2)),
+                  const ExtraColors(
+                      modalBarrier: Colors.black38,
+                      inactive: Colors.grey)
                 ],
                 colorScheme: ColorScheme.fromSeed(
                     seedColor: Color(0xffA0C49D),

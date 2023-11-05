@@ -1,7 +1,7 @@
-import 'package:easy_beck/feature/actions/data/local_action.dart';
-import 'package:easy_beck/feature/actions/model/action.dart';
-import 'package:easy_beck/feature/actions/model/action_id.dart';
-import 'package:easy_beck/feature/actions/repository/action_repository.dart';
+import 'package:easy_beck/isar/actions/local_action.dart';
+import 'package:easy_beck/domain/actions/model/action.dart';
+import 'package:easy_beck/domain/actions/model/action_id.dart';
+import 'package:easy_beck/domain/actions/repository/action_repository.dart';
 import 'package:isar/isar.dart';
 
 class IsarActionRepository implements ActionRepository {

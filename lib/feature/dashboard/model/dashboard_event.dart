@@ -1,4 +1,4 @@
-import 'package:easy_beck/feature/actions/model/task.dart';
+import 'package:easy_beck/domain/actions/model/task.dart';
 import 'package:easy_beck/domain/symptoms/model/symptom_type.dart';
 
 sealed class DashboardEvent {

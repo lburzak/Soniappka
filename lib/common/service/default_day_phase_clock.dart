@@ -1,5 +1,5 @@
-import 'package:easy_beck/feature/actions/model/action.dart';
-import 'package:easy_beck/feature/actions/usecase/day_phase_clock.dart';
+import 'package:easy_beck/domain/actions/model/action.dart';
+import 'package:easy_beck/domain/actions/service/day_phase_clock.dart';
 
 class DefaultDayPhaseClock implements DayPhaseClock {
   @override
