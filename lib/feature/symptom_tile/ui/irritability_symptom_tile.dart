@@ -1,5 +1,9 @@
+import 'package:easy_beck/common/asset_names.dart';
+import 'package:easy_beck/common/hero_tags.dart';
 import 'package:easy_beck/common/ratings/irritability_ratings.dart';
-import 'package:easy_beck/feature/symptom_tile/symptom_tile.dart';
+import 'package:easy_beck/feature/symptom_tile/ui/symptom_tile.dart';
+import 'package:easy_beck/l10n/localizations.dart';
+import 'package:easy_beck/routing/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -16,14 +20,14 @@ class IrritabilitySymptomTile extends HookWidget {
 
     return SymptomTile(
       level: level.data,
-      title: "Drażliwość",
+      title: context.l10n.symptomIrritability,
       ratings: irritabilityRatings,
       image: const Hero(
-        tag: "icon/irritability",
-        child: Image(image: AssetImage("assets/angry-cut.gif")),
+        tag: HeroTags.irritabilityIcon,
+        child: Image(image: AssetImage(AssetNames.irritabilityIcon)),
       ),
       onExpanded: () {
-        context.push("/symptom/irritability");
+        context.push(RouteNames.irritabilityPage);
       }, onUpdated: onUpdated,
     );
   }

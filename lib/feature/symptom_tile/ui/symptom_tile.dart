@@ -1,6 +1,7 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
 import 'package:easy_beck/common/ui/rating_slider.dart';
 import 'package:easy_beck/l10n/localizations.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class SymptomTile extends StatelessWidget {
@@ -24,7 +25,7 @@ class SymptomTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,10 +43,11 @@ class SymptomTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style:
-                      const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: context.theme.textTheme.headlineSmall,
                 ),
-                Text(level != null ? ratings[level!].title : context.l10n.ratingUndefined),
+                Text(level != null
+                    ? ratings[level!].title
+                    : context.l10n.ratingUndefined),
                 SizedBox(
                   height: 30,
                   child: RatingSlider.compact(
@@ -55,8 +57,8 @@ class SymptomTile extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child:
-                  IconButton(onPressed: onExpanded, icon: const Icon(Icons.info)),
+              child: IconButton(
+                  onPressed: onExpanded, icon: const Icon(Icons.info)),
             )
           ],
         ),
