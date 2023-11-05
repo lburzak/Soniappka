@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:easy_beck/app/app_router.dart';
+import 'package:easy_beck/domain/symptoms/repository/symptom_repository.dart';
 import 'package:easy_beck/feature/beck_test/data/hive_beck_test_result_repository.dart';
 import 'package:easy_beck/feature/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/feature/beck_test/repository/beck_test_result_repository.dart'
@@ -35,10 +36,9 @@ import 'package:easy_beck/feature/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/feature/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/common/ui/typed_widget_builder.dart';
 import 'package:easy_beck/feature/dashboard/ui/dashboard.dart';
-import 'package:easy_beck/feature/symptom_prompt/data/hive_symptom_repository.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/log_symptom.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/observe_symptom_has_value_today.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/symptom_repository.dart';
+import 'package:easy_beck/hive/hive_symptom_repository.dart';
+import 'package:easy_beck/domain/symptoms/use_case/log_symptom.dart';
+import 'package:easy_beck/domain/symptoms/use_case/observe_symptom_has_value_today.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/symptom_log_repository.dart';
 import 'package:easy_beck/feature/symptoms_chart/service/symptoms_chart_controller.dart';
 import 'package:easy_beck/feature/symptoms_chart/ui/symptoms_chart.dart';

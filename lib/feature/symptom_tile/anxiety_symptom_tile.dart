@@ -1,4 +1,4 @@
-import 'package:easy_beck/feature/symptom_prompt/ui/anxiety_prompt.dart';
+import 'package:easy_beck/common/ratings/anxiety_ratings.dart';
 import 'package:easy_beck/feature/symptom_tile/symptom_tile.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';

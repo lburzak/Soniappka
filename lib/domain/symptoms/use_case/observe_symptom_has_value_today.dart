@@ -1,5 +1,5 @@
 import 'package:easy_beck/common/day.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/symptom_repository.dart';
+import 'package:easy_beck/domain/symptoms/repository/symptom_repository.dart';
 import 'package:quiver/time.dart';
 
 class ObserveSymptomHasValueToday {

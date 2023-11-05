@@ -1,4 +1,6 @@
 import 'package:easy_beck/common/day.dart';
+import 'package:easy_beck/domain/symptoms/model/symptom_log.dart';
+import 'package:easy_beck/domain/symptoms/repository/symptom_repository.dart';
 import 'package:easy_beck/feature/actions/usecase/toggle_task.dart';
 import 'package:easy_beck/feature/actions/usecase/watch_beck_test_task.dart';
 import 'package:easy_beck/feature/dashboard/error/invalid_symptom_level_error.dart';
@@ -7,8 +9,6 @@ import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/service/dashboard_router.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
 import 'package:easy_beck/feature/dashboard/model/symptom_type.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/symptom_log.dart';
-import 'package:easy_beck/feature/symptom_prompt/domain/symptom_repository.dart';
 import 'package:quiver/time.dart';
 import 'package:rxdart/rxdart.dart';
 
