@@ -5,6 +5,7 @@ import 'package:easy_beck/common/ui/loader_builder.dart';
 import 'package:easy_beck/isar/isar_container.dart';
 import 'package:easy_beck/theme/backgrounds.dart';
 import 'package:easy_beck/theme/borders.dart';
+import 'package:easy_beck/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -59,7 +60,9 @@ class MyApp extends StatelessWidget {
                       const Backgrounds(selected: Colors.white24),
                       Borders(
                           thin: Border.all(width: 0.5),
-                          regular: Border.all(width: 1)),
+                          regular: Border.all(width: 1)
+                      ),
+                      const ExtraColors(modalBarrier: Colors.black38)
                     ],
                     colorScheme: ColorScheme.fromSeed(
                         seedColor: Color(0xffA0C49D),
@@ -74,6 +77,9 @@ class MyApp extends StatelessWidget {
                         headlineLarge: GoogleFonts.amaticSc()
                             .copyWith(
                             fontSize: 32, fontWeight: FontWeight.bold),
+                        headlineSmall: font.headlineSmall?.copyWith(
+                            fontSize: 18, fontWeight: FontWeight.bold
+                        ),
                         titleMedium: font.titleMedium?.copyWith(
                             fontSize: 20
                         ),

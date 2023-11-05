@@ -1,5 +1,7 @@
 import 'package:easy_beck/common/ui/rating_selector.dart';
-import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
+import 'package:easy_beck/feature/symptom_page/model/symptom_page_view_model.dart';
+import 'package:easy_beck/theme/colors.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,7 +24,7 @@ class SymptomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const ModalBarrier(color: Colors.black38),
+        ModalBarrier(color: context.theme.colors.modalBarrier),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -59,8 +61,7 @@ class SymptomPage extends StatelessWidget {
                       ),
                       Text(
                         description,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: context.theme.textTheme.headlineSmall,
                       ),
                       SizedBox(
                           height: 210,

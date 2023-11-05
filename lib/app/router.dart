@@ -18,11 +18,11 @@ import 'package:easy_beck/feature/dashboard/use_case/check_beck_test_solved.dart
 import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/ui/material_dashboard_router.dart';
 import 'package:easy_beck/feature/dashboard/service/new_dashboard_controller.dart';
-import 'package:easy_beck/feature/symptom_page/anxiety_page.dart';
-import 'package:easy_beck/feature/symptom_page/irritability_page.dart';
-import 'package:easy_beck/feature/symptom_page/sleepiness_page.dart';
-import 'package:easy_beck/feature/symptom_page/symptom_page_controller.dart';
-import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
+import 'package:easy_beck/feature/symptom_page/ui/anxiety_page.dart';
+import 'package:easy_beck/feature/symptom_page/ui/irritability_page.dart';
+import 'package:easy_beck/feature/symptom_page/ui/sleepiness_page.dart';
+import 'package:easy_beck/feature/symptom_page/service/symptom_page_controller.dart';
+import 'package:easy_beck/feature/symptom_page/model/symptom_page_view_model.dart';
 import 'package:easy_beck/feature/symptoms_chart/domain/beck_test_result_repository.dart'
     as symptoms_chart;
 import 'package:easy_beck/feature/beck_test/repository/depression_level_repository.dart';
