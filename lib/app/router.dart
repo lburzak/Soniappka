@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:easy_beck/app/app_router.dart';
-import 'package:easy_beck/beck_calendar/beck_calendar_controller.dart';
-import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/data/hive_beck_test_result_repository.dart';
 import 'package:easy_beck/beck_test/data/json_file_beck_repository.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
@@ -162,17 +160,6 @@ class BeckTestButtonContainer extends KiwiContainer {
   }
 }
 
-class BeckCalendarContainer extends KiwiContainer {
-  BeckCalendarContainer() : super.scoped() {
-    registerFactory(
-        (container) => BeckCalendarController(beckTestDomainContainer()));
-    registerFactory<TypedWidgetBuilder<BeckCalendarView>>(
-        (container) => (context) => BeckCalendarView(
-              viewModel: container<BeckCalendarController>().viewModel,
-            ));
-  }
-}
-
 class MoodTrackerContainer extends KiwiContainer {
   MoodTrackerContainer() : super.scoped() {
     registerFactory((container) => const Clock());
@@ -303,13 +290,11 @@ class SymptomsChartContainer extends KiwiContainer {
 class JournalPageContainer extends KiwiContainer {
   JournalPageContainer(
       {required SymptomsChartContainer symptomsChartContainer,
-      required BeckCalendarContainer beckCalendarContainer,
       required BeckTestButtonContainer beckTestButtonContainer})
       : super.scoped() {
     registerFactory<WidgetBuilder>(
         (container) => (BuildContext context) => JournalPage(
               symptomsChartBuilder: symptomsChartContainer(),
-              calendarBuilder: beckCalendarContainer(),
               beckTestButtonBuilder: beckTestButtonContainer(),
             ));
   }
@@ -317,7 +302,6 @@ class JournalPageContainer extends KiwiContainer {
 
 final beckTestResultContainer = BeckTestResultContainer();
 final beckTestDomainContainer = BeckTestDomainContainer();
-final beckCalendarContainer = BeckCalendarContainer();
 final moodTrackerContainer = MoodTrackerContainer();
 final symptomPromptContainer = SymptomPromptContainer();
 final hiveContainer = HiveContainer();

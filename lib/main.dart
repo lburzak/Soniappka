@@ -20,7 +20,6 @@ void main() async {
       DashboardContainer(isarContainer),
       JournalPageContainer(
           symptomsChartContainer: SymptomsChartContainer(),
-          beckCalendarContainer: BeckCalendarContainer(),
           beckTestButtonContainer: BeckTestButtonContainer()));
 
   runApp(MyApp(

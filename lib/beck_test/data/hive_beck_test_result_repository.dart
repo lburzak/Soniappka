@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:easy_beck/beck_calendar/beck_calendar_view.dart';
 import 'package:easy_beck/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/beck_test/model/beck_test_result.dart';
 import 'package:easy_beck/beck_test/repository/beck_test_result_repository.dart'
@@ -82,4 +81,8 @@ class HiveBeckTestResultRepository
         .watch()
         .flatMap((event) => findSubmissionDateTimeOfLast().asStream());
   }
+}
+
+extension DayHash on DateTime {
+  int get dayHashCode => year.hashCode ^ month.hashCode ^ day.hashCode;
 }
