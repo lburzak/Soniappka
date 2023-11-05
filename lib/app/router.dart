@@ -35,8 +35,6 @@ import 'package:easy_beck/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/beck_test/usecase/submit_beck_test.dart';
 import 'package:easy_beck/common/ui/typed_widget_builder.dart';
 import 'package:easy_beck/feature/dashboard/dashboard.dart';
-import 'package:easy_beck/feature/beck_test_button/domain/check_if_test_was_filled_today.dart';
-import 'package:easy_beck/feature/beck_test_button/ui/beck_test_button.dart';
 import 'package:easy_beck/feature/symptom_prompt/data/hive_symptom_repository.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/log_symptom.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/observe_symptom_has_value_today.dart';
@@ -145,17 +143,6 @@ class DashboardContainer extends KiwiContainer {
                 sink: container<EventSink<DashboardEvent>>()));
       };
     });
-  }
-}
-
-class BeckTestButtonContainer extends KiwiContainer {
-  BeckTestButtonContainer() : super.scoped() {
-    registerFactory((container) => const Clock());
-    registerFactory((container) =>
-        ObserveIfTestWasFilledToday(container(), beckTestDomainContainer()));
-    registerFactory<TypedWidgetBuilder<BeckTestButton>>((container) =>
-        (context) => BeckTestButton(
-            isTestFilledToday: container<ObserveIfTestWasFilledToday>()()));
   }
 }
 
@@ -291,7 +278,6 @@ final beckTestDomainContainer = BeckTestDomainContainer();
 final moodTrackerContainer = MoodTrackerContainer();
 final symptomPromptContainer = SymptomPromptContainer();
 final hiveContainer = HiveContainer();
-final beckTestButtonContainer = BeckTestButtonContainer();
 final symptomsChartContainer = SymptomsChartContainer();
 
 class RouterContainer extends KiwiContainer {
