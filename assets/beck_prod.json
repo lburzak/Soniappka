@@ -5,206 +5,206 @@
       "level": "NONE"
     },
     {
-      "threshold": 10,
+      "threshold": 8,
       "level": "MILD"
     },
     {
-      "threshold": 19,
+      "threshold": 16,
       "level": "MODERATE"
     },
     {
-      "threshold": 30,
+      "threshold": 26,
       "level": "SEVERE"
     }
   ],
   "questions": [
     {
-      "id": 1,
+      "id": "1",
       "answers": {
-        "0": "Nie czuję smutku.",
-        "1": "Czuję smutek.",
-        "2": "Jestem smutna przez cały czas i nie mogę się z tego wyzwolić.",
-        "3": "Jestem tak smutna lub nieszczęśliwa, że nie wytrzymuję tego."
+        "0": "Nie jestem smutny ani przygnębiony",
+        "1": "Odczuwam często smutek i przygnębienie",
+        "2": "Przeżywam stale smutek i przygnębienie, nie mogę uwolnić się od tych przeżyć",
+        "3": "Jestem stale tak smutny i nieszczęśliwy, że jest to nie do wytrzymania"
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "answers": {
-        "0": "Nie jestem szczególnie zniechęcona co do przyszłości.",
-        "1": "Czuję się zniechęcona co do przyszłości.",
-        "2": "Czuję, że nie mam niczego, na co mogę czekać.",
-        "3": "Czuję, że przyszłość jest beznadziejna i nic się nie może poprawić."
+        "0": "Nie przejmuję się zbytnio przyszłością",
+        "1": "Często martwię się o przyszłość",
+        "2": "Obawiam się, że w przyszłości nic dobrego mnie nie czeka",
+        "3": "Czuję, że przyszłość jest beznadziejna i nic tego nie zmieni"
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "answers": {
-        "0": "Nie czuję się jak porażka.",
-        "1": "Czuję, że zawiodłam więcej niż przeciętna osoba.",
-        "2": "Gdy patrzę wstecz na swoje życie, widzę tylko wiele porażek.",
-        "3": "Czuję, że jestem kompletną porażką jako osoba."
+        "0": "Sądzę, że nie popełniam większych zaniedbań",
+        "1": "Sądzę, że czynię więcej zaniedbań niż inni",
+        "2": "Kiedy spoglądam na to co robiłem, widzę mnóstwo błędów i zaniedbań",
+        "3": "Jestem zupełnie niewydolny i wszystko robię źle"
       }
     },
     {
-      "id": 4,
+      "id": "4",
       "answers": {
-        "0": "Dalej czerpię tyle samo satysfakcji z rzeczy, co wcześniej.",
-        "1": "Nie cieszę się rzeczami tak, jak kiedyś.",
-        "2": "Nie czerpię już prawdziwej satysfakcji z niczego.",
-        "3": "Czuję się niezadowolona lub znudzona wszystkim."
+        "0": "To co robię sprawia mi przyjemność",
+        "1": "Nie cieszy mnie to co robię",
+        "2": "Nic mi teraz nie daje prawdziwego zadowolenia",
+        "3": "Nie potrafię przeżywać zadowolenia i przyjemności i wszystko mnie nuży"
       }
     },
     {
-      "id": 5,
+      "id": "5",
       "answers": {
-        "0": "Nie czuję się szczególnie winna.",
-        "1": "Czuję się winna znaczną część czasu.",
-        "2": "Czuję się dość winna większość czasu.",
-        "3": "Czuję się winna cały czas."
+        "0": "Nie czuję się winny ani wobec siebie ani wobec innych",
+        "1": "Dość często miewam wyrzuty sumienia",
+        "2": "Czuję często, że zawiniłem",
+        "3": "Stale czuję się winnym"
       }
     },
     {
-      "id": 6,
+      "id": "6",
       "answers": {
-        "0": "Nie czuję, że jestem karana.",
-        "1": "Czuję, że mogę być ukarana.",
-        "2": "Oczekuję, że zostanę ukarana.",
-        "3": "Czuję, że jestem karana."
+        "0": "Sądzę, że nie zasługuję na karę",
+        "1": "Sądzę, że zasługuję na karę",
+        "2": "Spodziewam się ukarania",
+        "3": "Wiem, że jestem karany (lub ukarany)"
       }
     },
     {
-      "id": 7,
+      "id": "7",
       "answers": {
-        "0": "Nie czuję się rozczarowana sobą.",
-        "1": "Jestem rozczarowana sobą.",
-        "2": "Czuję wstręt do siebie.",
-        "3": "Nienawidzę siebie."
+        "0": "Jestem z siebie zadowolony",
+        "1": "Nie jestem z siebie zadowolony",
+        "2": "Czuję do siebie niechęć",
+        "3": "Nienawidzę siebie"
       }
     },
     {
-      "id": 8,
+      "id": "8",
       "answers": {
-        "0": "Nie czuję, że jestem gorsza od innych.",
-        "1": "Jestem krytyczna wobec siebie za swoje słabości lub błędy.",
-        "2": "Wszystko, co złe, wiąże się z moimi wadami.",
-        "3": "Obwiniam siebie za wszystko złe, co się dzieje."
+        "0": "Nie czuję się gorszy od innych ludzi",
+        "1": "Zarzucam sobie, że jestem nieudolny i popełniam błędy",
+        "2": "Stale potępiam siebie za popełnione błędy",
+        "3": "Winię siebie za wszystko zło, które istnieje"
       }
     },
     {
-      "id": 9,
+      "id": "9",
       "answers": {
-        "0": "Nie mam myśli o zabiciu siebie.",
-        "1": "Mam myśli o samobójstwie, ale nie wykonałabym ich.",
-        "2": "Chciałabym popełnić samobójstwo.",
-        "3": "Popełniłbym samobójstwo, gdybym miała okazję."
+        "0": "Nie myślę o odebraniu sobie życia",
+        "1": "Myślę o samobójstwie, ale nie mógłbym tego dokonać",
+        "2": "Pragnę odebrać sobie życie",
+        "3": "Popełnię samobójstwo, jak będzie odpowiednia sposobność"
       }
     },
     {
-      "id": 10,
+      "id": "10",
       "answers": {
-        "0": "Nie płaczę więcej niż zazwyczaj.",
-        "1": "Teraz płaczę więcej niż kiedyś.",
-        "2": "Teraz płaczę cały czas.",
-        "3": "Kiedyś potrafiłam płakać, ale teraz nie potrafię, nawet gdy chcę."
+        "0": "Nie płaczę częściej niż zwykle",
+        "1": "Płaczę częściej niż dawniej",
+        "2": "Ciągle chce mi się płakać",
+        "3": "Chciałbym płakać, lecz nie jestem w stanie"
       }
     },
     {
-      "id": 11,
+      "id": "11",
       "answers": {
-        "0": "Nie jestem bardziej poirytowana niż zazwyczaj.",
-        "1": "Łatwiej się denerwuję lub irytuję niż kiedyś.",
-        "2": "Teraz jestem cała czas podirytowana.",
-        "3": "Już się w ogóle nie irytuję tym, co kiedyś mnie irytowało."
+        "0": "Nie jestem bardziej podenerwowany niż dawniej",
+        "1": "Jestem bardziej nerwowy i przykry niż dawniej",
+        "2": "Jestem stale rozdrażniony",
+        "3": "Wszystko to, co dawniej mnie denerwowało, teraz nic mnie nie obchodzi"
       }
     },
     {
-      "id": 12,
+      "id": "12",
       "answers": {
-        "0": "Nie straciłam zainteresowania innymi ludźmi.",
-        "1": "Jestem mniej zainteresowana innymi ludźmi niż kiedyś.",
-        "2": "Straciłam większość zainteresowania innymi ludźmi.",
-        "3": "Straciłam całkowicie zainteresowanie innymi ludźmi."
+        "0": "Ludzie interesują mnie jak dawniej.",
+        "1": "Interesuję się ludźmi mniej niż dawniej",
+        "2": "Utraciłem większość zainteresowania innymi ludźmi",
+        "4": "Utraciłem wszelkie zainteresowanie innymi ludźmi"
       }
     },
     {
-      "id": 13,
+      "id": "13",
       "answers": {
-        "0": "Nadal podejmuję decyzje tak samo dobrze jak zawsze.",
-        "1": "Odkładam podejmowanie decyzji dłużej niż kiedyś.",
-        "2": "Mam większe trudności w podejmowaniu decyzji niż przedtem.",
-        "3": "W ogóle już nie potrafię podejmować decyzji."
+        "0": "Decyzję podejmuję łatwo, tak jak dawniej",
+        "1": "Częściej niż kiedyś odwlekam podjęcie decyzji",
+        "2": "Mam duże trudności z podjęciem decyzji",
+        "3": "Nie jestem w stanie podjąć żadnej decyzji"
       }
     },
     {
-      "id": 14,
+      "id": "14",
       "answers": {
-        "0": "Nie czuję, że wyglądam gorzej niż kiedyś.",
-        "1": "Martwię się, że wyglądam stara lub nieatrakcyjnie.",
-        "2": "Czuję, że są trwałe zmiany w moim wyglądzie, które sprawiają, że wyglądam nieatrakcyjnie.",
-        "3": "Wierzę, że wyglądam brzydko."
+        "0": "Sądzę, że wyglądam nie gorzej niż dawniej",
+        "1": "Martwię się tym, że wyglądam staro i nieatrakcyjnie",
+        "2": "Czuję, że wyglądam coraz gorzej",
+        "3": "Jestem przekonany, że wyglądam okropnie i odpychająco"
       }
     },
     {
-      "id": 15,
+      "id": "15",
       "answers": {
-        "0": "Mogę pracować tak samo dobrze jak wcześniej.",
-        "1": "Potrzebuję dodatkowego wysiłku, żeby zabrać się za coś.",
-        "2": "Muszę się bardzo napracować, żeby cokolwiek zrobić.",
-        "3": "W ogóle nie jestem w stanie teraz pracować."
+        "0": "Mogę pracować jak dawniej",
+        "1": "Z trudem rozpoczynam każdą czynność",
+        "2": "Z wielkim wysiłkiem zmuszam się do robienia czegokolwiek",
+        "3": "Nie jestem w stanie nic robić"
       }
     },
     {
-      "id": 16,
+      "id": "16",
       "answers": {
-        "0": "Mogę spać tak samo dobrze jak zawsze.",
-        "1": "Nie śpię tak dobrze jak kiedyś.",
-        "2": "Budzę się 1-2 godziny wcześniej niż zwykle i trudno mi wrócić do snu.",
-        "3": "Budzę się teraz o kilka godzin wcześniej niż kiedyś i nie potrafię wrócić do snu."
+        "0": "Sypiam dobrze, jak zwykle",
+        "1": "Sypiam gorzej niż dawniej",
+        "2": "Rano budzę się 1-2 godziny wcześnie i trudno mi jest ponownie usnąć",
+        "3": "Budzę się kilka godzin za wcześnie i nie mogę ponownie usnąć"
       }
     },
     {
-      "id": 17,
+      "id": "17",
       "answers": {
-        "0": "Nie czuję większego zmęczenia niż zazwyczaj.",
-        "1": "Szybciej się męczę niż kiedyś.",
-        "2": "Męczę się od czegokolwiek.",
-        "3": "Jestem zbyt zmęczona, żeby cokolwiek robić."
+        "0": "Nie męczę się bardziej niż dawniej",
+        "1": "Męczę się znacznie łatwiej niż poprzednio",
+        "2": "Męczę się wszystkim co robię",
+        "3": "Jestem zbyt zmęczony aby cokolwiek robić"
       }
     },
     {
-      "id": 18,
+      "id": "18",
       "answers": {
-        "0": "Mój apetyt nie jest gorszy niż zazwyczaj.",
-        "1": "Mój apetyt nie jest taki dobry jak kiedyś.",
-        "2": "Mój apetyt jest teraz znacznie gorszy.",
-        "3": "W ogóle nie mam już apetytu."
+        "0": "Mam apetyt nie gorszy niż dawniej",
+        "1": "Mam trochę gorszy apetyt",
+        "2": "Apetyt mam wyraźnie gorszy",
+        "3": "Nie mam w ogóle apetytu"
       }
     },
     {
-      "id": 19,
+      "id": "19",
       "answers": {
-        "0": "Nie straciłam ostatnio dużo wagi, jeśli w ogóle, lub celowo próbuję schudnąć.",
-        "1": "Straciłam ponad 2 kilogramy",
-        "2": "Straciłam ponad 5 kilogramów",
-        "3": "Straciłam ponad 7 kilogramów"
+        "0": "Nie tracę na wadze ciała (w okresie ostatniego miesiąca)",
+        "1": "Straciłem na wadze więcej niż 2 kg",
+        "2": "Straciłem na wadze więcej niż 4 kg",
+        "3": "Straciłem na wadze więcej niż 6 kg"
       }
     },
     {
-      "id": 20,
+      "id": "20",
       "answers": {
-        "0": "Nie martwię się bardziej o swoje zdrowie niż zazwyczaj.",
-        "1": "Martwię się problemami fizycznymi, takimi jak bóle i dolegliwości; lub bóle brzucha; lub zaparcia.",
-        "2": "Bardzo martwię się problemami zdrowotnymi i trudno mi myśleć o czymkolwiek innym.",
-        "3": "Jestem tak zmartwiona moimi problemami zdrowotnymi, że nie potrafię myśleć o niczym innym."
+        "0": "Nie martwię się o swoje zdrowie bardziej niż zawsze",
+        "1": "Martwię się swoimi dolegliwościami, mam rozstrój żołądka, zaparcia, bóle",
+        "2": "Stan mego zdrowia bardzo mnie martwi, często o tym myślę",
+        "3": "Bardzo martwię się o swoje zdrowie, nie mogę o niczym innym myśleć"
       }
     },
     {
-      "id": 21,
+      "id": "21",
       "answers": {
-        "0": "Nie zauważyłam ostatnio zmiany w zainteresowaniu seksem.",
-        "1": "Jestem mniej zainteresowana seksem niż kiedyś.",
-        "2": "Teraz jestem o wiele mniej zainteresowana seksem.",
-        "3": "Straciłam całkowicie zainteresowanie seksem."
+        "0": "Moje zainteresowania seksualne nie uległy zmianom",
+        "1": "Jestem mniej zainteresowany sprawami płci (seksu)",
+        "2": "Problemy płciowe wyraźnie mnie nie interesują",
+        "3": "Utraciłem wszelkie zainteresowanie sprawami seksualnymi"
       }
     }
   ]
