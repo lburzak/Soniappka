@@ -2,6 +2,7 @@ import 'package:easy_beck/feature/beck_test/model/beck_test_id.dart';
 import 'package:easy_beck/feature/beck_test/ui/result_view.dart';
 import 'package:easy_beck/feature/beck_test/usecase/get_beck_test_result.dart';
 import 'package:easy_beck/common/ui/safe_future_builder.dart';
+import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -36,14 +37,14 @@ class BeckTestResultPage extends StatelessWidget {
                     onPressed: () {
                       context.replace("/beck-test");
                     },
-                    icon: Icon(Icons.refresh),
-                    label: Text("Jeszcze raz")),
+                    icon: const Icon(Icons.refresh),
+                    label: Text(context.l10n.restart)),
                 ElevatedButton.icon(
                     onPressed: () {
                       context.pop();
                     },
-                    icon: Icon(Icons.done),
-                    label: Text("Zakończ"))
+                    icon: const Icon(Icons.done),
+                    label: Text(context.l10n.finish))
               ],
             ))
       ],

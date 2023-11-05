@@ -41,5 +41,7 @@
   "ratingAnxietyDescriptionLevel3": "Odczuwałam silne uczucia niepokoju i lęku. Moje myśli były skoncentrowane na negatywnych scenariuszach, co mogło utrudniać mi normalne funkcjonowanie i podejmowanie decyzji.",
   "ratingAnxietyTitleLevel4": "Skrajnie zaniepokojona",
   "ratingAnxietyDescriptionLevel4": "Byłam przytłoczona lękiem i niepokojem, co prowadziło do znacznego pogorszenia jakości życia. Zmaganie się z codziennymi wyzwaniami stało się trudne, a moje emocje wydawały się niekontrolowane.",
-  "chartAxis_symptomsLevel": "Poziom symptomów"
+  "chartAxis_symptomsLevel": "Poziom symptomów",
+  "restart": "Jeszcze raz",
+  "finish": "Zakończ"
 }
