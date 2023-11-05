@@ -1,3 +1,5 @@
+import 'package:easy_beck/theme/borders.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class PageIcon extends StatelessWidget {
@@ -13,9 +15,10 @@ class PageIcon extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: filled ? Color(0xffA3CC85) : Colors.transparent,
-            border: Border.fromBorderSide(
-                BorderSide(color: Colors.black, width: selected ? 1 : 0.5))),
+            color: filled ? context.theme.colorScheme.primary : null,
+            border: selected
+                ? context.theme.borders.regular
+                : context.theme.borders.thin),
       ),
     );
   }

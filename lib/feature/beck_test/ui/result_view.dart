@@ -1,5 +1,6 @@
 import 'package:easy_beck/feature/beck_test/model/depression_level.dart';
 import 'package:easy_beck/l10n/localizations.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class ResultView extends StatelessWidget {
@@ -16,9 +17,12 @@ class ResultView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("$points", style: const TextStyle(fontSize: 64),),
+            Text(
+              "$points",
+              style: context.theme.textTheme.displayLarge,
+            ),
             Text(getDepressionLevelString(context),
-                style: const TextStyle(fontSize: 22))
+                style: context.theme.textTheme.titleMedium)
           ],
         ),
       ),

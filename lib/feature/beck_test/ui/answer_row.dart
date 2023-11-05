@@ -1,3 +1,5 @@
+import 'package:easy_beck/theme/backgrounds.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class AnswerRow extends StatelessWidget {
@@ -7,14 +9,14 @@ class AnswerRow extends StatelessWidget {
 
   const AnswerRow(
       {super.key,
-        required this.text,
-        required this.selected,
-        required this.onSelected});
+      required this.text,
+      required this.selected,
+      required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: selected ? Colors.white24 : Colors.transparent,
+      color: selected ? context.theme.backgrounds.selected : null,
       child: ListTile(
         title: Text(text),
         onTap: onSelected,

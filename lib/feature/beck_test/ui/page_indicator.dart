@@ -1,4 +1,5 @@
 import 'package:easy_beck/feature/beck_test/ui/page_icon.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class PageIndicator extends StatelessWidget {
@@ -29,7 +30,7 @@ class PageIndicator extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           "${currentPageIndex + 1} / $pagesCount",
-          style: const TextStyle(fontSize: 20),
+          style: context.theme.textTheme.titleMedium,
         )
       ],
     );
