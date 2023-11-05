@@ -1,3 +1,5 @@
+import 'package:quiver/time.dart';
+
 class Day {
   final int year;
   final int month;
@@ -35,4 +37,8 @@ class Day {
 
 extension ToDay on DateTime {
   Day toDay() => Day.fromDateTime(this);
+}
+
+extension Today on Clock {
+  Day today() => now().toDay();
 }

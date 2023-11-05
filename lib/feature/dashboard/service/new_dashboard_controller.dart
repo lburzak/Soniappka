@@ -1,11 +1,12 @@
 import 'package:easy_beck/common/day.dart';
 import 'package:easy_beck/feature/actions/usecase/toggle_task.dart';
 import 'package:easy_beck/feature/actions/usecase/watch_beck_test_task.dart';
-import 'package:easy_beck/feature/dashboard/check_beck_test_solved.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_event.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_router.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_state.dart';
-import 'package:easy_beck/feature/dashboard/symptom_type.dart';
+import 'package:easy_beck/feature/dashboard/error/invalid_symptom_level_error.dart';
+import 'package:easy_beck/feature/dashboard/use_case/check_beck_test_solved.dart';
+import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
+import 'package:easy_beck/feature/dashboard/service/dashboard_router.dart';
+import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
+import 'package:easy_beck/feature/dashboard/model/symptom_type.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/symptom_log.dart';
 import 'package:easy_beck/feature/symptom_prompt/domain/symptom_repository.dart';
 import 'package:quiver/time.dart';
@@ -22,22 +23,21 @@ class NewDashboardController {
   final CheckBeckTestStatusForDay _checkBeckTestSolvedForDay;
 
   Stream<DashboardState> createState() =>
-      Stream.value(_clock.today()).switchMap((today) =>
-          Rx.combineLatest4(
-              _anxietyRepository.observeSymptomLevelForDay(today),
-              _irritabilityRepository.observeSymptomLevelForDay(today),
-              _sleepinessRepository.observeSymptomLevelForDay(today),
-              _watchBeckTestTask(),
-                  (a, b, c, d) =>
-                  DashboardState(
-                      irritabilityLevel: b,
-                      sleepinessLevel: c,
-                      anxietyLevel: a,
-                      tasks: [d].toList())));
+      Stream.value(_clock.today()).switchMap((today) => Rx.combineLatest4(
+          _anxietyRepository.observeSymptomLevelForDay(today),
+          _irritabilityRepository.observeSymptomLevelForDay(today),
+          _sleepinessRepository.observeSymptomLevelForDay(today),
+          _watchBeckTestTask(),
+          (a, b, c, d) => DashboardState(
+              irritabilityLevel: b,
+              sleepinessLevel: c,
+              anxietyLevel: a,
+              tasks: [d].toList())));
 
   void handleEvent(DashboardEvent event) {
     switch (event) {
       case SetLevel(symptomType: var type, level: var level):
+        _validateLevel(level);
         _getRepositoryForType(type)
             .upsertSymptomLog(SymptomLog(day: _clock.today(), level: level));
       case UnsetLevel(symptomType: var type):
@@ -48,8 +48,8 @@ class NewDashboardController {
         {}
       case BeckTestOpened():
         Future.microtask(() async {
-          final solved = await _checkBeckTestSolvedForDay(
-              Day.fromDateTime(_clock.now()));
+          final solved =
+              await _checkBeckTestSolvedForDay(Day.fromDateTime(_clock.now()));
           if (solved) {
             _router.showBeckTestAlreadySolvedWarning(onProceed: () {
               _router.goToBeckTest();
@@ -61,8 +61,7 @@ class NewDashboardController {
     }
   }
 
-  SymptomRepository _getRepositoryForType(SymptomType type) =>
-      switch (type) {
+  SymptomRepository _getRepositoryForType(SymptomType type) => switch (type) {
         SymptomType.anxiety => _anxietyRepository,
         SymptomType.irritability => _irritabilityRepository,
         SymptomType.sleepiness => _sleepinessRepository
@@ -77,8 +76,7 @@ class NewDashboardController {
     required Clock clock,
     required DashboardRouter router,
     required CheckBeckTestStatusForDay checkBeckTestSolved,
-  })
-      : _anxietyRepository = anxietyRepository,
+  })  : _anxietyRepository = anxietyRepository,
         _irritabilityRepository = irritabilityRepository,
         _sleepinessRepository = sleepinessRepository,
         _toggleTask = toggleTask,
@@ -86,8 +84,10 @@ class NewDashboardController {
         _clock = clock,
         _router = router,
         _checkBeckTestSolvedForDay = checkBeckTestSolved;
-}
 
-extension Today on Clock {
-  Day today() => now().toDay();
+  void _validateLevel(int level) {
+    if (level < 1 && level > 5) {
+      throw InvalidSymptomLevelError(level: level);
+    }
+  }
 }

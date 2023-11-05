@@ -26,6 +26,8 @@
       }
     }
   },
+  "therapy": "Terapia",
+  "symptoms": "Symptomy",
   "symptomAnxiety": "Niepokój",
   "symptomIrritability": "Drażliwość",
   "symptomSleepiness": "Senność",
@@ -43,5 +45,9 @@
   "ratingAnxietyDescriptionLevel4": "Byłam przytłoczona lękiem i niepokojem, co prowadziło do znacznego pogorszenia jakości życia. Zmaganie się z codziennymi wyzwaniami stało się trudne, a moje emocje wydawały się niekontrolowane.",
   "chartAxis_symptomsLevel": "Poziom symptomów",
   "restart": "Jeszcze raz",
-  "finish": "Zakończ"
+  "finish": "Zakończ",
+  "repeatTodayTestTitle": "Powtórz dzisiejszy test",
+  "repeatTodayTestPrompt": "Kwestionariusz Becka został już dzisiaj przez Ciebie wypełniony. Czy chcesz go powtórzyć?",
+  "accept": "Tak",
+  "decline": "Nie"
 }

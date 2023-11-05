@@ -1,6 +1,7 @@
+import 'package:easy_beck/l10n/localizations.dart';
+import 'package:easy_beck/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class BeckTestAlreadySolvedDialog extends StatelessWidget {
   final void Function() onProceed;
@@ -10,34 +11,32 @@ class BeckTestAlreadySolvedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Powtórz dzisiejszy test', style: GoogleFonts.amaticSc().copyWith(
-          fontSize: 32,
-          fontWeight: FontWeight.bold),),
-      content: const Text(
-        'Kwestionariusz Becka został już dzisiaj przez Ciebie wypełniony. Czy chcesz go powtórzyć?',
+      title: Text(
+        context.l10n.repeatTodayTestTitle,
+        style: context.theme.textTheme.headlineLarge,
       ),
+      content: Text(context.l10n.repeatTodayTestPrompt),
       actions: <Widget>[
         TextButton(
           style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
+            textStyle: context.theme.textTheme.labelLarge,
           ),
           onPressed: () {
             context.pop();
           },
-          child: const Text('Nie'),
+          child: Text(context.l10n.decline),
         ),
         TextButton(
           style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
+            textStyle: context.theme.textTheme.labelLarge,
           ),
           onPressed: () {
             onProceed();
             context.pop();
           },
-          child: const Text('Tak'),
+          child: Text(context.l10n.accept),
         ),
       ],
     );
   }
-
 }

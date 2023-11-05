@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:easy_beck/feature/actions/widget/task_grid.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_event.dart';
-import 'package:easy_beck/feature/dashboard/dashboard_state.dart';
-import 'package:easy_beck/feature/dashboard/symptom_type.dart';
+import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
+import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
+import 'package:easy_beck/feature/dashboard/model/symptom_type.dart';
 import 'package:easy_beck/feature/symptom_tile/anxiety_symptom_tile.dart';
 import 'package:easy_beck/feature/symptom_tile/irritability_symptom_tile.dart';
 import 'package:easy_beck/feature/symptom_tile/sleepiness_symptom_tile.dart';
+import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,7 +30,7 @@ class Dashboard extends StatelessWidget {
                       (context, index) => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Symptomy",
+                              Text(context.l10n.symptoms,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineLarge),
@@ -70,7 +71,7 @@ class Dashboard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
               sliver: SliverFixedExtentList(
                   delegate: SliverChildBuilderDelegate(
-                      (context, index) => Text("Terapia",
+                      (context, index) => Text(context.l10n.therapy,
                           style: Theme.of(context).textTheme.headlineLarge),
                       childCount: 1),
                   itemExtent: 40),

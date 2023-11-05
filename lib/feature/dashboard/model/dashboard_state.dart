@@ -6,10 +6,9 @@ class DashboardState {
   final int? anxietyLevel;
   final List<Task> tasks;
 
-  const DashboardState({
-    required this.irritabilityLevel,
-    required this.sleepinessLevel,
-    required this.anxietyLevel,
-    required this.tasks
-  });
+  const DashboardState(
+      {required this.irritabilityLevel,
+      required this.sleepinessLevel,
+      required this.anxietyLevel,
+      required this.tasks});
 }
