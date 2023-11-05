@@ -16,7 +16,7 @@ void main() async {
   Intl.defaultLocale = "pl_PL";
   final isarContainer = IsarContainer();
   final routerContainer = RouterContainer(
-          (context) => BeckTestQuestionnaireContainer(context),
+      (context) => BeckTestQuestionnaireContainer(context),
       DashboardContainer(isarContainer),
       JournalPageContainer(
           symptomsChartContainer: SymptomsChartContainer(),
@@ -39,34 +39,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final font = GoogleFonts.itimTextTheme();
     return LoaderBuilder(
-        onReady: () { FlutterNativeSplash.remove(); },
+        onReady: () {
+          FlutterNativeSplash.remove();
+        },
         loader: loader,
-        builder: (context) =>
-            MaterialApp.router(
-                title: "Soniappka",
-                routerConfig: routerConfig,
-                supportedLocales: const [Locale("pl")],
-                locale: const Locale("pl"),
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                    colorScheme: ColorScheme.fromSeed(
-                        seedColor: Color(0xffA0C49D),
-                        background: const Color(0xffC4D7B2)),
-                    cardTheme: const CardTheme(
-                        surfaceTintColor: Color(0xffF4F2DE),
-                        color: Color(0xffF7FFE5)),
-                    // iconTheme: const IconThemeData(color: Color(0xffA0C49D)),
-                    useMaterial3: true,
-                    textTheme: font.copyWith(
-                        labelLarge: font.labelLarge?.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        )))));
+        builder: (context) => MaterialApp.router(
+            title: "Soniappka",
+            routerConfig: routerConfig,
+            supportedLocales: const [Locale("pl")],
+            locale: const Locale("pl"),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(
+                    seedColor: Color(0xffA0C49D),
+                    background: const Color(0xffC4D7B2)),
+                cardTheme: const CardTheme(
+                    surfaceTintColor: Color(0xffF4F2DE),
+                    color: Color(0xffF7FFE5)),
+                // iconTheme: const IconThemeData(color: Color(0xffA0C49D)),
+                useMaterial3: true,
+                textTheme: font.copyWith(
+                    headlineLarge: GoogleFonts.amaticSc()
+                        .copyWith(fontSize: 32, fontWeight: FontWeight.bold),
+                    labelLarge: font.labelLarge?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    )))));
   }
 }

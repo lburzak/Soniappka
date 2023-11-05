@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Prompt extends StatelessWidget {
   final String title;
@@ -33,8 +32,7 @@ class Prompt extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(title,
-                        style: GoogleFonts.amaticSc().copyWith(
-                            fontSize: 32, fontWeight: FontWeight.bold)),
+                        style: Theme.of(context).textTheme.headlineLarge),
                     IconButton(
                         onPressed: () {
                           context.pop();

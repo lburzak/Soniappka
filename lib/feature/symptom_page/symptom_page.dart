@@ -2,7 +2,6 @@ import 'package:easy_beck/common/ui/rating_selector.dart';
 import 'package:easy_beck/feature/symptom_page/symptom_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SymptomPage extends StatelessWidget {
   final String title;
@@ -44,9 +43,9 @@ class SymptomPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(title,
-                                  style: GoogleFonts.amaticSc().copyWith(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold)),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge),
                               IconButton(
                                   onPressed: () {
                                     context.pop();

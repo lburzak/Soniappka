@@ -9,7 +9,6 @@ import 'package:easy_beck/feature/symptom_tile/irritability_symptom_tile.dart';
 import 'package:easy_beck/feature/symptom_tile/sleepiness_symptom_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatelessWidget {
   final Stream<DashboardState> state;
@@ -31,9 +30,9 @@ class Dashboard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Symptomy",
-                                  style: GoogleFonts.amaticSc().copyWith(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold)),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge),
                               IconButton(
                                   onPressed: () {
                                     context.push("/journal");
@@ -72,8 +71,7 @@ class Dashboard extends StatelessWidget {
               sliver: SliverFixedExtentList(
                   delegate: SliverChildBuilderDelegate(
                       (context, index) => Text("Terapia",
-                          style: GoogleFonts.amaticSc().copyWith(
-                              fontSize: 32, fontWeight: FontWeight.bold)),
+                          style: Theme.of(context).textTheme.headlineLarge),
                       childCount: 1),
                   itemExtent: 40),
             ),
