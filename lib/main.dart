@@ -1,8 +1,9 @@
-import 'package:easy_beck/app/router.dart';
 import 'package:easy_beck/common/loader/loader.dart';
 import 'package:easy_beck/common/loader/multi_loader.dart';
 import 'package:easy_beck/common/loader/widget/loader_builder.dart';
-import 'package:easy_beck/isar/isar_container.dart';
+import 'package:easy_beck/di/hive.dart';
+import 'package:easy_beck/di/isar.dart';
+import 'package:easy_beck/di/router.dart';
 import 'package:easy_beck/common/ui/theme/backgrounds.dart';
 import 'package:easy_beck/common/ui/theme/borders.dart';
 import 'package:easy_beck/common/ui/theme/colors.dart';
@@ -17,15 +18,13 @@ void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   Intl.defaultLocale = "pl_PL";
-  final isarContainer = IsarContainer();
-  final routerContainer = RouterContainer(
-      (context) => BeckTestQuestionnaireContainer(context),
-      DashboardContainer(isarContainer),
-      JournalPageContainer(symptomsChartContainer: SymptomsChartContainer()));
 
   runApp(MyApp(
-    routerConfig: routerContainer(),
-    loader: MultiLoader(loaders: [hiveContainer(), isarContainer()]),
+    routerConfig: routerDependencyGraph.appRouter,
+    loader: MultiLoader(loaders: [
+      hiveDependencyGraph.hiveLoader,
+      isarDependencyGraph.isarLoader
+    ])
   ));
 }
 
@@ -33,7 +32,10 @@ class MyApp extends StatelessWidget {
   final RouterConfig<Object> routerConfig;
   final Loader loader;
 
-  const MyApp({super.key, required this.routerConfig, required this.loader});
+  const MyApp(
+      {super.key,
+      required this.routerConfig,
+      required this.loader});
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +65,7 @@ class MyApp extends StatelessWidget {
                       regular: Border.all(width: 1),
                       bold: Border.all(width: 2)),
                   const ExtraColors(
-                      modalBarrier: Colors.black38,
-                      inactive: Colors.grey)
+                      modalBarrier: Colors.black38, inactive: Colors.grey)
                 ],
                 colorScheme: ColorScheme.fromSeed(
                     seedColor: Color(0xffA0C49D),
