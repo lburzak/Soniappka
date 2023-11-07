@@ -65,9 +65,9 @@ class AppRouter extends GoRouter {
                   builder: (context, state) => beckTestBuilder(context)),
               GoRoute(
                   path:
-                      "${RouteNames.beckTest}/:${_PathParams.beckTestId}/${RouteNames.beckTestResult}",
+                      "${RouteNames.beckTest}/:beckTestId/${RouteNames.beckTestResult}",
                   builder: (context, state) => beckTestResultBuilder(
-                      context, state.pathParameters[_PathParams.beckTestId]!)),
+                      context, state.pathParameters["beckTestId"]!)),
               GoRoute(
                   parentNavigatorKey: rootNavigatorKey,
                   path: RouteNames.irritabilityPage,
@@ -114,8 +114,4 @@ class AppRouter extends GoRouter {
                         );
                       }))
             ]);
-}
-
-abstract class _PathParams {
-  static const beckTestId = "beckTestId";
 }
