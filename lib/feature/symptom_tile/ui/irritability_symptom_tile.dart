@@ -21,7 +21,7 @@ class IrritabilitySymptomTile extends HookWidget {
     return SymptomTile(
       level: level.data,
       title: context.l10n.symptomIrritability,
-      ratings: irritabilityRatings,
+      ratings: IrritabilityRatings.of(context).asList,
       image: const Hero(
         tag: HeroTags.irritabilityIcon,
         child: Image(image: AssetImage(AssetNames.irritabilityIcon)),

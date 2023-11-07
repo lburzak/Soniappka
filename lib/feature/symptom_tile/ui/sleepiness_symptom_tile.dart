@@ -21,7 +21,7 @@ class SleepinessSymptomTile extends HookWidget {
     return SymptomTile(
       level: level.data,
       title: context.l10n.symptomSleepiness,
-      ratings: sleepinessRatings,
+      ratings: SleepinessRatings.of(context).asList,
       image: const Hero(
         tag: HeroTags.sleepinessIcon,
         child: Image(image: AssetImage(AssetNames.sleepinessIcon)),

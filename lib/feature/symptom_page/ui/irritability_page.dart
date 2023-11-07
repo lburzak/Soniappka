@@ -20,7 +20,7 @@ class IrritabilityPage extends StatelessWidget {
             tag: HeroTags.irritabilityIcon,
             child: Image(
                 height: 100, image: AssetImage(AssetNames.irritabilityIcon))),
-        ratings: irritabilityRatings,
+        ratings: IrritabilityRatings.of(context).asList,
         viewModel: viewModel);
   }
 }

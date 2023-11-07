@@ -20,7 +20,7 @@ class SleepinessPage extends StatelessWidget {
             tag: HeroTags.sleepinessIcon,
             child: Image(
                 height: 100, image: AssetImage(AssetNames.sleepinessIcon))),
-        ratings: sleepinessRatings,
+        ratings: SleepinessRatings.of(context).asList,
         viewModel: viewModel);
   }
 }
