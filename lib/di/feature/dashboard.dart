@@ -41,4 +41,10 @@ class _InjectedDashboardState extends State<InjectedDashboard> {
             state: controller.createState().asBroadcastStream(),
             sink: events.sink));
   }
+
+  @override
+  void dispose() {
+    events.close();
+    super.dispose();
+  }
 }

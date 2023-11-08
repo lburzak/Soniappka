@@ -8,7 +8,7 @@ abstract class AppColors {
   static const background = Color(0xffC4D7B2);
   static const surfaceTint = Color(0xffF4F2DE);
   static const surface = Color(0xffF7FFE5);
-  static const opaqueSelection = Color(0xffffffff);
+  static const opaqueSelection = Colors.white24;
 }
 
 abstract class AppFontFamilies {
