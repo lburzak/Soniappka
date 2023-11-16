@@ -5,10 +5,15 @@ class DashboardState {
   final int? sleepinessLevel;
   final int? anxietyLevel;
   final List<Task> tasks;
+  final DateTime day;
+  final bool isToday;
 
-  const DashboardState(
-      {required this.irritabilityLevel,
-      required this.sleepinessLevel,
-      required this.anxietyLevel,
-      required this.tasks});
+  const DashboardState({
+    this.irritabilityLevel,
+    this.sleepinessLevel,
+    this.anxietyLevel,
+    required this.tasks,
+    required this.day,
+    required this.isToday,
+  });
 }

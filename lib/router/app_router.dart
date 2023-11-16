@@ -1,4 +1,6 @@
 import 'package:easy_beck/common/routing/route_names.dart';
+import 'package:easy_beck/domain/common/day.dart';
+import 'package:easy_beck/router/day_parameter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -8,7 +10,8 @@ typedef BeckTestResultPageBuilder = Widget Function(
     BuildContext context, String idParameter);
 
 class AppRouter extends GoRouter {
-  final WidgetBuilder dashboardBuilder;
+  final Widget Function(BuildContext buildContext, Day dayParameter)
+      dashboardBuilder;
   final WidgetBuilder journalBuilder;
   final WidgetBuilder beckTestBuilder;
   final BeckTestResultPageBuilder beckTestResultBuilder;
@@ -30,16 +33,20 @@ class AppRouter extends GoRouter {
       required this.anxietyPageBuilder})
       : super(
             navigatorKey: rootNavigatorKey,
-            initialLocation: RouteNames.dashboard,
+            initialLocation: "${RouteNames.dashboard}/today",
             routes: [
               ShellRoute(
                   builder: (context, state, child) =>
                       scaffoldBuilder(context, child),
                   routes: [
                     GoRoute(
-                        path: RouteNames.dashboard,
+                        path: "${RouteNames.dashboard}/:day",
                         builder: (context, state) {
-                          return dashboardBuilder(context);
+                          return dashboardBuilder(
+                              context,
+                              DayParameter.fromString(
+                                      state.pathParameters["day"]!)
+                                  .day);
                         }),
                     GoRoute(
                         path: RouteNames.journal,

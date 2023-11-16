@@ -15,7 +15,7 @@ class RouterDependencyGraph {
   late final appRouter = AppRouter(
       rootNavigatorKey: rootNavigatorKey,
       shellNavigatorKey: shellNavigatorKey,
-      dashboardBuilder: (context) => const InjectedDashboard(),
+      dashboardBuilder: (context, day) => InjectedDashboard(day: day),
       journalBuilder: (context) => const InjectedSymptomsChartPage(),
       scaffoldBuilder: (context, child) => Scaffold(body: child),
       beckTestBuilder: (context) => const InjectedBeckTest(),

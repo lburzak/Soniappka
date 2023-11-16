@@ -9,6 +9,7 @@ abstract class AppColors {
   static const surfaceTint = Color(0xffF4F2DE);
   static const surface = Color(0xffF7FFE5);
   static const opaqueSelection = Colors.white24;
+  static const primaryLight = Color(0xffDBE4CB);
 }
 
 abstract class AppFontFamilies {
@@ -23,7 +24,11 @@ final themeData = ThemeData(
           thin: Border.all(width: 0.5),
           regular: Border.all(width: 1),
           bold: Border.all(width: 2)),
-      const ExtraColors(modalBarrier: Colors.black38, inactive: Colors.grey)
+      const ExtraColors(
+          modalBarrier: Colors.black38,
+          inactive: Colors.grey,
+          backgroundVariant: AppColors.primaryLight,
+          backgroundDark: AppColors.primary)
     ],
     colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primary, background: AppColors.background),
@@ -36,6 +41,10 @@ final themeData = ThemeData(
         headlineLarge: TextStyle(
             fontFamily: AppFontFamilies.display,
             fontSize: 32,
+            fontWeight: FontWeight.bold),
+        headlineMedium: TextStyle(
+            fontFamily: AppFontFamilies.display,
+            fontSize: 24,
             fontWeight: FontWeight.bold),
         headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         titleMedium: TextStyle(fontSize: 20),
