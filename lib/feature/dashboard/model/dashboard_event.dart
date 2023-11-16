@@ -80,3 +80,23 @@ class BeckTestOpened extends DashboardEvent {
   @override
   int get hashCode => 0;
 }
+
+class ShowToday extends DashboardEvent {
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ShowToday && runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => 0;
+}
+
+class ShowYesterday extends DashboardEvent {
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ShowYesterday && runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => 0;
+}
