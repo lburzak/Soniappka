@@ -4,7 +4,7 @@ import 'package:easy_beck/l10n/localizations.dart';
 import 'package:easy_beck/common/ui/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
-class SymptomTile extends StatelessWidget {
+class RatingTile extends StatelessWidget {
   final String title;
   final List<Rating> ratings;
   final Widget image;
@@ -12,7 +12,7 @@ class SymptomTile extends StatelessWidget {
   final void Function() onExpanded;
   final void Function(int? level) onUpdated;
 
-  const SymptomTile(
+  const RatingTile(
       {super.key,
       required this.ratings,
       required this.image,

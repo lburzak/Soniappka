@@ -1,7 +1,7 @@
 import 'package:easy_beck/common/ui/values/asset_names.dart';
 import 'package:easy_beck/common/ui/values/hero_tags.dart';
 import 'package:easy_beck/common/ui/values/irritability_ratings.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/symptom_tile.dart';
+import 'package:easy_beck/feature/symptom_tile/ui/rating_tile.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:easy_beck/common/routing/route_names.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class IrritabilitySymptomTile extends HookWidget {
   Widget build(BuildContext context) {
     final level = useStream(state);
 
-    return SymptomTile(
+    return RatingTile(
       level: level.data,
       title: context.l10n.symptomIrritability,
       ratings: IrritabilityRatings.of(context).asList,

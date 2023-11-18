@@ -7,9 +7,6 @@ import 'package:easy_beck/feature/actions/widget/task_grid.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
 import 'package:easy_beck/domain/symptoms/model/symptom_type.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/anxiety_symptom_tile.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/irritability_symptom_tile.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/sleepiness_symptom_tile.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -20,8 +17,9 @@ import 'package:morphable_shape/morphable_shape.dart';
 class Dashboard extends HookWidget {
   final Stream<DashboardState> state;
   final EventSink<DashboardEvent> sink;
+  final List<Widget> symptomTiles;
 
-  const Dashboard({super.key, required this.state, required this.sink});
+  const Dashboard({super.key, required this.state, required this.sink, required this.symptomTiles});
 
   @override
   Widget build(BuildContext context) {
@@ -101,28 +99,7 @@ class Dashboard extends HookWidget {
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                sliver: SliverList.list(children: [
-                  IrritabilitySymptomTile(
-                    state: state
-                        .map((event) => event.irritabilityLevel)
-                        .distinct(),
-                    onUpdated: (level) =>
-                        onLevelUpdated(SymptomType.irritability, level),
-                  ),
-                  SleepinessSymptomTile(
-                    state:
-                        state.map((event) => event.sleepinessLevel).distinct(),
-                    onUpdated: (level) =>
-                        onLevelUpdated(SymptomType.sleepiness, level),
-                  ),
-                  AnxietySymptomTile(
-                    state: state.map((event) => event.anxietyLevel).distinct(),
-                    onUpdated: (level) =>
-                        onLevelUpdated(SymptomType.anxiety, level),
-                  ),
-                  // SymptomTile(),
-                  // SymptomTile(),
-                ]),
+                sliver: SliverList.list(children: symptomTiles),
               ),
               SliverPadding(
                 padding:
