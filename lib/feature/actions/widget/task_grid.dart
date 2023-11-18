@@ -6,7 +6,7 @@ import 'package:easy_beck/common/ui/theme/theme_getter.dart';
 import 'package:flutter/material.dart';
 
 class TasksGrid extends StatelessWidget {
-  final List<Task> tasks;
+  final Stream<List<Task>> tasks;
   final void Function(Task task) onToggleTask;
   final void Function() onNewTask;
   final void Function() onBeckTestOpen;
@@ -20,15 +20,19 @@ class TasksGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.builder(
-        itemCount: tasks.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemBuilder: (context, index) => TaskTile(
-            task: tasks[index],
-            onToggle: () => tasks[index].action == beckTestAction
-                ? onBeckTestOpen()
-                : onToggleTask(tasks[index])));
+    return StreamBuilder(
+      stream: tasks,
+      builder: (context, snapshot) => SliverGrid.builder(
+          itemCount: snapshot.data?.length ?? 0,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3),
+          itemBuilder: (context, index) => TaskTile(
+              task: snapshot.requireData[index],
+              onToggle: () =>
+                  snapshot.requireData[index].action == beckTestAction
+                      ? onBeckTestOpen()
+                      : onToggleTask(snapshot.requireData[index]))),
+    );
   }
 }
 

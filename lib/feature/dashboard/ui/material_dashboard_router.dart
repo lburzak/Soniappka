@@ -1,5 +1,5 @@
 import 'package:easy_beck/domain/common/day.dart';
-import 'package:easy_beck/feature/dashboard/ui/beck_test_already_solved_dialog.dart';
+import 'package:easy_beck/feature/actions/widget/beck_test_already_solved_dialog.dart';
 import 'package:easy_beck/feature/dashboard/service/dashboard_router.dart';
 import 'package:easy_beck/router/day_parameter.dart';
 import 'package:flutter/material.dart';

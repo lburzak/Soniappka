@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:easy_beck/common/ui/theme/colors.dart';
 import 'package:easy_beck/common/ui/theme/theme_getter.dart';
 import 'package:easy_beck/common/ui/widget/stream_visibility.dart';
-import 'package:easy_beck/feature/actions/widget/task_grid.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
 import 'package:easy_beck/domain/symptoms/model/symptom_type.dart';
@@ -18,12 +17,14 @@ class Dashboard extends HookWidget {
   final Stream<DashboardState> state;
   final EventSink<DashboardEvent> sink;
   final List<Widget> symptomTiles;
+  final Widget tasksGrid;
 
   const Dashboard(
       {super.key,
       required this.state,
       required this.sink,
-      required this.symptomTiles});
+      required this.symptomTiles,
+      required this.tasksGrid});
 
   @override
   Widget build(BuildContext context) {
@@ -93,15 +94,7 @@ class Dashboard extends HookWidget {
               _Header(text: context.l10n.therapy),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                sliver: StreamBuilder(
-                  stream: state.map((event) => event.tasks),
-                  builder: (context, snapshot) => TasksGrid(
-                    tasks: snapshot.data ?? [],
-                    onNewTask: () => sink.add(ShowTaskCreator()),
-                    onToggleTask: (task) => sink.add(TaskToggled(task: task)),
-                    onBeckTestOpen: () => sink.add(BeckTestOpened()),
-                  ),
-                ),
+                sliver: tasksGrid,
               )
             ],
           )),

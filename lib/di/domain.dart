@@ -23,7 +23,7 @@ class DomainDependencyGraph {
     clock: commonDependencyGraph.clock,
     calendar: commonDependencyGraph.calendar,
   );
-  late final checkBeckTestSolved = CheckBeckTestStatusForDay(
+  late final checkBeckTestStatusForDay = CheckBeckTestStatusForDay(
       beckTestResultRepository: hiveDependencyGraph.beckTestResultRepository);
   late final submitBeckTest = SubmitBeckTest(
       jsonDependencyContext.jsonFileBeckRepository,
