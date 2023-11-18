@@ -51,7 +51,7 @@ class Dashboard extends HookWidget {
                         Align(
                             alignment: Alignment.topCenter,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 8),
+                              padding: const EdgeInsets.only(top: 12),
                               child: StreamBuilder(
                                   stream: state.map((event) => event.day),
                                   builder: (context, snapshot) {
@@ -67,13 +67,18 @@ class Dashboard extends HookWidget {
                             )),
                         Align(
                             alignment: Alignment.topRight,
-                            child: StreamVisibility(
-                                visibilityStream:
-                                    state.map((event) => !event.isToday),
-                                child: GestureDetector(
-                                  onTap: () => sink.add(ShowToday()),
-                                  child: const FoldedCornerNext(),
-                                )))
+                            child: StreamBuilder<bool>(
+                                stream: state.map((event) => event.isToday),
+                                builder: (context, snapshot) =>
+                                    switch (snapshot.data) {
+                                      false => GestureDetector(
+                                          onTap: () => sink.add(ShowToday()),
+                                          child: const FoldedCornerNext()),
+                                      _ => const Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                          child: StatisticsButton(),
+                                        ),
+                                    })),
                       ],
                     ),
                   )),
@@ -89,11 +94,6 @@ class Dashboard extends HookWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineLarge),
-                                IconButton(
-                                    onPressed: () {
-                                      context.push("/journal");
-                                    },
-                                    icon: const Icon(Icons.bar_chart))
                               ],
                             ),
                         childCount: 1),
@@ -160,6 +160,21 @@ class Dashboard extends HookWidget {
   }
 }
 
+class StatisticsButton extends StatelessWidget {
+  const StatisticsButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          context.push("/journal");
+        },
+        icon: const Icon(Icons.bar_chart));
+  }
+}
+
 class FoldedCornerNext extends StatelessWidget {
   const FoldedCornerNext({
     super.key,
@@ -171,12 +186,13 @@ class FoldedCornerNext extends StatelessWidget {
       color: context.theme.colorScheme.background,
       elevation: 4,
       shape: TriangleShapeBorder(
-        point3: DynamicOffset(100.toPXLength, 100.toPXLength),
+        point3: DynamicOffset(
+            _foldedCornerSize.toPXLength, _foldedCornerSize.toPXLength),
       ),
       clipBehavior: Clip.antiAlias,
       child: const SizedBox(
-        width: 50,
-        height: 50,
+        width: _foldedCornerSize,
+        height: _foldedCornerSize,
       ),
     );
   }
@@ -190,22 +206,25 @@ class FoldedCornerPrevious extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
-      height: 50,
+      width: _foldedCornerSize,
+      height: _foldedCornerSize,
       color: context.theme.colors.backgroundVariant,
       child: Material(
         color: context.theme.colors.backgroundDark,
         elevation: 4,
         shape: TriangleShapeBorder(
-          point1: DynamicOffset(0.toPXLength, 100.toPXLength),
-          point3: DynamicOffset(100.toPXLength, 100.toPXLength),
+          point1: DynamicOffset(0.toPXLength, _foldedCornerSize.toPXLength),
+          point3: DynamicOffset(
+              _foldedCornerSize.toPXLength, _foldedCornerSize.toPXLength),
         ),
         clipBehavior: Clip.antiAlias,
         child: const SizedBox(
-          width: 50,
-          height: 50,
+          width: _foldedCornerSize,
+          height: _foldedCornerSize,
         ),
       ),
     );
   }
 }
+
+const _foldedCornerSize = 50.0;
