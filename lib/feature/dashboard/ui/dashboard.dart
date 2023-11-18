@@ -19,7 +19,11 @@ class Dashboard extends HookWidget {
   final EventSink<DashboardEvent> sink;
   final List<Widget> symptomTiles;
 
-  const Dashboard({super.key, required this.state, required this.sink, required this.symptomTiles});
+  const Dashboard(
+      {super.key,
+      required this.state,
+      required this.sink,
+      required this.symptomTiles});
 
   @override
   Widget build(BuildContext context) {
@@ -73,44 +77,20 @@ class Dashboard extends HookWidget {
                                           onTap: () => sink.add(ShowToday()),
                                           child: const FoldedCornerNext()),
                                       _ => const Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 4, horizontal: 8),
                                           child: StatisticsButton(),
                                         ),
                                     })),
                       ],
                     ),
                   )),
-              SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                sliver: SliverFixedExtentList(
-                    delegate: SliverChildBuilderDelegate(
-                        (context, index) => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(context.l10n.symptoms,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge),
-                              ],
-                            ),
-                        childCount: 1),
-                    itemExtent: 40),
-              ),
+              _Header(text: context.l10n.symptoms),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 sliver: SliverList.list(children: symptomTiles),
               ),
-              SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                sliver: SliverFixedExtentList(
-                    delegate: SliverChildBuilderDelegate(
-                        (context, index) => Text(context.l10n.therapy,
-                            style: Theme.of(context).textTheme.headlineLarge),
-                        childCount: 1),
-                    itemExtent: 40),
-              ),
+              _Header(text: context.l10n.therapy),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 sliver: StreamBuilder(
@@ -134,6 +114,27 @@ class Dashboard extends HookWidget {
     } else {
       sink.add(SetLevel(level: level, symptomType: symptomType));
     }
+  }
+}
+
+class _Header extends StatelessWidget {
+  final String text;
+
+  const _Header({
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      sliver: SliverFixedExtentList(
+          delegate: SliverChildBuilderDelegate(
+              (context, index) =>
+                  Text(text, style: Theme.of(context).textTheme.headlineLarge),
+              childCount: 1),
+          itemExtent: 40),
+    );
   }
 }
 
