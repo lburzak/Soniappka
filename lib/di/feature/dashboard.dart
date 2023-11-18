@@ -35,7 +35,8 @@ class _InjectedDashboardState extends State<InjectedDashboard> {
       day: widget.day,
       calendar: commonDependencyGraph.calendar,
       router: router,
-      checkBeckTestSolvedForDay: domainDependencyGraph.checkBeckTestStatusForDay);
+      checkBeckTestSolvedForDay:
+          domainDependencyGraph.checkBeckTestStatusForDay);
 
   late final events = StreamController<DashboardEvent>.broadcast();
 
@@ -45,8 +46,10 @@ class _InjectedDashboardState extends State<InjectedDashboard> {
         stream: events.stream,
         onData: controller.handleEvent,
         child: Dashboard(
-            state: controller.createState().asBroadcastStream(),
-            sink: events.sink,
+          day: widget.day,
+          isToday: commonDependencyGraph.calendar.isToday(widget.day),
+          onGoToYesterday: router.goToYesterdayDashboard,
+          onGoToToday: router.goToTodayDashboard,
           symptomTiles: [
             InjectedIrritabilitySymptomTile(day: widget.day),
             InjectedSleepinessSymptomTile(day: widget.day),

@@ -1,37 +1,24 @@
-import 'dart:async';
-
 import 'package:easy_beck/common/ui/theme/colors.dart';
 import 'package:easy_beck/common/ui/theme/theme_getter.dart';
-import 'package:easy_beck/common/ui/widget/stream_visibility.dart';
-import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
-import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
-import 'package:easy_beck/domain/symptoms/model/symptom_type.dart';
+import 'package:easy_beck/domain/common/day.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:morphable_shape/morphable_shape.dart';
 
-class Dashboard extends HookWidget {
-  final Stream<DashboardState> state;
-  final EventSink<DashboardEvent> sink;
+class Dashboard extends StatelessWidget {
+  final Day day;
+  final bool isToday;
   final List<Widget> symptomTiles;
   final Widget tasksGrid;
-
-  const Dashboard(
-      {super.key,
-      required this.state,
-      required this.sink,
-      required this.symptomTiles,
-      required this.tasksGrid});
+  final void Function() onGoToYesterday;
+  final void Function() onGoToToday;
 
   @override
   Widget build(BuildContext context) {
-    final isToday = useStream(state.map((event) => event.isToday));
-
     return Container(
-      color: isToday.data == true
+      color: isToday
           ? context.theme.colorScheme.background
           : context.theme.colors.backgroundVariant,
       child: SafeArea(
@@ -45,44 +32,33 @@ class Dashboard extends HookWidget {
                       children: [
                         Align(
                             alignment: Alignment.topLeft,
-                            child: StreamVisibility(
-                                visibilityStream:
-                                    state.map((event) => event.isToday),
+                            child: Visibility(
+                                visible: isToday,
                                 child: GestureDetector(
-                                    onTap: () => sink.add(ShowYesterday()),
-                                    child: const FoldedCornerPrevious()))),
+                                    onTap: () => onGoToYesterday(),
+                                    child: const _FoldedCornerPrevious()))),
                         Align(
                             alignment: Alignment.topCenter,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 12),
-                              child: StreamBuilder(
-                                  stream: state.map((event) => event.day),
-                                  builder: (context, snapshot) {
-                                    return Text(
-                                        snapshot.hasData
-                                            ? DateFormat.MMMMEEEEd()
-                                                .format(snapshot.requireData)
-                                            : "",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium);
-                                  }),
+                              child: Text(
+                                  DateFormat.MMMMEEEEd().format(day.dateTime),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium),
                             )),
                         Align(
                             alignment: Alignment.topRight,
-                            child: StreamBuilder<bool>(
-                                stream: state.map((event) => event.isToday),
-                                builder: (context, snapshot) =>
-                                    switch (snapshot.data) {
-                                      false => GestureDetector(
-                                          onTap: () => sink.add(ShowToday()),
-                                          child: const FoldedCornerNext()),
-                                      _ => const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 4, horizontal: 8),
-                                          child: StatisticsButton(),
-                                        ),
-                                    })),
+                            child: switch (isToday) {
+                              false => GestureDetector(
+                                  onTap: () => onGoToToday(),
+                                  child: const _FoldedCornerNext()),
+                              _ => const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 8),
+                                  child: _StatisticsButton(),
+                                ),
+                            }),
                       ],
                     ),
                   )),
@@ -101,13 +77,15 @@ class Dashboard extends HookWidget {
     );
   }
 
-  void onLevelUpdated(SymptomType symptomType, int? level) {
-    if (level == null) {
-      sink.add(UnsetLevel(symptomType: symptomType));
-    } else {
-      sink.add(SetLevel(level: level, symptomType: symptomType));
-    }
-  }
+  const Dashboard({
+    super.key,
+    required this.day,
+    required this.isToday,
+    required this.symptomTiles,
+    required this.tasksGrid,
+    required this.onGoToYesterday,
+    required this.onGoToToday,
+  });
 }
 
 class _Header extends StatelessWidget {
@@ -131,10 +109,8 @@ class _Header extends StatelessWidget {
   }
 }
 
-class StatisticsButton extends StatelessWidget {
-  const StatisticsButton({
-    super.key,
-  });
+class _StatisticsButton extends StatelessWidget {
+  const _StatisticsButton();
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +122,8 @@ class StatisticsButton extends StatelessWidget {
   }
 }
 
-class FoldedCornerNext extends StatelessWidget {
-  const FoldedCornerNext({
-    super.key,
-  });
+class _FoldedCornerNext extends StatelessWidget {
+  const _FoldedCornerNext();
 
   @override
   Widget build(BuildContext context) {
@@ -169,10 +143,8 @@ class FoldedCornerNext extends StatelessWidget {
   }
 }
 
-class FoldedCornerPrevious extends StatelessWidget {
-  const FoldedCornerPrevious({
-    super.key,
-  });
+class _FoldedCornerPrevious extends StatelessWidget {
+  const _FoldedCornerPrevious();
 
   @override
   Widget build(BuildContext context) {
