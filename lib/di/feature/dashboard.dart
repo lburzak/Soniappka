@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:easy_beck/di/common.dart';
 import 'package:easy_beck/di/domain.dart';
+import 'package:easy_beck/di/feature/actions.dart';
+import 'package:easy_beck/di/feature/symptom_tile.dart';
 import 'package:easy_beck/di/hive.dart';
 import 'package:easy_beck/domain/common/day.dart';
 import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
@@ -33,7 +35,8 @@ class _InjectedDashboardState extends State<InjectedDashboard> {
       day: widget.day,
       calendar: commonDependencyGraph.calendar,
       router: router,
-      checkBeckTestSolvedForDay: domainDependencyGraph.checkBeckTestSolved);
+      checkBeckTestSolvedForDay:
+          domainDependencyGraph.checkBeckTestStatusForDay);
 
   late final events = StreamController<DashboardEvent>.broadcast();
 
@@ -43,8 +46,17 @@ class _InjectedDashboardState extends State<InjectedDashboard> {
         stream: events.stream,
         onData: controller.handleEvent,
         child: Dashboard(
-            state: controller.createState().asBroadcastStream(),
-            sink: events.sink));
+          day: widget.day,
+          isToday: commonDependencyGraph.calendar.isToday(widget.day),
+          onGoToYesterday: router.goToYesterdayDashboard,
+          onGoToToday: router.goToTodayDashboard,
+          symptomTiles: [
+            InjectedIrritabilitySymptomTile(day: widget.day),
+            InjectedSleepinessSymptomTile(day: widget.day),
+            InjectedAnxietySymptomTile(day: widget.day),
+          ],
+          tasksGrid: InjectedTasksGrid(day: widget.day),
+        ));
   }
 
   @override

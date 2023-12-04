@@ -1,34 +1,24 @@
-import 'dart:async';
-
 import 'package:easy_beck/common/ui/theme/colors.dart';
 import 'package:easy_beck/common/ui/theme/theme_getter.dart';
-import 'package:easy_beck/common/ui/widget/stream_visibility.dart';
-import 'package:easy_beck/feature/actions/widget/task_grid.dart';
-import 'package:easy_beck/feature/dashboard/model/dashboard_event.dart';
-import 'package:easy_beck/feature/dashboard/model/dashboard_state.dart';
-import 'package:easy_beck/domain/symptoms/model/symptom_type.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/anxiety_symptom_tile.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/irritability_symptom_tile.dart';
-import 'package:easy_beck/feature/symptom_tile/ui/sleepiness_symptom_tile.dart';
+import 'package:easy_beck/domain/common/day.dart';
 import 'package:easy_beck/l10n/localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:morphable_shape/morphable_shape.dart';
 
-class Dashboard extends HookWidget {
-  final Stream<DashboardState> state;
-  final EventSink<DashboardEvent> sink;
-
-  const Dashboard({super.key, required this.state, required this.sink});
+class Dashboard extends StatelessWidget {
+  final Day day;
+  final bool isToday;
+  final List<Widget> symptomTiles;
+  final Widget tasksGrid;
+  final void Function() onGoToYesterday;
+  final void Function() onGoToToday;
 
   @override
   Widget build(BuildContext context) {
-    final isToday = useStream(state.map((event) => event.isToday));
-
     return Container(
-      color: isToday.data == true
+      color: isToday
           ? context.theme.colorScheme.background
           : context.theme.colors.backgroundVariant,
       child: SafeArea(
@@ -42,128 +32,98 @@ class Dashboard extends HookWidget {
                       children: [
                         Align(
                             alignment: Alignment.topLeft,
-                            child: StreamVisibility(
-                                visibilityStream:
-                                    state.map((event) => event.isToday),
+                            child: Visibility(
+                                visible: isToday,
                                 child: GestureDetector(
-                                    onTap: () => sink.add(ShowYesterday()),
-                                    child: const FoldedCornerPrevious()))),
+                                    onTap: () => onGoToYesterday(),
+                                    child: const _FoldedCornerPrevious()))),
                         Align(
                             alignment: Alignment.topCenter,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: StreamBuilder(
-                                  stream: state.map((event) => event.day),
-                                  builder: (context, snapshot) {
-                                    return Text(
-                                        snapshot.hasData
-                                            ? DateFormat.MMMMEEEEd()
-                                                .format(snapshot.requireData)
-                                            : "",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium);
-                                  }),
+                              padding: const EdgeInsets.only(top: 12),
+                              child: Text(
+                                  DateFormat.MMMMEEEEd().format(day.dateTime),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium),
                             )),
                         Align(
                             alignment: Alignment.topRight,
-                            child: StreamVisibility(
-                                visibilityStream:
-                                    state.map((event) => !event.isToday),
-                                child: GestureDetector(
-                                  onTap: () => sink.add(ShowToday()),
-                                  child: const FoldedCornerNext(),
-                                )))
+                            child: switch (isToday) {
+                              false => GestureDetector(
+                                  onTap: () => onGoToToday(),
+                                  child: const _FoldedCornerNext()),
+                              _ => const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 8),
+                                  child: _StatisticsButton(),
+                                ),
+                            }),
                       ],
                     ),
                   )),
-              SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                sliver: SliverFixedExtentList(
-                    delegate: SliverChildBuilderDelegate(
-                        (context, index) => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(context.l10n.symptoms,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge),
-                                IconButton(
-                                    onPressed: () {
-                                      context.push("/journal");
-                                    },
-                                    icon: const Icon(Icons.bar_chart))
-                              ],
-                            ),
-                        childCount: 1),
-                    itemExtent: 40),
-              ),
+              _Header(text: context.l10n.symptoms),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                sliver: SliverList.list(children: [
-                  IrritabilitySymptomTile(
-                    state: state
-                        .map((event) => event.irritabilityLevel)
-                        .distinct(),
-                    onUpdated: (level) =>
-                        onLevelUpdated(SymptomType.irritability, level),
-                  ),
-                  SleepinessSymptomTile(
-                    state:
-                        state.map((event) => event.sleepinessLevel).distinct(),
-                    onUpdated: (level) =>
-                        onLevelUpdated(SymptomType.sleepiness, level),
-                  ),
-                  AnxietySymptomTile(
-                    state: state.map((event) => event.anxietyLevel).distinct(),
-                    onUpdated: (level) =>
-                        onLevelUpdated(SymptomType.anxiety, level),
-                  ),
-                  // SymptomTile(),
-                  // SymptomTile(),
-                ]),
+                sliver: SliverList.list(children: symptomTiles),
               ),
-              SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                sliver: SliverFixedExtentList(
-                    delegate: SliverChildBuilderDelegate(
-                        (context, index) => Text(context.l10n.therapy,
-                            style: Theme.of(context).textTheme.headlineLarge),
-                        childCount: 1),
-                    itemExtent: 40),
-              ),
+              _Header(text: context.l10n.therapy),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                sliver: StreamBuilder(
-                  stream: state.map((event) => event.tasks),
-                  builder: (context, snapshot) => TasksGrid(
-                    tasks: snapshot.data ?? [],
-                    onNewTask: () => sink.add(ShowTaskCreator()),
-                    onToggleTask: (task) => sink.add(TaskToggled(task: task)),
-                    onBeckTestOpen: () => sink.add(BeckTestOpened()),
-                  ),
-                ),
+                sliver: tasksGrid,
               )
             ],
           )),
     );
   }
 
-  void onLevelUpdated(SymptomType symptomType, int? level) {
-    if (level == null) {
-      sink.add(UnsetLevel(symptomType: symptomType));
-    } else {
-      sink.add(SetLevel(level: level, symptomType: symptomType));
-    }
+  const Dashboard({
+    super.key,
+    required this.day,
+    required this.isToday,
+    required this.symptomTiles,
+    required this.tasksGrid,
+    required this.onGoToYesterday,
+    required this.onGoToToday,
+  });
+}
+
+class _Header extends StatelessWidget {
+  final String text;
+
+  const _Header({
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      sliver: SliverFixedExtentList(
+          delegate: SliverChildBuilderDelegate(
+              (context, index) =>
+                  Text(text, style: Theme.of(context).textTheme.headlineLarge),
+              childCount: 1),
+          itemExtent: 40),
+    );
   }
 }
 
-class FoldedCornerNext extends StatelessWidget {
-  const FoldedCornerNext({
-    super.key,
-  });
+class _StatisticsButton extends StatelessWidget {
+  const _StatisticsButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          context.push("/journal");
+        },
+        icon: const Icon(Icons.bar_chart));
+  }
+}
+
+class _FoldedCornerNext extends StatelessWidget {
+  const _FoldedCornerNext();
 
   @override
   Widget build(BuildContext context) {
@@ -171,41 +131,43 @@ class FoldedCornerNext extends StatelessWidget {
       color: context.theme.colorScheme.background,
       elevation: 4,
       shape: TriangleShapeBorder(
-        point3: DynamicOffset(100.toPXLength, 100.toPXLength),
+        point3: DynamicOffset(
+            _foldedCornerSize.toPXLength, _foldedCornerSize.toPXLength),
       ),
       clipBehavior: Clip.antiAlias,
       child: const SizedBox(
-        width: 50,
-        height: 50,
+        width: _foldedCornerSize,
+        height: _foldedCornerSize,
       ),
     );
   }
 }
 
-class FoldedCornerPrevious extends StatelessWidget {
-  const FoldedCornerPrevious({
-    super.key,
-  });
+class _FoldedCornerPrevious extends StatelessWidget {
+  const _FoldedCornerPrevious();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
-      height: 50,
+      width: _foldedCornerSize,
+      height: _foldedCornerSize,
       color: context.theme.colors.backgroundVariant,
       child: Material(
         color: context.theme.colors.backgroundDark,
         elevation: 4,
         shape: TriangleShapeBorder(
-          point1: DynamicOffset(0.toPXLength, 100.toPXLength),
-          point3: DynamicOffset(100.toPXLength, 100.toPXLength),
+          point1: DynamicOffset(0.toPXLength, _foldedCornerSize.toPXLength),
+          point3: DynamicOffset(
+              _foldedCornerSize.toPXLength, _foldedCornerSize.toPXLength),
         ),
         clipBehavior: Clip.antiAlias,
         child: const SizedBox(
-          width: 50,
-          height: 50,
+          width: _foldedCornerSize,
+          height: _foldedCornerSize,
         ),
       ),
     );
   }
 }
+
+const _foldedCornerSize = 50.0;
